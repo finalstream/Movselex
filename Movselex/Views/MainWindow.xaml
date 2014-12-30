@@ -1,4 +1,4 @@
-﻿<Window x:Class="Movselex.Views.MainWindow"
+﻿<controls:MetroWindow x:Class="Movselex.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -6,7 +6,10 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:Movselex.Views"
         xmlns:vm="clr-namespace:Movselex.ViewModels"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        Title="MainWindow" Height="350" Width="525"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        >
     
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -35,4 +38,4 @@
     <Grid>
         
     </Grid>
-</Window>
+</controls:MetroWindow>
