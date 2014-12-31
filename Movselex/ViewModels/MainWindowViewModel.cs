@@ -1,22 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-
+﻿using System.Collections.Generic;
 using Livet;
-using Livet.Commands;
-using Livet.Messaging;
-using Livet.Messaging.IO;
-using Livet.EventListeners;
-using Livet.Messaging.Windows;
-
-using Movselex.Models;
+using Movselex.Core;
+using Movselex.Core.Models;
 
 namespace Movselex.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
+
+        /// <summary>
+        /// フィルタリング情報。
+        /// </summary>
+        public IEnumerable<FilteringItem> Filterings { get { return _client.Filterings.FilteringItems; } }
+
+        /// <summary>
+        /// グループ情報。
+        /// </summary>
+        public IEnumerable<GroupItem> Groups { get { return null; }}
+
+
+
+        #region NowPlayingTitle変更通知プロパティ
+
+        private string _nowPlayingTitle;
+
+        public string NowPlayingTitle
+        {
+            get { return _nowPlayingTitle; }
+            set
+            {
+                if (_nowPlayingTitle == value) return;
+                _nowPlayingTitle = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region FilteringSelectedItem変更通知プロパティ
+
+        private FilteringItem _filteringSelectedItem;
+
+        public FilteringItem FilteringSelectedItem
+        {
+            get { return _filteringSelectedItem; }
+            set
+            {
+                if (_filteringSelectedItem == value) return;
+                _filteringSelectedItem = value;
+                RaisePropertyChanged();
+                ChangeFiltering();
+            }
+        }
+
+        #endregion
+
+
+        private readonly IMovselexClient _client;
+
+        /// <summary>
+        /// 新しいインスタンスを初期化します。
+        /// </summary>
+        public MainWindowViewModel()
+        {
+            _client = MovselexClientFactory.Create();
+
+            _client.Initialize();
+
+            NowPlayingTitle = _client.NowPlayingInfo.Title;
+
+        }
+
         /* コマンド、プロパティの定義にはそれぞれ 
          * 
          *  lvcom   : ViewModelCommand
@@ -58,9 +112,25 @@ namespace Movselex.ViewModels
          * LivetのViewModelではプロパティ変更通知(RaisePropertyChanged)やDispatcherCollectionを使ったコレクション変更通知は
          * 自動的にUIDispatcher上での通知に変換されます。変更通知に際してUIDispatcherを操作する必要はありません。
          */
-
         public void Initialize()
         {
+            
+
+            //_filterings = _client.Filterings.FilteringItems;
+
+            //foreach (var filteringItem in client.Filterings.FilteringItems)
+            //{
+            //    _filterings.Add(filteringItem);
+            //}
+
+            //var listener = new CollectionChangedEventListener(
+            //    _client.Filterings.FilteringItems);
+            //CompositeDisposable.Add(listener);
+        }
+
+        public void ChangeFiltering()
+        {
+            
         }
     }
 }
