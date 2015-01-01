@@ -49,10 +49,10 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
@@ -61,16 +61,33 @@
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
-		
+
 		<!-- Header -->
 		<StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" >
 			<Label Content="{x:Static prop:Resources.NowPlayingLabel }" Style="{StaticResource Header}" Margin="5"></Label>
 			<Label Content="{Binding NowPlayingTitle}" Style="{StaticResource Header}" Margin="0,5,5,5"></Label>
 		</StackPanel>
-		<Label Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Content="00:00/00:00" Style="{StaticResource Header}" Margin="10,5,5,5"></Label>
-		
+		<Label Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Content="00:00/00:00" Style="{StaticResource Header}" Margin="10,5,5,5" HorizontalContentAlignment="Right"></Label>
+
+		<!-- FilteringText -->
+		<Grid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<!--<Path Grid.Column="0" Stretch="Uniform" Fill="Black" Data="F1 M 477.366,32.4489C 470.432,35.802 462.011,33.0596 458.558,26.3193C 455.103,19.5833 457.927,11.3994 464.867,8.04321C 471.8,4.69006 480.222,7.4342 483.675,14.1729C 487.123,20.9102 484.303,29.0901 477.366,32.4489 Z M 489.398,50.2073L 481.138,34.0914C 488.075,29.3633 490.6,20.2981 486.712,12.7021C 482.423,4.33691 471.967,0.928711 463.351,5.09277C 454.739,9.26074 451.234,19.4209 455.52,27.7913C 459.414,35.3821 468.384,38.8887 476.447,36.3619L 484.703,52.4756C 485.051,53.1487 485.924,53.4045 486.66,53.0488L 488.688,52.0686C 489.427,51.7129 489.742,50.8782 489.398,50.2073 Z " UseLayoutRounding="False" Width="15" Margin="5,2"/> -->
+			<Rectangle  Grid.Column="0" Width="20" Height="20" Margin="5,2">
+				<Rectangle.Fill>
+					<VisualBrush Visual="{StaticResource appbar_magnify}" />
+				</Rectangle.Fill>
+			</Rectangle>
+			<TextBox Grid.Column="1" Height="25" Width="Auto" Margin="0,0,5,0"></TextBox>
+			<Label Grid.Column="2" Content="0" ContentStringFormat="{}{0} items" Margin="30,0,0,0"></Label>
+		</Grid>
+
 		<!-- FilteringList -->
-		<ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Width="200" Height="200" ItemsSource="{Binding Filterings}" SelectedItem="{Binding FilteringSelectedItem}" HorizontalAlignment="Left" BorderThickness="0" Margin="5,0,0,0">
+		<ListBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="200" Height="200" ItemsSource="{Binding Filterings}" SelectedItem="{Binding FilteringSelectedItem}" HorizontalAlignment="Left" BorderThickness="0" Margin="5,10,0,0">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Label Content="{Binding DisplayValue}" Style="{StaticResource Item}" />
@@ -79,10 +96,10 @@
 		</ListBox>
 
 		<!-- GroupGrid -->
-		<DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Groups}" AutoGenerateColumns="False" Height="200" Margin="5,0,0,0" BorderThickness="0">
+		<DataGrid Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Groups}" AutoGenerateColumns="False" Height="200" Margin="5,10,0,0" BorderThickness="0">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Group" Width="*"
-									Binding="{Binding Title, StringFormat=D2}" />
+					Binding="{Binding GroupName}" />
 				<DataGridTextColumn Header="Drive" Width="100"
 									Binding="{Binding Drive}" />
 				<DataGridTextColumn Header="Filesize" Width="100"
@@ -95,5 +112,66 @@
 									Binding="{Binding IsCompleted}" />
 			</DataGrid.Columns>
 		</DataGrid>
+
+
+		<!-- LibraryGrid -->
+		<DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"  ItemsSource="{Binding Libraries}" AutoGenerateColumns="False" Margin="5,10,0,0" BorderThickness="0">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="" Width="10"
+									 />
+				<DataGridTextColumn Header="Group" Width="100"
+									Binding="{Binding GroupName}" />
+				<DataGridTextColumn Header="Title" Width="*"
+									Binding="{Binding Title}" />
+				<DataGridTextColumn Header="No" Width="50"
+									Binding="{Binding No}" />
+				<DataGridTextColumn Header="Length" Width="50"
+									Binding="{Binding Length}" />
+				<DataGridTextColumn Header="★" Width="35"
+									Binding="{Binding IsFavorite}" />
+				<DataGridTextColumn Header="P" Width="35"
+									Binding="{Binding IsPlayed}" />
+				<DataGridTextColumn Header="Date" Width="100"
+									Binding="{Binding FileLastUpdateDateTime}" />
+				<DataGridTextColumn Header="VideoSize" Width="100"
+									Binding="{Binding VideoSize}" />
+				<DataGridTextColumn Header="D" Width="35"
+									Binding="{Binding Drive}" />
+				<DataGridTextColumn Header="D" Width="35"
+									Binding="{Binding Drive}" />
+				<DataGridTextColumn Header="Cnt" Width="35"
+									Binding="{Binding PlayCount}" />
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<!-- PlayingGrid -->
+		<DataGrid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="300"  ItemsSource="{Binding Playings}" AutoGenerateColumns="False" Margin="5,10,5,0" BorderThickness="0">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Time" Width="100"
+									Binding="{Binding Time}" />
+				<DataGridTextColumn Header="Title" Width="*"
+									Binding="{Binding Title}" />
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<!-- Button -->
+		<Grid Grid.Row="4" Grid.ColumnSpan="5" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Button Content="Throw" Margin="5"></Button>
+			<Button Grid.Column="1" Content="Shuffle" Margin="0,5,5,5"></Button>
+		</Grid>
+		
+		<!-- Footer -->
+		<Grid Grid.Row="5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<GroupBox Header="Database">
+			</GroupBox>
+		</Grid>
+		
 	</Grid>
 </controls:MetroWindow>

@@ -12,7 +12,7 @@ namespace Movselex.Core.Models
         /// <summary>
         /// グループ名。
         /// </summary>
-        public string Title { get; private set; }
+        public string GroupName { get; private set; }
 
         /// <summary>
         /// ファイルが格納されているドライブ。
@@ -42,15 +42,15 @@ namespace Movselex.Core.Models
         /// <summary>
         /// 新しいインスタンスを初期化します。
         /// </summary>
-        /// <param name="title"></param>
+        /// <param name="groupName"></param>
         /// <param name="drive"></param>
         /// <param name="filesize"></param>
         /// <param name="count"></param>
         /// <param name="isFavorite"></param>
         /// <param name="isCompleted"></param>
-        public GroupItem(string title, string drive, double filesize, int count, bool isFavorite, bool isCompleted)
+        public GroupItem(string groupName, string drive, double filesize, int count, bool isFavorite, bool isCompleted)
         {
-            Title = title;
+            GroupName = groupName;
             Drive = drive;
             Filesize = filesize;
             Count = count;

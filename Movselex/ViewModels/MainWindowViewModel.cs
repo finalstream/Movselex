@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Livet;
 using Movselex.Core;
 using Movselex.Core.Models;
@@ -17,6 +18,16 @@ namespace Movselex.ViewModels
         /// グループ情報。
         /// </summary>
         public IEnumerable<GroupItem> Groups { get { return null; }}
+
+        /// <summary>
+        /// ライブラリ情報。
+        /// </summary>
+        public IEnumerable<LibraryItem> Libraries { get { return new ObservableCollection<LibraryItem>(); } }
+
+        /// <summary>
+        /// 再生中情報。
+        /// </summary>
+        public IEnumerable<PlayingItem> Playings { get { return null; } }
 
 
 

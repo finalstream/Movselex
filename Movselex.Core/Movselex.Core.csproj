@@ -64,8 +64,10 @@
     <Compile Include="Models\FilteringItem.cs" />
     <Compile Include="Models\GroupItem.cs" />
     <Compile Include="Models\IMovselexFiltering.cs" />
+    <Compile Include="Models\LibraryItem.cs" />
     <Compile Include="Models\MovselexFiltering.cs" />
     <Compile Include="Models\MovselexLibrary.cs" />
+    <Compile Include="Models\PlayingItem.cs" />
     <Compile Include="MovselexClient.cs" />
     <Compile Include="MovselexClientFactory.cs" />
     <Compile Include="NowPlayingInfo.cs" />
