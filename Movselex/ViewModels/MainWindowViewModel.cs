@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
+using FirstFloor.ModernUI.Presentation;
 using Livet;
 using Movselex.Core;
 using Movselex.Core.Models;
@@ -80,6 +82,7 @@ namespace Movselex.ViewModels
 
             NowPlayingTitle = _client.NowPlayingInfo.Title;
 
+            AppearanceManager.Current.AccentColor = Colors.Orange;
         }
 
         /* コマンド、プロパティの定義にはそれぞれ 
