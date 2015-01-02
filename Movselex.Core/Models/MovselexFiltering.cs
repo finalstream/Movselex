@@ -14,7 +14,6 @@ namespace Movselex.Core.Models
     /// </summary>
     internal class MovselexFiltering : NotificationObject, IMovselexFiltering
     {
-        private const string DefaultFilteringFilePath = "sql\\default.json";
 
         private readonly ObservableSynchronizedCollection<FilteringItem> _filteringItems;
         public ObservableSynchronizedCollection<FilteringItem> FilteringItems { get { return _filteringItems; } } 
@@ -29,7 +28,7 @@ namespace Movselex.Core.Models
         /// </summary>
         public void Load()
         {
-            var absolutePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DefaultFilteringFilePath);
+            var absolutePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultFilteringFilePath);
 
             var filters = JsonConvert.DeserializeObject<List<FilteringItem>>(
                 File.ReadAllText(absolutePath));

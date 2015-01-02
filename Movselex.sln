@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movselex.Core", "Movselex.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalstreamCommons", "FinalstreamCommons\FinalstreamCommons.csproj", "{BDF2BA67-4B60-40B5-A039-1BF67BBE25C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalstreamUIComponents", "FinalstreamUIComponents\FinalstreamUIComponents.csproj", "{39167CD4-5721-413F-93CE-9C2122D71E9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{BDF2BA67-4B60-40B5-A039-1BF67BBE25C4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{BDF2BA67-4B60-40B5-A039-1BF67BBE25C4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BDF2BA67-4B60-40B5-A039-1BF67BBE25C4}.Release|x86.ActiveCfg = Release|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{39167CD4-5721-413F-93CE-9C2122D71E9B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

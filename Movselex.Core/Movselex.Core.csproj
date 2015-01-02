@@ -59,6 +59,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationDefinitions.cs" />
     <Compile Include="IMovselexClient.cs" />
     <Compile Include="INowPlayingInfo.cs" />
     <Compile Include="Models\FilteringItem.cs" />

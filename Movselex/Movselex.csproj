@@ -70,6 +70,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Pages\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Settings\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Settings\Appearance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ModernWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,6 +95,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Model.cs" />
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\Appearance.xaml.cs">
+      <DependentUpon>Appearance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\AppearanceViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -121,6 +147,10 @@
     <ProjectReference Include="..\FinalstreamCommons\FinalstreamCommons.csproj">
       <Project>{bdf2ba67-4b60-40b5-a039-1bf67bbe25c4}</Project>
       <Name>FinalstreamCommons</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinalstreamUIComponents\FinalstreamUIComponents.csproj">
+      <Project>{39167cd4-5721-413f-93ce-9c2122d71e9b}</Project>
+      <Name>FinalstreamUIComponents</Name>
     </ProjectReference>
     <ProjectReference Include="..\Movselex.Core\Movselex.Core.csproj">
       <Project>{f819d8cd-372d-4584-9bb9-22fb4a7e5252}</Project>
