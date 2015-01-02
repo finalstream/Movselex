@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Media;
 using FirstFloor.ModernUI.Presentation;
 
-namespace Movselex.Pages.Settings
+namespace Movselex.Views.Pages.Settings
 {
     /// <summary>
     /// A simple view model for configuring theme, font and accent colors.

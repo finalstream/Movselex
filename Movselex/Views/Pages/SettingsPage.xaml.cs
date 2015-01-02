@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Movselex.Pages
+namespace Movselex.Views.Pages
 {
     /// <summary>
     /// Interaction logic for SettingsPage.xaml

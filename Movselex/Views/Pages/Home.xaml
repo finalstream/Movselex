@@ -1,0 +1,162 @@
+﻿<UserControl x:Class="Movselex.Views.Pages.Home"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:prop="clr-namespace:Movselex.Properties"
+			 xmlns:behaviors="clr-namespace:FinalstreamUIComponents.Behaviors;assembly=FinalstreamUIComponents"
+			 mc:Ignorable="d" 
+			 d:DesignHeight="600" d:DesignWidth="1100">
+
+	<UserControl.Resources>
+
+		<Style TargetType="TextBlock" x:Key="Header">
+			<Setter Property="FontSize" Value="20" />
+		</Style>
+		<Style TargetType="TextBlock" x:Key="Item">
+			<Setter Property="FontSize" Value="15" />
+		</Style>
+
+		<Style TargetType="ContentControl" x:Key="icon">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ContentControl">
+						<Viewbox Height="{TemplateBinding Height}" Stretch="Uniform">
+							<ContentPresenter />
+						</Viewbox>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Canvas x:Key="icon-magnify" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="appbar_magnify" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+			<Path Width="33.1464" Height="33.1465" Canvas.Left="10" Canvas.Top="22" Stretch="Fill" Fill="#FF000000" Data="F1 M 42.5,22C 49.4036,22 55,27.5964 55,34.5C 55,41.4036 49.4036,47 42.5,47C 40.1356,47 37.9245,46.3435 36,45.2426L 26.9749,54.2678C 25.8033,55.4393 23.9038,55.4393 22.7322,54.2678C 21.5607,53.0962 21.5607,51.1967 22.7322,50.0251L 31.7971,40.961C 30.6565,39.0755 30,36.8644 30,34.5C 30,27.5964 35.5964,22 42.5,22 Z M 42.5,26C 37.8056,26 34,29.8056 34,34.5C 34,39.1944 37.8056,43 42.5,43C 47.1944,43 51,39.1944 51,34.5C 51,29.8056 47.1944,26 42.5,26 Z "/>
+		</Canvas>
+	</UserControl.Resources>
+
+	<Grid Style="{StaticResource ContentRootEx}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition  />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Header -->
+		<StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" >
+			<TextBlock Text="{x:Static prop:Resources.NowPlayingLabel }" Style="{StaticResource Header}" Margin="5"></TextBlock>
+			<TextBlock Text="{Binding NowPlayingTitle}" Style="{StaticResource Header}" Margin="0,5,5,5"></TextBlock>
+		</StackPanel>
+		<TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Text="00:00/00:00" Style="{StaticResource Header}" Margin="10,5,5,5" HorizontalAlignment="Right"></TextBlock>
+
+		<!-- FilteringText -->
+		<Grid  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<ComboBox Grid.Column="0" Width="100" Height="25" Margin="5,0,5,0" ItemsSource="{Binding Filterings}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<Path Width="16" Height="16" Margin="0,2,5,0"  Stretch="Fill" Fill="#FF000000" Data="F1 M 38,19C 47.3888,19 55,21.0147 55,23.5038L 55,25.5C 55,27.9853 47.3888,30 38,30C 28.6112,30 21,27.9853 21,25.5L 21,23.5C 21,21.0147 28.6112,19 38,19 Z M 55,52.5C 55,54.9853 47.3888,57 38,57C 28.6112,57 21,54.9853 21,52.5L 21,46.5C 21,48.9853 28.6112,51 38,51C 47.384,51 54.9921,48.9874 55,46.5039L 55,52.5 Z M 55,43.5C 55,45.9853 47.3888,48 38,48C 28.6112,48 21,45.9853 21,43.5L 21,37.5C 21,39.9853 28.6112,42 38,42C 47.384,42 54.9921,39.9874 55,37.5038L 55,43.5 Z M 55,34.5C 55,36.9853 47.3888,39 38,39C 28.6112,39 21,36.9853 21,34.5L 21,28.5C 21,30.9853 28.6112,33 38,33C 47.384,33 54.9921,30.9874 55,28.5038L 55,34.5 Z "/>
+							<TextBlock Text="default" />
+						</StackPanel>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<Button Grid.Column="1" Content="Normal" Height="25" Width="100" Margin="5"></Button>
+			<!--<Path Grid.Column="0" Stretch="Uniform" Fill="Black" Data="F1 M 477.366,32.4489C 470.432,35.802 462.011,33.0596 458.558,26.3193C 455.103,19.5833 457.927,11.3994 464.867,8.04321C 471.8,4.69006 480.222,7.4342 483.675,14.1729C 487.123,20.9102 484.303,29.0901 477.366,32.4489 Z M 489.398,50.2073L 481.138,34.0914C 488.075,29.3633 490.6,20.2981 486.712,12.7021C 482.423,4.33691 471.967,0.928711 463.351,5.09277C 454.739,9.26074 451.234,19.4209 455.52,27.7913C 459.414,35.3821 468.384,38.8887 476.447,36.3619L 484.703,52.4756C 485.051,53.1487 485.924,53.4045 486.66,53.0488L 488.688,52.0686C 489.427,51.7129 489.742,50.8782 489.398,50.2073 Z " UseLayoutRounding="False" Width="15" Margin="5,2"/> -->
+			<ContentControl Grid.Column="2" Style="{StaticResource icon}" Content="{StaticResource icon-magnify}" Width="48" Height="48"  />
+			<TextBox Grid.Column="3" Height="25" Width="Auto" Margin="-10,0,5,0" behaviors:PlaceHolderBehavior.PlaceHolderText="Search Library"></TextBox>
+			<Label Grid.Column="4" Content="0" ContentStringFormat="{}{0} items" Margin="30,0,0,0" VerticalAlignment="Center"></Label>
+		</Grid>
+
+		<!-- FilteringList -->
+		<ListBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="210" Height="200" ItemsSource="{Binding Filterings}" SelectedItem="{Binding FilteringSelectedItem}" HorizontalAlignment="Left" BorderThickness="0" Margin="5,10,5,0">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding DisplayValue}" Style="{StaticResource Item}" />
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<!-- GroupGrid -->
+		<DataGrid Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Groups}" AutoGenerateColumns="False" Height="200" Margin="5,10,0,0" BorderThickness="0">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Group" Width="*"
+					Binding="{Binding GroupName}" />
+				<DataGridTextColumn Header="Drive" Width="100"
+									Binding="{Binding Drive}" />
+				<DataGridTextColumn Header="Filesize" Width="100"
+									Binding="{Binding Filesize}" />
+				<DataGridTextColumn Header="Cnt" Width="60"
+									Binding="{Binding Count}" />
+				<DataGridTextColumn Header="★" Width="50"
+									Binding="{Binding IsFavorite}" />
+				<DataGridTextColumn Header="E" Width="50"
+									Binding="{Binding IsCompleted}" />
+			</DataGrid.Columns>
+		</DataGrid>
+
+
+		<!-- LibraryGrid -->
+		<DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"  ItemsSource="{Binding Libraries}" AutoGenerateColumns="False" Margin="5,10,0,0" BorderThickness="0">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="" Width="10"
+									 />
+				<DataGridTextColumn Header="Group" Width="100" 
+									Binding="{Binding GroupName}" />
+				<DataGridTextColumn Header="Title" Width="*"
+									Binding="{Binding Title}" />
+				<DataGridTextColumn Header="No" Width="60"
+									Binding="{Binding No}" />
+				<DataGridTextColumn Header="Length" Width="80"
+									Binding="{Binding Length}" />
+				<DataGridTextColumn Header="★" Width="50"
+									Binding="{Binding IsFavorite}" />
+				<DataGridTextColumn Header="P" Width="50"
+									Binding="{Binding IsPlayed}" />
+				<DataGridTextColumn Header="Date" Width="100"
+									Binding="{Binding FileLastUpdateDateTime}" />
+				<DataGridTextColumn Header="VideoSize" Width="100"
+									Binding="{Binding VideoSize}" />
+				<DataGridTextColumn Header="D" Width="50"
+									Binding="{Binding Drive}" />
+				<DataGridTextColumn Header="Cnt" Width="60"
+									Binding="{Binding PlayCount}" />
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<!-- PlayingGrid -->
+		<DataGrid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="300"  ItemsSource="{Binding Playings}" AutoGenerateColumns="False" Margin="5,10,5,0" BorderThickness="0">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Time" Width="100"
+									Binding="{Binding Time}" />
+				<DataGridTextColumn Header="Title" Width="*"
+									Binding="{Binding Title}" />
+			</DataGrid.Columns>
+		</DataGrid>
+
+		<!-- Button -->
+		<Grid Grid.Row="4" Grid.ColumnSpan="5" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Button Content="Throw" Margin="5"></Button>
+			<Button Grid.Column="1" Content="Shuffle" Margin="0,5,5,5"></Button>
+		</Grid>
+
+	</Grid>
+</UserControl>
