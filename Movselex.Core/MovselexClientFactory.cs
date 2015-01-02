@@ -8,9 +8,9 @@ namespace Movselex.Core
 {
     public class MovselexClientFactory
     {
-        public static IMovselexClient Create()
+        public static IMovselexClient Create(string appConfigFilePath)
         {
-            return new MovselexClient();
+            return new MovselexClient(appConfigFilePath);
         }
     }
 }

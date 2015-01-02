@@ -18,5 +18,7 @@ namespace Movselex.Core
         /// 初期化を行います。
         /// </summary>
         void Initialize();
+
+        void Finish();
     }
 }

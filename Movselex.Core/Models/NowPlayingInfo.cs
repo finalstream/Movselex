@@ -1,4 +1,4 @@
-﻿namespace Movselex.Core
+﻿namespace Movselex.Core.Models
 {
     internal class NowPlayingInfo : INowPlayingInfo
     {

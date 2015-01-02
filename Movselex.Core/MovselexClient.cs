@@ -17,14 +17,19 @@ namespace Movselex.Core
 
         public IMovselexFiltering Filterings { get; private set; }
         public INowPlayingInfo NowPlayingInfo { get; private set; }
+        public MovselexAppConfig AppConfig { get; private set; }
 
-        public MovselexClient()
+        private readonly string _appConfigFilePath;
+
+        public MovselexClient(string appConfigFilePath)
         {
-          
+            _appConfigFilePath = appConfigFilePath;
+            AppConfig = LoadConfig<MovselexAppConfig>(_appConfigFilePath);
         }
 
         protected override void InitializeCore()
         {
+
             var filtering = new MovselexFiltering();
             filtering.Load();
             Filterings = filtering;
@@ -32,6 +37,11 @@ namespace Movselex.Core
             NowPlayingInfo = new NowPlayingInfo("ここにたいとるがはいります。");
 
             _log.Debug("Initialized MovselexClinet.");
+        }
+
+        protected override void FinalizeCore()
+        {
+            SaveConfig(_appConfigFilePath, AppConfig);
         }
     }
 }

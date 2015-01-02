@@ -61,17 +61,18 @@
   <ItemGroup>
     <Compile Include="ApplicationDefinitions.cs" />
     <Compile Include="IMovselexClient.cs" />
-    <Compile Include="INowPlayingInfo.cs" />
     <Compile Include="Models\FilteringItem.cs" />
     <Compile Include="Models\GroupItem.cs" />
     <Compile Include="Models\IMovselexFiltering.cs" />
+    <Compile Include="Models\INowPlayingInfo.cs" />
     <Compile Include="Models\LibraryItem.cs" />
+    <Compile Include="Models\MovselexAppConfig.cs" />
     <Compile Include="Models\MovselexFiltering.cs" />
     <Compile Include="Models\MovselexLibrary.cs" />
+    <Compile Include="Models\NowPlayingInfo.cs" />
     <Compile Include="Models\PlayingItem.cs" />
     <Compile Include="MovselexClient.cs" />
     <Compile Include="MovselexClientFactory.cs" />
-    <Compile Include="NowPlayingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

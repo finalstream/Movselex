@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows.Media;
 using FirstFloor.ModernUI.Presentation;
 using Livet;
@@ -76,7 +78,8 @@ namespace Movselex.ViewModels
         /// </summary>
         public MainWindowViewModel()
         {
-            _client = MovselexClientFactory.Create();
+            _client = MovselexClientFactory.Create(
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
 
             _client.Initialize();
 
@@ -145,6 +148,11 @@ namespace Movselex.ViewModels
         public void ChangeFiltering()
         {
             
+        }
+
+        public void Finish()
+        {
+            _client.Finish();
         }
     }
 }
