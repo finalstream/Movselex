@@ -147,12 +147,14 @@ namespace Movselex.ViewModels
 
         public void ChangeFiltering()
         {
-            
+            _client.ExecEmpty();
         }
 
-        public void Finish()
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             _client.Finish();
         }
+
     }
 }

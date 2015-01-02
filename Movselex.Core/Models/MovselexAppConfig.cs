@@ -7,7 +7,7 @@ namespace Movselex.Core.Models
     {
         public string AppVersion { get; private set; }
         
-        public Rect WindowRect { get; private set; }
+        public Rect WindowBounds { get; private set; }
 
         public string PlayerExePath { get; private set; }
 
@@ -35,7 +35,7 @@ namespace Movselex.Core.Models
         public MovselexAppConfig()
         {
             AppVersion = "";
-            WindowRect = default(Rect);
+            WindowBounds = default(Rect);
             PlayerExePath = "";
             ScreenNo = 1;
             IsFullScreen = false;
@@ -49,10 +49,10 @@ namespace Movselex.Core.Models
             LibraryMode = 0;
         }
 
-        public MovselexAppConfig(string appVersion, Rect windowRect, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, int playCountUpMinutes, int selectFilteringIndex, string titleFormat, int libraryMode)
+        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, int playCountUpMinutes, int selectFilteringIndex, string titleFormat, int libraryMode)
         {
             AppVersion = appVersion;
-            WindowRect = windowRect;
+            WindowBounds = windowBounds;
             PlayerExePath = playerExePath;
             ScreenNo = screenNo;
             IsFullScreen = isFullScreen;

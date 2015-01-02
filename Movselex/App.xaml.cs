@@ -33,20 +33,14 @@ namespace Movselex
             this.MainWindow.Show();
         }
 
-        protected override void OnExit(ExitEventArgs e)
-        {
-            base.OnExit(e);
-            ViewModelRoot.Finish();
-        }
-
         //集約エラーハンドラ
         private void CurrentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             _log.Error("Catch UnhandledException.", e.ExceptionObject as Exception);
 
             MessageBox.Show(
-                "不明なエラーが発生しました。アプリケーションを終了します。",
-                "エラー",
+                "不明なエラーが発生しました。アプリケーションを終了します。エラーログを開発元に送付してください。",
+                "Critical Error",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
 

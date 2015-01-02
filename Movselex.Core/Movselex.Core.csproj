@@ -59,6 +59,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\EmptyAction.cs" />
+    <Compile Include="Actions\MovselexActionBase.cs" />
     <Compile Include="ApplicationDefinitions.cs" />
     <Compile Include="IMovselexClient.cs" />
     <Compile Include="Models\FilteringItem.cs" />
