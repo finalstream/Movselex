@@ -16,6 +16,9 @@ namespace Movselex.ViewModels
 
         public MovselexAppConfig AppConfig { get { return _client.AppConfig; }}
 
+
+        public IEnumerable<string> Databases {get { return _client.Databases; }} 
+
         /// <summary>
         /// フィルタリング情報。
         /// </summary>
@@ -55,6 +58,25 @@ namespace Movselex.ViewModels
 
         #endregion
 
+        #region CurrentDatabase変更通知プロパティ
+
+        private string _currentDatabase;
+
+        public string CurrentDatabase
+        {
+            get { return _currentDatabase; }
+            set
+            {
+                if (_currentDatabase == value) return;
+                _currentDatabase = value;
+                _client.ChangeDatabase(_currentDatabase);
+                RaisePropertyChanged();
+                
+            }
+        }
+
+        #endregion
+
         #region FilteringSelectedItem変更通知プロパティ
 
         private FilteringItem _filteringSelectedItem;
@@ -83,16 +105,30 @@ namespace Movselex.ViewModels
         {
             _client = MovselexClientFactory.Create(
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
-            
-            // 設定変更イベントリスナー
-            var listener = new PropertyChangedEventListener(AppConfig)
+
+            _client.Refreshed += (sender, args) =>
             {
-                {"AccentColor", (sender, args) => AppearanceManager.Current.AccentColor = AppConfig.AccentColor }
+                _currentDatabase = AppConfig.SelectDatabase;
+                RaisePropertyChanged("CurrentDatabase");
             };
-            CompositeDisposable.Add(listener);
+            // VMイベントリスナー
+            //var vmListener = new PropertyChangedEventListener(this)
+            //{
+            //    {"DatabaseSelectedItem", (sender, args) => _client.ChangeDatabase(DatabaseSelectedItem)}
+            //};
+            //CompositeDisposable.Add(vmListener);
+
+            // 設定変更イベントリスナー
+            var configListener = new PropertyChangedEventListener(AppConfig)
+            {
+                {"AccentColor", (sender, args) => AppearanceManager.Current.AccentColor = AppConfig.AccentColor },
+                //{"SelectDatabase", (sender, args) => CurrentDatabase = AppConfig.SelectDatabase }
+            };
+            CompositeDisposable.Add(configListener);
 
             _client.Initialize();
 
+            CurrentDatabase = _client.AppConfig.SelectDatabase;
             NowPlayingTitle = _client.NowPlayingInfo.Title;
         }
 

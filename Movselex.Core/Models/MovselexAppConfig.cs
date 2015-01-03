@@ -24,7 +24,7 @@ namespace Movselex.Core.Models
 
         public string MoveBaseDirectory { get; private set; }
 
-        public string SelectDatabase { get; private set; }
+        public string SelectDatabase { get; set; }
 
         public int PlayCountUpMinutes { get; private set; }
 
@@ -64,7 +64,7 @@ namespace Movselex.Core.Models
             SupportExtentions = new[] { ".avi",".mpg",".mp4",".mkv",".flv",".wmv" };
             LimitNum = 50;
             MoveBaseDirectory = "";
-            SelectDatabase = "default";
+            SelectDatabase = "library";
             PlayCountUpMinutes = 10;
             SelectFilteringIndex = 0;
             TitleFormat = "%TITLE% - %NO%";

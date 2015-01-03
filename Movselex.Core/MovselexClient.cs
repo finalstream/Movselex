@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using FinalstreamCommons;
 using FinalstreamCommons.Models;
 using Livet;
@@ -17,6 +18,22 @@ namespace Movselex.Core
     internal class MovselexClient : CoreClient, IMovselexClient
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
+
+        #region Refreshedイベント
+
+        // Event object
+        public event EventHandler Refreshed;
+
+        protected virtual void OnRefreshed(EventArgs e)
+        {
+            var handler = this.Refreshed;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        #endregion
 
         public IEnumerable<FilteringItem> Filterings { 
             get
@@ -33,12 +50,23 @@ namespace Movselex.Core
         }
         public INowPlayingInfo NowPlayingInfo { get; private set; }
         public MovselexAppConfig AppConfig { get; private set; }
+        public DispatcherCollection<string> Databases { get; private set; }
         public MovselexFiltering MovselexFiltering { get; private set; }
         public MovselexLibrary MovselexLibrary { get; private set; }
         private readonly string _appConfigFilePath;
         private readonly ActionExecuter<MovselexClient> _actionExecuter;
-        private readonly IDatabaseAccessor _databaseAccessor;
-        
+
+        private IDatabaseAccessor _databaseAccessor;
+        private IDatabaseAccessor DatabaseAccessor
+        {
+            get { return _databaseAccessor; }
+            set
+            {
+                if(_databaseAccessor != null) _databaseAccessor.Dispose();
+                _databaseAccessor = value;
+            }
+        }
+
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
@@ -53,6 +81,7 @@ namespace Movselex.Core
             _databaseAccessor = new DatabaseAccessor(AppConfig.SelectDatabase);
             MovselexFiltering = new MovselexFiltering();
             MovselexLibrary = new MovselexLibrary(_databaseAccessor);
+            Databases = new DispatcherCollection<string>(DispatcherHelper.UIDispatcher);
         }
 
         /// <summary>
@@ -60,11 +89,10 @@ namespace Movselex.Core
         /// </summary>
         protected override void InitializeCore()
         {
+
             AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
 
             NowPlayingInfo = new NowPlayingInfo("ここにたいとるがはいります。");
-
-            Refresh();
 
             _log.Debug("Initialized MovselexClinet.");
         }
@@ -80,14 +108,23 @@ namespace Movselex.Core
         /// <summary>
         /// すべてのデータをリフレッシュします。
         /// </summary>
-        public void Refresh()
+        public void Refresh(string selectedDatabase)
         {
-            PostAction(new RefreshAction());
+            var action = new RefreshAction(selectedDatabase);
+            action.AfterAction = () => OnRefreshed(EventArgs.Empty);
+            PostAction(action);
         }
 
         public void ExecEmpty()
         {
             PostAction(new EmptyAction());
+        }
+
+        public void ChangeDatabase(string databaseName)
+        {
+            if (databaseName == null) return;
+            _databaseAccessor = new DatabaseAccessor(databaseName);
+            Refresh(databaseName);
         }
 
         /// <summary>

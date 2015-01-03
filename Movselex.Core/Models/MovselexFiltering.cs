@@ -14,12 +14,12 @@ namespace Movselex.Core.Models
     /// </summary>
     internal class MovselexFiltering : NotificationObject, IMovselexFiltering
     {
-        public ObservableSynchronizedCollection<FilteringItem> FilteringItems { get; private set; } 
+        public DispatcherCollection<FilteringItem> FilteringItems { get; private set; } 
 
 
         public MovselexFiltering()
         {
-            FilteringItems = new ObservableSynchronizedCollection<FilteringItem>();
+            FilteringItems = new DispatcherCollection<FilteringItem>(DispatcherHelper.UIDispatcher);
         }
 
         /// <summary>

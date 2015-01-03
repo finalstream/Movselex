@@ -22,6 +22,13 @@ namespace Movselex.Core.Models
         }
 
 
+        public void SelectLibrary()
+        {
+
+            //_sqlExecuter.Query();
+
+        }
+
         #region Dispose
 
         // Flag: Has Dispose already been called?

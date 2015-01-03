@@ -12,7 +12,9 @@ namespace Movselex.Core
 {
     public interface IMovselexClient : IDisposable
     {
-        
+
+        event EventHandler Refreshed;
+
         /// <summary>
         /// フィルタリング情報。
         /// </summary>
@@ -33,6 +35,8 @@ namespace Movselex.Core
         /// </summary>
         MovselexAppConfig AppConfig { get; }
 
+        DispatcherCollection<string> Databases { get; }
+
         /// <summary>
         /// 初期化を行います。
         /// </summary>
@@ -41,5 +45,7 @@ namespace Movselex.Core
         void Finish();
 
         void ExecEmpty();
+
+        void ChangeDatabase(string databaseName);
     }
 }

@@ -5,6 +5,6 @@ namespace Movselex.Core.Models
 {
     public interface IMovselexFiltering
     {
-        ObservableSynchronizedCollection<FilteringItem> FilteringItems { get; }
+        DispatcherCollection<FilteringItem> FilteringItems { get; }
     }
 }

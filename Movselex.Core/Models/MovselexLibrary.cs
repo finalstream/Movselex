@@ -32,7 +32,7 @@ namespace Movselex.Core.Models
         /// </summary>
         public void Load()
         {
-            
+            _databaseAccessor.SelectLibrary();
         }
 
     }

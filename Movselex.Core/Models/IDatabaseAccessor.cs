@@ -4,5 +4,6 @@ namespace Movselex.Core.Models
 {
     internal interface IDatabaseAccessor : IDisposable
     {
+        void SelectLibrary();
     }
 }

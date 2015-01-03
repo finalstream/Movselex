@@ -16,10 +16,11 @@
 		Style="{StaticResource ModernWindowEx}"  
 		>
 
+	<!--
 	<Window.DataContext>
 		<vm:MainWindowViewModel/>
 	</Window.DataContext>
-
+	-->
 	
 
 	<i:Interaction.Triggers>
