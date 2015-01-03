@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Movselex.ViewModels.Pages.Settings;
 
 namespace Movselex.Views.Pages.Settings
 {

@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Media;
 using FirstFloor.ModernUI.Presentation;
 using Livet;
+using Livet.EventListeners;
 using Movselex.Core;
 using Movselex.Core.Models;
 
@@ -13,10 +14,12 @@ namespace Movselex.ViewModels
     public class MainWindowViewModel : ViewModel
     {
 
+        public MovselexAppConfig AppConfig { get { return _client.AppConfig; }}
+
         /// <summary>
         /// フィルタリング情報。
         /// </summary>
-        public IEnumerable<FilteringItem> Filterings { get { return _client.Filterings.FilteringItems; } }
+        public IEnumerable<FilteringItem> Filterings { get { return _client.Filterings; } }
 
         /// <summary>
         /// グループ情報。
@@ -80,12 +83,17 @@ namespace Movselex.ViewModels
         {
             _client = MovselexClientFactory.Create(
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
+            
+            // 設定変更イベントリスナー
+            var listener = new PropertyChangedEventListener(AppConfig)
+            {
+                {"AccentColor", (sender, args) => AppearanceManager.Current.AccentColor = AppConfig.AccentColor }
+            };
+            CompositeDisposable.Add(listener);
 
             _client.Initialize();
 
             NowPlayingTitle = _client.NowPlayingInfo.Title;
-
-            AppearanceManager.Current.AccentColor = Colors.Orange;
         }
 
         /* コマンド、プロパティの定義にはそれぞれ 
@@ -154,6 +162,7 @@ namespace Movselex.ViewModels
         {
             base.Dispose(disposing);
             _client.Finish();
+            _client.Dispose();
         }
 
     }

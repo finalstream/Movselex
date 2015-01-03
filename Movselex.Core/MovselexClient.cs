@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using FinalstreamCommons;
 using FinalstreamCommons.Models;
-using Movselex.Core.Actions;
+using Livet;
+using Livet.EventListeners;
 using Movselex.Core.Models;
+using Movselex.Core.Models.Actions;
 using NLog;
 
 namespace Movselex.Core
@@ -16,23 +18,41 @@ namespace Movselex.Core
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
-        public IMovselexFiltering Filterings { get; private set; }
+        public IEnumerable<FilteringItem> Filterings { 
+            get
+            {
+                return MovselexFiltering.FilteringItems;
+            } 
+        }
+        public IEnumerable<LibraryItem> Libraries
+        {
+            get
+            {
+                return MovselexLibrary.LibraryItems;
+            }
+        }
         public INowPlayingInfo NowPlayingInfo { get; private set; }
         public MovselexAppConfig AppConfig { get; private set; }
-
+        public MovselexFiltering MovselexFiltering { get; private set; }
+        public MovselexLibrary MovselexLibrary { get; private set; }
         private readonly string _appConfigFilePath;
-        private readonly ActionExecuter<IMovselexClient> _actionExecuter; 
+        private readonly ActionExecuter<MovselexClient> _actionExecuter;
+        private readonly IDatabaseAccessor _databaseAccessor;
+        
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
         /// </summary>
         /// <param name="appConfigFilePath"></param>
-        public MovselexClient(string appConfigFilePath)
+        public MovselexClient(string appConfigFilePath) : base()
         {
             _appConfigFilePath = appConfigFilePath;
-            AppConfig = LoadConfig<MovselexAppConfig>(_appConfigFilePath);
-
-            _actionExecuter = new ActionExecuter<IMovselexClient>(this);
+            
+            AppConfig = new MovselexAppConfig();
+            _actionExecuter = new ActionExecuter<MovselexClient>(this);
+            _databaseAccessor = new DatabaseAccessor(AppConfig.SelectDatabase);
+            MovselexFiltering = new MovselexFiltering();
+            MovselexLibrary = new MovselexLibrary(_databaseAccessor);
         }
 
         /// <summary>
@@ -40,12 +60,11 @@ namespace Movselex.Core
         /// </summary>
         protected override void InitializeCore()
         {
-
-            var filtering = new MovselexFiltering();
-            filtering.Load();
-            Filterings = filtering;
+            AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
 
             NowPlayingInfo = new NowPlayingInfo("ここにたいとるがはいります。");
+
+            Refresh();
 
             _log.Debug("Initialized MovselexClinet.");
         }
@@ -58,6 +77,13 @@ namespace Movselex.Core
             SaveConfig(_appConfigFilePath, AppConfig);
         }
 
+        /// <summary>
+        /// すべてのデータをリフレッシュします。
+        /// </summary>
+        public void Refresh()
+        {
+            PostAction(new RefreshAction());
+        }
 
         public void ExecEmpty()
         {
@@ -68,9 +94,42 @@ namespace Movselex.Core
         /// アクションを実行します。
         /// </summary>
         /// <param name="action"></param>
-        private void PostAction(IGeneralAction<IMovselexClient> action)
+        private void PostAction(IGeneralAction<MovselexClient> action)
         {
             _actionExecuter.Post(action);
         }
+
+        #region Dispose
+
+        // Flag: Has Dispose already been called?
+        private bool disposed = false;
+
+        // Public implementation of Dispose pattern callable by consumers.
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Protected implementation of Dispose pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                // Free any other managed objects here.
+                //
+                if (_databaseAccessor != null) _databaseAccessor.Dispose();
+            }
+
+            // Free any unmanaged objects here.
+            //
+            disposed = true;
+        }
+
+        #endregion
     }
+
 }

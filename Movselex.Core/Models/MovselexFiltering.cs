@@ -14,13 +14,12 @@ namespace Movselex.Core.Models
     /// </summary>
     internal class MovselexFiltering : NotificationObject, IMovselexFiltering
     {
+        public ObservableSynchronizedCollection<FilteringItem> FilteringItems { get; private set; } 
 
-        private readonly ObservableSynchronizedCollection<FilteringItem> _filteringItems;
-        public ObservableSynchronizedCollection<FilteringItem> FilteringItems { get { return _filteringItems; } } 
 
         public MovselexFiltering()
         {
-            _filteringItems = new ObservableSynchronizedCollection<FilteringItem>();
+            FilteringItems = new ObservableSynchronizedCollection<FilteringItem>();
         }
 
         /// <summary>
@@ -33,6 +32,7 @@ namespace Movselex.Core.Models
             var filters = JsonConvert.DeserializeObject<List<FilteringItem>>(
                 File.ReadAllText(absolutePath));
 
+            FilteringItems.Clear();
             foreach (var filter in filters)
             {
                 FilteringItems.Add(filter);

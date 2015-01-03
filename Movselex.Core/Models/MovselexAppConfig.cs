@@ -1,10 +1,13 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using FinalstreamCommons.Models;
+using Livet;
 
 namespace Movselex.Core.Models
 {
-    public class MovselexAppConfig : IAppConfig
+    public class MovselexAppConfig : NotificationObject, IAppConfig
     {
+
         public string AppVersion { get; private set; }
         
         public Rect WindowBounds { get; private set; }
@@ -29,7 +32,26 @@ namespace Movselex.Core.Models
 
         public string TitleFormat { get; private set; }
 
-        public int LibraryMode { get; private set; }
+        public LibraryMode LibraryMode { get; private set; }
+
+        //public Color AccentColor { get; private set; }
+
+        #region AccentColor変更通知プロパティ
+
+        private Color _accentColor;
+
+        public Color AccentColor
+        {
+            get { return _accentColor; }
+            set
+            {
+                if (_accentColor == value) return;
+                _accentColor = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
 
         public MovselexAppConfig()
@@ -46,10 +68,11 @@ namespace Movselex.Core.Models
             PlayCountUpMinutes = 10;
             SelectFilteringIndex = 0;
             TitleFormat = "%TITLE% - %NO%";
-            LibraryMode = 0;
+            LibraryMode = LibraryMode.Normal;
+            AccentColor = Colors.Orange;
         }
 
-        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, int playCountUpMinutes, int selectFilteringIndex, string titleFormat, int libraryMode)
+        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, int playCountUpMinutes, int selectFilteringIndex, string titleFormat, LibraryMode libraryMode, Color accentColor)
         {
             AppVersion = appVersion;
             WindowBounds = windowBounds;
@@ -64,7 +87,27 @@ namespace Movselex.Core.Models
             SelectFilteringIndex = selectFilteringIndex;
             TitleFormat = titleFormat;
             LibraryMode = libraryMode;
+            AccentColor = accentColor;
         }
 
+        
+        public void Update(MovselexAppConfig newConfig)
+        {
+            // PropertyChangedEventをひろうためにめんどーだけどひとつずつ設定する。
+            AppVersion = newConfig.AppVersion;
+            WindowBounds = newConfig.WindowBounds;
+            PlayerExePath = newConfig.PlayerExePath;
+            ScreenNo = newConfig.ScreenNo;
+            IsFullScreen = newConfig.IsFullScreen;
+            SupportExtentions = newConfig.SupportExtentions;
+            LimitNum = newConfig.LimitNum;
+            MoveBaseDirectory = newConfig.MoveBaseDirectory;
+            SelectDatabase = newConfig.SelectDatabase;
+            PlayCountUpMinutes = newConfig.PlayCountUpMinutes;
+            SelectFilteringIndex = newConfig.SelectFilteringIndex;
+            TitleFormat = newConfig.TitleFormat;
+            LibraryMode = newConfig.LibraryMode;
+            AccentColor = newConfig.AccentColor;
+        }
     }
 }

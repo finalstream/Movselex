@@ -13,12 +13,27 @@ namespace Movselex.Core.Models
     /// </summary>
     class MovselexLibrary : NotificationObject
     {
-        public readonly ObservableSynchronizedCollection<FilteringItem> ConditionItems; 
+        public ObservableSynchronizedCollection<LibraryItem> LibraryItems { get; private set; }
 
-        public MovselexLibrary()
+        private readonly IDatabaseAccessor _databaseAccessor;
+
+        /// <summary>
+        /// 新しいインスタンスを初期化します。
+        /// </summary>
+        /// <param name="databaseAccessor"></param>
+        public MovselexLibrary(IDatabaseAccessor databaseAccessor)
         {
-            ConditionItems = new ObservableSynchronizedCollection<FilteringItem>();
+            _databaseAccessor = databaseAccessor;
+            LibraryItems = new ObservableSynchronizedCollection<LibraryItem>();
         }
-        
+
+        /// <summary>
+        /// ライブラリデータをロードします。
+        /// </summary>
+        public void Load()
+        {
+            
+        }
+
     }
 }

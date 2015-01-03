@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Media;
 using FirstFloor.ModernUI.Presentation;
 
-namespace Movselex.Views.Pages.Settings
+namespace Movselex.ViewModels.Pages.Settings
 {
     /// <summary>
     /// A simple view model for configuring theme, font and accent colors.
@@ -139,9 +139,10 @@ namespace Movselex.Views.Pages.Settings
                 if (this.selectedAccentColor != value)
                 {
                     this.selectedAccentColor = value;
+                    App.Config.AccentColor = value;
                     OnPropertyChanged("SelectedAccentColor");
 
-                    AppearanceManager.Current.AccentColor = value;
+                    //AppearanceManager.Current.AccentColor = value;
                 }
             }
         }
