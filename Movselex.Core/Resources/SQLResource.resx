@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SQL" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SQL001" xml:space="preserve">
+    <value>SELECT 
+  PL.ID,
+  FILEPATH,
+  GPL.GROUPNAME,
+  TITLE,
+  NO,
+  LENGTH,
+  CODEC,
+  PLAYED,
+  RATING,
+  DATE,
+  VIDEOSIZE,
+  PLAYCOUNT,
+  ADDDATE,
+  LASTPLAYDATE,
+  GPL.GID
+FROM MOVLIST PL 
+LEFT JOIN MOVGROUPLIST GPL
+ON PL.GID = GPL.GID</value>
+    <comment>PLAYLIST取得ベースSQL</comment>
+  </data>
+  <data name="SQL002" xml:space="preserve">
+    <value>SELECT 
+  COUNT(ID) 
+FROM MOVLIST 
+WHERE FILEPATH = :FilePath</value>
+    <comment>既にDBに存在するか確認するSQL(filepath)</comment>
+  </data>
+  <data name="SQL003" xml:space="preserve">
+    <value>INSERT INTO MOVLIST(
+  FILEPATH,
+  TITLE,
+  NO,
+  GID,
+  LENGTH,
+  CODEC,
+  RATING,
+  VIDEOSIZE,
+  PLAYCOUNT,
+  DATE,
+  NOTFOUND,
+  OPTION,
+  TAG,
+  ADDDATE,
+  LASTPLAYDATE,
+  DRIVE,
+  FILESIZE,
+  PLAYED
+) VALUES (
+  :FilePath,
+  :Title,
+  :No,
+  :Gid,
+  :Length,
+  :Codec,
+  :Rating,
+  :VideoSize,
+  :PlayCount,
+  :Date,
+  :NotFound,
+  :Option,
+  :Tag,
+  :AddDate,
+  :LastPlayDate,
+  SUBSTR(:FilePath,1,1),
+  :Filesize,
+  :Played
+)</value>
+    <comment>プレイリストにレコードを挿入するSQL</comment>
+  </data>
+  <data name="SQL004" xml:space="preserve">
+    <value>SELECT last_insert_rowid() AS LASTROWID</value>
+    <comment>LASTROWIDを取得</comment>
+  </data>
+  <data name="SQL005" xml:space="preserve">
+    <value>UPDATE PLAYLIST 
+SET
+TITLE = :Title ,
+PLAYCOUNT = :PlayCount ,
+RATING = :Rating ,
+DATE = :Date,
+ADDDATE = :AddDate,
+NOTFOUND = :NotFound
+WHERE ID = :Id</value>
+    <comment>プレイリストのベース情報更新</comment>
+  </data>
+  <data name="SQL007" xml:space="preserve">
+    <value>UPDATE MOVLIST 
+SET
+LASTPLAYDATE = :LastPlayDate
+WHERE ID = :Id</value>
+    <comment>プレイリスト詳細情報更新</comment>
+  </data>
+  <data name="SQL012" xml:space="preserve">
+    <value>SELECT GGPL.GID,GNAME,CNT,FAVCNT, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE
+FROM (SELECT GPL.GID,#condMode# GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE
+FROM (#LASTEXECSQL#) PL
+#JOIN#
+GROUP BY #condMode#
+ORDER BY GPL.LASTUPDATE DESC, GPL.GID DESC) GGPL
+#DRIVELISTJOIN#
+#FILESIZELISTJOIN#</value>
+    <comment>コンディションリスト生成</comment>
+  </data>
+  <data name="SQL016" xml:space="preserve">
+    <value>SELECT sum(round((julianday('00:' || length)-julianday('00:00:00')) * 86400))
+FROM PLAYLIST PL</value>
+    <comment>再生時間の合計を取得(sec)</comment>
+  </data>
+  <data name="SQL017" xml:space="preserve">
+    <value>SELECT 
+  PLAYCOUNT 
+FROM PLAYLIST 
+WHERE ID = :Id</value>
+    <comment>再生回数取得</comment>
+  </data>
+  <data name="SQL018" xml:space="preserve">
+    <value>INSERT INTO PLAYINGLIST(ID, SORT) VALUES (:Id, :Sort)</value>
+    <comment>再生中リスト追加</comment>
+  </data>
+  <data name="SQL019" xml:space="preserve">
+    <value>DELETE FROM PLAYINGLIST</value>
+    <comment>再生中リスト削除</comment>
+  </data>
+  <data name="SQL020" xml:space="preserve">
+    <value>SELECT count(*) FROM PLAYINGLIST</value>
+    <comment>再生中リストカウント</comment>
+  </data>
+  <data name="SQL021" xml:space="preserve">
+    <value>SELECT 
+    PL.ID
+FROM MOVLIST PL 
+WHERE GID = :Gid</value>
+    <comment>グループ名に一致するIDを取得</comment>
+  </data>
+  <data name="SQL023" xml:space="preserve">
+    <value>SELECT 
+  GID
+FROM MOVGROUPLIST 
+WHERE lower(GROUPNAME) = :GroupName</value>
+    <comment>既にDBに存在するか確認するSQL(groupname)</comment>
+  </data>
+  <data name="SQL024" xml:space="preserve">
+    <value>INSERT INTO MOVGROUPLIST(
+  GROUPNAME,
+  KEYWORD,
+  LASTUPDATE
+) VALUES (
+  :GroupName,
+  :Keyword,
+  :LastUpdate
+)</value>
+    <comment>グループプレイリストにレコードを挿入するSQL</comment>
+  </data>
+  <data name="SQL025" xml:space="preserve">
+    <value>UPDATE MOVLIST 
+SET
+GID = :Gid
+WHERE ID = :Id</value>
+    <comment>GIDを更新</comment>
+  </data>
+  <data name="SQL026" xml:space="preserve">
+    <value>UPDATE MOVGROUPLIST 
+SET
+LASTUPDATE = :LastUpdate
+WHERE GID = :Gid</value>
+    <comment>グループ最終更新日時更新</comment>
+  </data>
+  <data name="SQL027" xml:space="preserve">
+    <value>SELECT 
+  GID,
+  GROUPNAME
+FROM MOVGROUPLIST 
+WHERE KEYWORD = :Keyword</value>
+    <comment>キーワード検索</comment>
+  </data>
+  <data name="SQL028" xml:space="preserve">
+    <value>SELECT 
+    ID,
+    TITLE
+FROM MOVLIST
+WHERE GID IS NULL</value>
+    <comment>全タイトルを取得</comment>
+  </data>
+  <data name="SQL029" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET GID = null
+WHERE GID = :Gid</value>
+    <comment>グループ解除</comment>
+  </data>
+  <data name="SQL030" xml:space="preserve">
+    <value>DELETE FROM MOVGROUPLIST 
+WHERE GID = :Gid</value>
+    <comment>グループ削除</comment>
+  </data>
+  <data name="SQL031" xml:space="preserve">
+    <value>UPDATE MOVGROUPLIST 
+SET
+GROUPNAME = :GroupName
+WHERE GID = :Gid</value>
+    <comment>グループ名変更</comment>
+  </data>
+  <data name="SQL032" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET TITLE = replace(TITLE, :OldGroupName, :NewGroupName)
+WHERE GID = :Gid</value>
+    <comment>グループ名変更によるタイトル更新</comment>
+  </data>
+  <data name="SQL033" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET FILEPATH = :FilePath,
+TITLE = :Title,
+DRIVE = SUBSTR(:FilePath,1,1),
+FILESIZE = GETFILESIZE(:FilePath)
+WHERE ID = :Id</value>
+    <comment>タイトル更新</comment>
+  </data>
+  <data name="SQL034" xml:space="preserve">
+    <value>UPDATE MOVLIST 
+SET
+FILEPATH = :FilePath,
+DRIVE = SUBSTR(:FilePath,1,1),
+FILESIZE = GETFILESIZE(:FilePath)
+WHERE ID = :Id</value>
+    <comment>ファイルパス更新</comment>
+  </data>
+  <data name="SQL035" xml:space="preserve">
+    <value>SELECT 
+  KEYWORD
+FROM MOVGROUPLIST 
+WHERE GID = :Gid</value>
+    <comment>キーワード取得</comment>
+  </data>
+  <data name="SQL036" xml:space="preserve">
+    <value>UPDATE MOVGROUPLIST 
+SET
+KEYWORD = :Keyword
+WHERE GID = :Gid</value>
+    <comment>キーワード更新</comment>
+  </data>
+  <data name="SQL037" xml:space="preserve">
+    <value>SELECT max(sort) FROM PLAYINGLIST</value>
+    <comment>MAX SORT値取得</comment>
+  </data>
+  <data name="SQL038" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET PLAYCOUNT = PLAYCOUNT + 1,
+LASTPLAYDATE = :LastPlayDate
+WHERE FILEPATH like :FilePath</value>
+    <comment>再生カウントアップ</comment>
+  </data>
+  <data name="SQL039" xml:space="preserve">
+    <value>SELECT GID FROM MOVLIST WHERE ID = :Id</value>
+    <comment>GIDを取得</comment>
+  </data>
+  <data name="SQL040" xml:space="preserve">
+    <value>UPDATE MOVGROUPLIST
+SET COMPLETE = :COMPLETE
+WHERE GID = :GID</value>
+    <comment>コンプリートを更新</comment>
+  </data>
+  <data name="SQL041" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET PLAYED = :Played
+WHERE ID = :Id</value>
+    <comment>再生済みを更新</comment>
+  </data>
+  <data name="SQL042" xml:space="preserve">
+    <value>SELECT MGL.GROUPNAME
+FROM MOVLIST ML inner join MOVGROUPLIST MGL ON ML.GID= MGL.GID 
+WHERE FILEPATH like :FilePath limit 1</value>
+    <comment>再生中のGID取得</comment>
+  </data>
+  <data name="SQL043" xml:space="preserve">
+    <value>SELECT count(GID) GCNT
+FROM MOVLIST
+WHERE GID = :Gid
+GROUP BY GID</value>
+    <comment>GID指定で件数取得</comment>
+  </data>
+  <data name="SQL044" xml:space="preserve">
+    <value>SELECT count(ID)
+FROM MOVLIST
+WHERE GID = :Gid
+AND RATING = 9</value>
+    <comment>GIDのお気に入りの件数取得</comment>
+  </data>
+  <data name="SQL045" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET TITLE = :Title
+WHERE ID = :Id</value>
+    <comment>タイトルのみ更新</comment>
+  </data>
+  <data name="SQL046" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET NO = :No
+WHERE ID = :Id</value>
+    <comment>Noを更新</comment>
+  </data>
+  <data name="SQL047" xml:space="preserve">
+    <value>SELECT 
+  TITLE,
+  ID,
+  GID
+FROM MOVLIST
+WHERE FILEPATH like :FilePath
+ORDER BY ADDDATE DESC LIMIT 1</value>
+    <comment>再生中タイトル取得</comment>
+  </data>
+  <data name="SQL048" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET LENGTH = :Length,
+CODEC = :Codec,
+VIDEOSIZE = :VideoSize
+WHERE ID = :Id</value>
+    <comment>ファイル情報再取得</comment>
+  </data>
+  <data name="SQL049" xml:space="preserve">
+    <value>SELECT ID,
+FILEPATH
+FROM MOVLIST
+WHERE GID = :Gid
+AND ABS(NO) &gt; (SELECT ABS(NO) FROM MOVLIST WHERE ID = :Id)
+ORDER BY ABS(NO) ASC
+LIMIT 1</value>
+    <comment>再生中Next取得</comment>
+  </data>
+  <data name="SQL050" xml:space="preserve">
+    <value>SELECT ID,
+FILEPATH
+FROM MOVLIST
+WHERE GID = :Gid
+AND ABS(NO) &lt; (SELECT ABS(NO) FROM MOVLIST WHERE ID = :Id)
+ORDER BY ABS(NO) DESC
+LIMIT 1</value>
+    <comment>再生中Previous取得</comment>
+  </data>
+  <data name="SQL051" xml:space="preserve">
+    <value>SELECT FILESIZE || ifnull(NO,'') || LENGTH 
+FROM MOVLIST 
+GROUP BY FILESIZE || ifnull(NO,'') || LENGTH</value>
+    <comment>重複チェック用SQL</comment>
+  </data>
+  <data name="SQL052" xml:space="preserve">
+    <value>SELECT ID,FILESIZE, NO, LENGTH 
+FROM MOVLIST 
+WHERE FILESIZE = :Filesize 
+AND ifnull(NO, '') = :No 
+AND LENGTH = :Length 
+ORDER BY ID</value>
+    <comment>同じファイルのものを取得</comment>
+  </data>
+  <data name="SQL053" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET FILEPATH = :FilePath,
+NOTFOUND = 0
+WHERE Id = :Id</value>
+    <comment>ファイルパス更新</comment>
+  </data>
+  <data name="SQL054" xml:space="preserve">
+    <value>SELECT FILEPATH FROM MOVLIST GROUP BY FILEPATH</value>
+    <comment>重複チェック用SQL（ファイルパス）</comment>
+  </data>
+</root>

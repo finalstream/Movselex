@@ -13,7 +13,7 @@ namespace Movselex.Core.Models
     /// </summary>
     class MovselexLibrary : NotificationObject
     {
-        public ObservableSynchronizedCollection<LibraryItem> LibraryItems { get; private set; }
+        public DispatcherCollection<LibraryItem> LibraryItems { get; private set; }
 
         private readonly IDatabaseAccessor _databaseAccessor;
 
@@ -24,7 +24,7 @@ namespace Movselex.Core.Models
         public MovselexLibrary(IDatabaseAccessor databaseAccessor)
         {
             _databaseAccessor = databaseAccessor;
-            LibraryItems = new ObservableSynchronizedCollection<LibraryItem>();
+            LibraryItems = new DispatcherCollection<LibraryItem>(DispatcherHelper.UIDispatcher);
         }
 
         /// <summary>
@@ -32,7 +32,13 @@ namespace Movselex.Core.Models
         /// </summary>
         public void Load()
         {
-            _databaseAccessor.SelectLibrary();
+            var libraries = _databaseAccessor.SelectLibrary();
+
+            LibraryItems.Clear();
+            foreach (var libraryItem in libraries)
+            {
+                LibraryItems.Add(libraryItem);
+            }
         }
 
     }

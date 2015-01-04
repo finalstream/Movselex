@@ -35,7 +35,7 @@ namespace Movselex.ViewModels
         /// <summary>
         /// ライブラリ情報。
         /// </summary>
-        public IEnumerable<LibraryItem> Libraries { get { return new ObservableCollection<LibraryItem>(); } }
+        public IEnumerable<LibraryItem> Libraries { get { return _client.Libraries; } }
 
         /// <summary>
         /// 再生中情報。

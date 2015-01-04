@@ -63,7 +63,7 @@ namespace Movselex.Core
             get { return _databaseAccessor; }
             set
             {
-                if(_databaseAccessor != null) _databaseAccessor.Dispose();
+                if(_databaseAccessor != null) _databaseAccessor.ChangeDatabase(value.DatabaseName);
                 _databaseAccessor = value;
             }
         }
@@ -124,7 +124,9 @@ namespace Movselex.Core
         public void ChangeDatabase(string databaseName)
         {
             if (databaseName == null) return;
-            _databaseAccessor = new DatabaseAccessor(databaseName);
+            _databaseAccessor.ChangeDatabase(databaseName);
+            AppConfig.SelectDatabase = databaseName;
+            //DatabaseAccessor = new DatabaseAccessor(databaseName);
             Refresh(databaseName);
         }
 

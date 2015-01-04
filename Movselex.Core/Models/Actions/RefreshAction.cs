@@ -26,7 +26,7 @@ namespace Movselex.Core.Models.Actions
             var dbnames = Directory.GetFiles(
                 ApplicationDefinitions.DatabaseDirectory, "*.db", SearchOption.TopDirectoryOnly).Select(Path.GetFileNameWithoutExtension);
             client.Databases.DiffUpdate(dbnames.ToArray());
-            client.AppConfig.SelectDatabase = _selectedDatabase;
+            
             /*
             client.Databases.Clear();
             foreach (var dbname in dbnames)

@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FinalstreamCommons.Models;
+using Movselex.Core.Resources;
 
 namespace Movselex.Core.Models
 {
     internal class DatabaseAccessor : IDatabaseAccessor
     {
+        public string DatabaseName { get; private set; }
 
         private SQLExecuter _sqlExecuter;
+
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
@@ -18,15 +21,21 @@ namespace Movselex.Core.Models
         /// <param name="databaseName"></param>
         public DatabaseAccessor(string databaseName)
         {
-            _sqlExecuter = MovselexSQLExecuterFactory.Create(databaseName);
+            ChangeDatabase(databaseName);
         }
 
-
-        public void SelectLibrary()
+        public IEnumerable<LibraryItem> SelectLibrary()
         {
+            var aaa = _sqlExecuter.Query(SQLResource.SQL001);
 
-            //_sqlExecuter.Query();
+            return _sqlExecuter.Query<LibraryItem>(SQLResource.SQL001);
 
+        }
+
+        public void ChangeDatabase(string databaseName)
+        {
+            DatabaseName = databaseName;
+            _sqlExecuter = MovselexSQLExecuterFactory.Create(databaseName);
         }
 
         #region Dispose
