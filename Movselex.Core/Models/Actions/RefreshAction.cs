@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FinalstreamCommons.Utils;
+using FinalstreamCommons.Extentions;
 
 namespace Movselex.Core.Models.Actions
 {
@@ -23,13 +25,16 @@ namespace Movselex.Core.Models.Actions
             // データベース一覧
             var dbnames = Directory.GetFiles(
                 ApplicationDefinitions.DatabaseDirectory, "*.db", SearchOption.TopDirectoryOnly).Select(Path.GetFileNameWithoutExtension);
+            client.Databases.DiffUpdate(dbnames.ToArray());
+            client.AppConfig.SelectDatabase = _selectedDatabase;
+            /*
             client.Databases.Clear();
             foreach (var dbname in dbnames)
             {
                 client.Databases.Add(dbname);
             }
             client.AppConfig.SelectDatabase = _selectedDatabase;
-
+            */
             // フィルタリングロード
             client.MovselexFiltering.Load();
 

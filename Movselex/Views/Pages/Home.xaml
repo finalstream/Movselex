@@ -7,7 +7,9 @@
 			 xmlns:behaviors="clr-namespace:FinalstreamUIComponents.Behaviors;assembly=FinalstreamUIComponents"
 			 xmlns:viewModels="clr-namespace:Movselex.ViewModels"
 			 mc:Ignorable="d"
-			 d:DesignHeight="600" d:DesignWidth="1100">
+			 d:DesignHeight="600" d:DesignWidth="1100"
+			 d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
+			 >
 
 	<!--
 	<UserControl.DataContext>
@@ -72,7 +74,7 @@
 				<ColumnDefinition />
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-            <ComboBox Grid.Column="0" Width="120" Height="25" Margin="5,0,5,0" ItemsSource="{Binding Databases}" SelectedValue="{Binding CurrentDatabase, Mode=TwoWay}">
+			<ComboBox Grid.Column="0" Width="120" Height="25" Margin="5,0,5,0" ItemsSource="{Binding Databases}" SelectedValue="{Binding CurrentDatabase}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal">
