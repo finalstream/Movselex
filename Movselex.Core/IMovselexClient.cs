@@ -47,5 +47,7 @@ namespace Movselex.Core
         void ExecEmpty();
 
         void ChangeDatabase(string databaseName);
+
+        void SwitchLibraryMode();
     }
 }

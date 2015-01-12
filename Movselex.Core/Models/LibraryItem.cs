@@ -76,7 +76,7 @@ namespace Movselex.Core.Models
         /// <summary>
         /// ファイルが格納されているドライブレターを取得します。
         /// </summary>
-        public string Drive { get; private set; }
+        public string Drive { get { return FilePath.Substring(0, 1).ToUpper(); } }
 
         /// <summary>
         /// 再生回数を取得します。
@@ -92,6 +92,8 @@ namespace Movselex.Core.Models
         /// 最後に再生した日時を取得します。
         /// </summary>
         public DateTime LastPlayedDateTime { get; private set; }
+
+        
 
 
     }

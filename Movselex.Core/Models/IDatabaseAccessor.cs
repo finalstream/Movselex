@@ -9,5 +9,6 @@ namespace Movselex.Core.Models
 
         IEnumerable<LibraryItem> SelectLibrary();
         void ChangeDatabase(string databaseName);
+        IEnumerable<GroupItem> SelectGroup();
     }
 }

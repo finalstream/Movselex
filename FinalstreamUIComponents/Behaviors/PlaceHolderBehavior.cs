@@ -1,73 +1,95 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interactivity;
 using System.Windows.Media;
 
 namespace FinalstreamUIComponents.Behaviors
 {
     // プレースホルダーを表示する添付ビヘイビア
-    public static class PlaceHolderBehavior
-    {
-        // プレースホルダーとして表示するテキスト
-        public static readonly DependencyProperty PlaceHolderTextProperty = DependencyProperty.RegisterAttached(
-            "PlaceHolderText",
-            typeof(string),
-            typeof(PlaceHolderBehavior),
-            new PropertyMetadata(null, OnPlaceHolderChanged));
+    
 
-        private static void OnPlaceHolderChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    public abstract class PlaceHolderBehaviorBase<T> : Behavior<T> where T : Control
+    {
+
+        public String Placeholder
         {
-            var textBox = sender as TextBox;
-            if (textBox == null)
+            get { return (String)GetValue(PlaceholderProperty); }
+            set { SetValue(PlaceholderProperty, value); }
+        }
+
+        public static readonly DependencyProperty PlaceholderProperty =
+            DependencyProperty.Register("Placeholder", typeof(String), typeof(PlaceHolderBehaviorBase<T>));
+
+        protected abstract String GetContent(T control);
+
+        protected Brush defaultBackground;
+
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+            this.AssociatedObject.Initialized += this.OnInitialized;
+            this.AssociatedObject.GotFocus += this.OnGotFocus;
+            this.AssociatedObject.LostFocus += this.OnLostFocus;
+        }
+
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+            this.AssociatedObject.Initialized -= this.OnInitialized;
+            this.AssociatedObject.GotFocus -= this.OnGotFocus;
+            this.AssociatedObject.LostFocus -= this.OnLostFocus;
+        }
+
+        private void OnInitialized(Object sender, EventArgs e)
+        {
+            var control = sender as T;
+            if (control == null)
             {
                 return;
             }
 
-            var placeHolder = e.NewValue as string;
-            var handler = CreateEventHandler(placeHolder);
-            if (string.IsNullOrEmpty(placeHolder))
-            {
-                textBox.TextChanged -= handler;
-            }
-            else
-            {
-                textBox.TextChanged += handler;
-                if (string.IsNullOrEmpty(textBox.Text))
-                {
-                    textBox.Background = CreateVisualBrush(placeHolder);
-                }
-            }
+            this.defaultBackground = control.Background;
+            control.Background = this.CreateVisualBrush(this.Placeholder);
         }
 
-        private static TextChangedEventHandler CreateEventHandler(string placeHolder)
+        private void OnGotFocus(Object sender, RoutedEventArgs e)
         {
-            // TextChanged イベントをハンドルし、TextBox が未入力のときだけ
-            // プレースホルダーを表示するようにする。
-            return (sender, e) =>
+            var control = sender as T;
+            if (control == null)
             {
-                // 背景に TextBlock を描画する VisualBrush を使って
-                // プレースホルダーを実現
-                var textBox = (TextBox)sender;
-                if (string.IsNullOrEmpty(textBox.Text))
-                {
-                    textBox.Background = CreateVisualBrush(placeHolder);
-                }
-                else
-                {
-                    textBox.Background = new SolidColorBrush(Colors.Transparent);
-                }
-            };
+                return;
+            }
+            control.Background = this.defaultBackground;
         }
 
-        private static VisualBrush CreateVisualBrush(string placeHolder)
+        private void OnLostFocus(Object sender, EventArgs e)
         {
-            var visual = new Label()
+            var control = sender as T;
+            if (control == null)
+            {
+                return;
+            }
+            var content = this.GetContent(control);
+            if (String.IsNullOrEmpty(content) == false)
+            {
+                return;
+            }
+            control.Background = this.CreateVisualBrush(this.Placeholder);
+        }
+
+        private VisualBrush CreateVisualBrush(string placeHolder)
+        {
+            var visual = new Label
             {
                 Content = placeHolder,
                 Padding = new Thickness(5, 1, 1, 1),
                 Foreground = new SolidColorBrush(Colors.LightGray),
+                Background = this.defaultBackground,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center,
             };
+
             return new VisualBrush(visual)
             {
                 Stretch = Stretch.None,
@@ -76,15 +98,47 @@ namespace FinalstreamUIComponents.Behaviors
                 AlignmentY = AlignmentY.Center,
             };
         }
+    }
 
-        public static void SetPlaceHolderText(TextBox textBox, string placeHolder)
+    public class TextBoxPlaceholderBehavior : PlaceHolderBehaviorBase<TextBox>
+    {
+        protected override void OnAttached()
         {
-            textBox.SetValue(PlaceHolderTextProperty, placeHolder);
+            base.OnAttached();
+            this.AssociatedObject.TextChanged += OnTextChanged;
         }
 
-        public static string GetPlaceHolderText(TextBox textBox)
+        protected override void OnDetaching()
         {
-            return textBox.GetValue(PlaceHolderTextProperty) as string;
+            base.OnDetaching();
+            this.AssociatedObject.TextChanged -= OnTextChanged;
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var control = sender as TextBox;
+            if (control == null)
+            {
+                return;
+            }
+
+            if (control.IsFocused == false)
+            {
+                control.Background = this.defaultBackground;
+            }
+        }
+
+        protected override string GetContent(TextBox control)
+        {
+            return control.Text;
+        }
+    }
+
+    public class ComboBoxPlaceholderBehavior : PlaceHolderBehaviorBase<ComboBox>
+    {
+        protected override string GetContent(ComboBox control)
+        {
+            return control.Text;
         }
     }
 }

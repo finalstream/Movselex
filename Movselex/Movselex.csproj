@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -185,7 +186,7 @@
       <Name>FinalstreamCommons</Name>
     </ProjectReference>
     <ProjectReference Include="..\FinalstreamUIComponents\FinalstreamUIComponents.csproj">
-      <Project>{39167cd4-5721-413f-93ce-9c2122d71e9b}</Project>
+      <Project>{3df18075-0985-4164-8fdd-6ab1736e9b0f}</Project>
       <Name>FinalstreamUIComponents</Name>
     </ProjectReference>
     <ProjectReference Include="..\Movselex.Core\Movselex.Core.csproj">

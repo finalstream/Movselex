@@ -32,7 +32,23 @@ namespace Movselex.Core.Models
 
         public string TitleFormat { get; private set; }
 
-        public LibraryMode LibraryMode { get; private set; }
+
+        #region LibraryMode変更通知プロパティ
+
+        private LibraryMode _libraryMode;
+
+        public LibraryMode LibraryMode
+        {
+            get { return _libraryMode; }
+            set
+            {
+                if (_libraryMode == value) return;
+                _libraryMode = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         //public Color AccentColor { get; private set; }
 

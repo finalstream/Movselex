@@ -54,19 +54,12 @@ namespace Movselex.Core
         public DispatcherCollection<string> Databases { get; private set; }
         public MovselexFiltering MovselexFiltering { get; private set; }
         public MovselexLibrary MovselexLibrary { get; private set; }
+        public MovselexGroup MovselexGroup { get; private set; }
+
         private readonly string _appConfigFilePath;
         private readonly ActionExecuter<MovselexClient> _actionExecuter;
 
-        private IDatabaseAccessor _databaseAccessor;
-        private IDatabaseAccessor DatabaseAccessor
-        {
-            get { return _databaseAccessor; }
-            set
-            {
-                if(_databaseAccessor != null) _databaseAccessor.ChangeDatabase(value.DatabaseName);
-                _databaseAccessor = value;
-            }
-        }
+        private readonly IDatabaseAccessor _databaseAccessor;
 
 
         /// <summary>
@@ -82,6 +75,7 @@ namespace Movselex.Core
             _databaseAccessor = new DatabaseAccessor(AppConfig.SelectDatabase);
             MovselexFiltering = new MovselexFiltering();
             MovselexLibrary = new MovselexLibrary(_databaseAccessor);
+            MovselexGroup = new MovselexGroup(_databaseAccessor);
             Databases = new DispatcherCollection<string>(DispatcherHelper.UIDispatcher);
         }
 
@@ -113,12 +107,13 @@ namespace Movselex.Core
         {
             var action = new RefreshAction(selectedDatabase);
             action.AfterAction = () => OnRefreshed(EventArgs.Empty);
-            PostAction(action);
+            _actionExecuter.Post(action);
         }
+
 
         public void ExecEmpty()
         {
-            PostAction(new EmptyAction());
+            _actionExecuter.Post(new EmptyAction());
         }
 
         public void ChangeDatabase(string databaseName)
@@ -130,13 +125,12 @@ namespace Movselex.Core
             Refresh(databaseName);
         }
 
-        /// <summary>
-        /// アクションを実行します。
-        /// </summary>
-        /// <param name="action"></param>
-        private void PostAction(IGeneralAction<MovselexClient> action)
+        public void SwitchLibraryMode()
         {
-            _actionExecuter.Post(action);
+            var libMode = AppConfig.LibraryMode;
+            libMode++;
+            if (libMode > Enum.GetValues(typeof (LibraryMode)).Cast<LibraryMode>().Max()) libMode =  LibraryMode.Normal;
+            AppConfig.LibraryMode = libMode;
         }
 
         #region Dispose
@@ -171,5 +165,4 @@ namespace Movselex.Core
 
         #endregion
     }
-
 }

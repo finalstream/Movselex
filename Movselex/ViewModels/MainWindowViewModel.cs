@@ -35,13 +35,34 @@ namespace Movselex.ViewModels
         /// <summary>
         /// ライブラリ情報。
         /// </summary>
-        public IEnumerable<LibraryItem> Libraries { get { return _client.Libraries; } }
+        public IEnumerable<LibraryItem> Libraries {
+            get
+            {
+                return _client.Libraries;
+            } 
+        }
 
         /// <summary>
         /// 再生中情報。
         /// </summary>
         public IEnumerable<PlayingItem> Playings { get { return null; } }
 
+        #region LibraryCount変更通知プロパティ
+
+        private int _libraryCount;
+
+        public int LibraryCount
+        {
+            get { return _libraryCount; }
+            set
+            {
+                if (_libraryCount == value) return;
+                _libraryCount = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
 
         #region NowPlayingTitle変更通知プロパティ
@@ -106,7 +127,10 @@ namespace Movselex.ViewModels
             _client = MovselexClientFactory.Create(
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
 
-            //_client.Refreshed += (sender, args) => RaisePropertyChanged("CurrentDatabase"); // リフレッシュ後、選択を復元するためにイベントなげる。
+            _client.Refreshed += (sender, args) =>
+            {
+                LibraryCount = _client.Libraries.Count();
+            };
 
 
             // 設定変更イベントリスナー
@@ -183,6 +207,11 @@ namespace Movselex.ViewModels
         public void ChangeFiltering()
         {
             _client.ExecEmpty();
+        }
+
+        public void SwitchLibraryMode()
+        {
+            _client.SwitchLibraryMode();
         }
 
         protected override void Dispose(bool disposing)

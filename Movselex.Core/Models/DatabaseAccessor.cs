@@ -14,6 +14,10 @@ namespace Movselex.Core.Models
 
         private SQLExecuter _sqlExecuter;
 
+        private SQLBuilder _sqlBuilder;
+
+        private string _lastLibrarySelectSQL;
+
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
@@ -22,12 +26,15 @@ namespace Movselex.Core.Models
         public DatabaseAccessor(string databaseName)
         {
             ChangeDatabase(databaseName);
+            _sqlBuilder = new SQLBuilder();
         }
 
         public IEnumerable<LibraryItem> SelectLibrary()
         {
-            var aaa = _sqlExecuter.Query(SQLResource.SQL001);
-
+            // TODO:SQLをビルドする。
+            var sql = SQLResource.SQL001;
+            var aaa = _sqlExecuter.Query(sql);
+            _lastLibrarySelectSQL = sql;
             return _sqlExecuter.Query<LibraryItem>(SQLResource.SQL001);
 
         }
@@ -36,6 +43,13 @@ namespace Movselex.Core.Models
         {
             DatabaseName = databaseName;
             _sqlExecuter = MovselexSQLExecuterFactory.Create(databaseName);
+            _lastLibrarySelectSQL = SQLResource.SQL001;
+        }
+
+        public IEnumerable<GroupItem> SelectGroup()
+        {
+            //throw new NotImplementedException();
+            return Enumerable.Empty<GroupItem>();
         }
 
         #region Dispose

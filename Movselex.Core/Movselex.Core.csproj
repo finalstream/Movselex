@@ -84,9 +84,11 @@
     <Compile Include="Models\MovselexLibrary.cs" />
     <Compile Include="Models\NowPlayingInfo.cs" />
     <Compile Include="Models\PlayingItem.cs" />
+    <Compile Include="Models\SQLBuilder.cs" />
     <Compile Include="Models\SQLiteFunctions\IsMatchMigemoSQLiteFunction.cs" />
     <Compile Include="MovselexClient.cs" />
     <Compile Include="MovselexClientFactory.cs" />
+    <Compile Include="MovselexGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\SQLResource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -106,7 +108,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\SQLResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SQLResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

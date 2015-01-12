@@ -40,6 +40,8 @@ namespace Movselex.Core.Models.Actions
 
             client.MovselexLibrary.Load();
 
+            client.MovselexGroup.Load();
+
         }
     }
 }
