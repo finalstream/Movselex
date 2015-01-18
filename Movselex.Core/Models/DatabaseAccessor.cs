@@ -10,6 +10,8 @@ namespace Movselex.Core.Models
 {
     internal class DatabaseAccessor : IDatabaseAccessor
     {
+
+
         public string DatabaseName { get; private set; }
 
         private SQLExecuter _sqlExecuter;
@@ -18,24 +20,24 @@ namespace Movselex.Core.Models
 
         private string _lastLibrarySelectSQL;
 
+        private readonly MovselexAppConfig _appConfig;
+
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
         /// </summary>
         /// <param name="databaseName"></param>
-        public DatabaseAccessor(string databaseName)
+        public DatabaseAccessor(MovselexAppConfig appConfig)
         {
-            ChangeDatabase(databaseName);
+            _appConfig = appConfig;
+            ChangeDatabase(_appConfig.SelectDatabase);
             _sqlBuilder = new SQLBuilder();
         }
 
         public IEnumerable<LibraryItem> SelectLibrary()
         {
-            // TODO:SQLをビルドする。
-            var sql = SQLResource.SQL001;
-            var aaa = _sqlExecuter.Query(sql);
-            _lastLibrarySelectSQL = sql;
-            return _sqlExecuter.Query<LibraryItem>(SQLResource.SQL001);
+            _lastLibrarySelectSQL = _sqlBuilder.CreateSelectLibrary();
+            return _sqlExecuter.Query<LibraryItem>(_lastLibrarySelectSQL);
 
         }
 
@@ -43,13 +45,13 @@ namespace Movselex.Core.Models
         {
             DatabaseName = databaseName;
             _sqlExecuter = MovselexSQLExecuterFactory.Create(databaseName);
-            _lastLibrarySelectSQL = SQLResource.SQL001;
+            _lastLibrarySelectSQL = SQLResource.SelectLibraryList;
         }
 
         public IEnumerable<GroupItem> SelectGroup()
         {
-            //throw new NotImplementedException();
-            return Enumerable.Empty<GroupItem>();
+            return _sqlExecuter.Query<GroupItem>(
+                _sqlBuilder.CreateSelectGroup(_appConfig.LibraryMode, _lastLibrarySelectSQL));
         }
 
         #region Dispose

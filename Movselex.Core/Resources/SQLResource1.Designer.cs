@@ -61,11 +61,18 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
+        ///   SELECT GGPL.GID,GNAME GroupName,CNT Count,cast(FAVCNT as integer) FavoriteCount, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE IsCompleted
+        ///FROM (SELECT GPL.GID,GPL.GROUPNAME GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE
+        ///FROM (#LASTEXECSQL#) PL
+        ///#JOIN#
+        ///GROUP BY GPL.GROUPNAME
+        ///ORDER BY GPL.LASTUPDATE DESC, GPL.GID DESC) GGPL
+        ///LEFT JOIN (SELECT DSLIST.GID, SUMSTR(DSLIST.DRIVE) DRIVE FROM MOVLIST DSLIST GROUP BY DSLIST.GID) DL ON ifnull(GGPL.GID,&apos;&apos;) = ifnull(DL.GID,&apos;&apos;)
+        /// [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SQL {
+        internal static string SelectGroupList {
             get {
-                return ResourceManager.GetString("SQL", resourceCulture);
+                return ResourceManager.GetString("SelectGroupList", resourceCulture);
             }
         }
         
@@ -78,7 +85,7 @@ namespace Movselex.Core.Resources {
         ///  NO,
         ///  LENGTH,
         ///  CODEC,
-        ///  PLAYED,
+        ///  PLAYED AS ISPLAYED,
         ///  RATING,
         ///  DATE,
         ///  VIDEOSIZE,
@@ -90,9 +97,9 @@ namespace Movselex.Core.Resources {
         ///LEFT JOIN MOVGROUPLIST GPL
         ///ON PL.GID = GPL.GID に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SQL001 {
+        internal static string SelectLibraryList {
             get {
-                return ResourceManager.GetString("SQL001", resourceCulture);
+                return ResourceManager.GetString("SelectLibraryList", resourceCulture);
             }
         }
         
@@ -190,22 +197,6 @@ namespace Movselex.Core.Resources {
         internal static string SQL007 {
             get {
                 return ResourceManager.GetString("SQL007", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   SELECT GGPL.GID,GNAME,CNT,FAVCNT, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE
-        ///FROM (SELECT GPL.GID,#condMode# GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE
-        ///FROM (#LASTEXECSQL#) PL
-        ///#JOIN#
-        ///GROUP BY #condMode#
-        ///ORDER BY GPL.LASTUPDATE DESC, GPL.GID DESC) GGPL
-        ///#DRIVELISTJOIN#
-        ///#FILESIZELISTJOIN# に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL012 {
-            get {
-                return ResourceManager.GetString("SQL012", resourceCulture);
             }
         }
         

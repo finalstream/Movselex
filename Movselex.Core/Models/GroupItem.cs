@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FinalstreamCommons.Utils;
 
 namespace Movselex.Core.Models
 {
     public class GroupItem
     {
-        
+        /// <summary>
+        /// グループID。
+        /// </summary>
+        public long Gid { get; private set; }
+
         /// <summary>
         /// グループ名。
         /// </summary>
@@ -22,12 +27,22 @@ namespace Movselex.Core.Models
         /// <summary>
         /// ファイルサイズ(Byte)。
         /// </summary>
-        public double Filesize { get; private set; }
+        public long Filesize { get; private set; }
 
         /// <summary>
         /// グループに格納されているファイル数。
         /// </summary>
         public int Count { get; private set; }
+
+        /// <summary>
+        /// グループに格納されているお気に入りのファイル数。
+        /// </summary>
+        public int FavoriteCount { get; private set; }
+
+        /// <summary>
+        /// グループのキーワード。
+        /// </summary>
+        public string Keyword { get; private set; }
 
         /// <summary>
         /// お気に入りかどうか。
@@ -39,23 +54,7 @@ namespace Movselex.Core.Models
         /// </summary>
         public bool IsCompleted { get; private set; }
 
-        /// <summary>
-        /// 新しいインスタンスを初期化します。
-        /// </summary>
-        /// <param name="groupName"></param>
-        /// <param name="drive"></param>
-        /// <param name="filesize"></param>
-        /// <param name="count"></param>
-        /// <param name="isFavorite"></param>
-        /// <param name="isCompleted"></param>
-        public GroupItem(string groupName, string drive, double filesize, int count, bool isFavorite, bool isCompleted)
-        {
-            GroupName = groupName;
-            Drive = drive;
-            Filesize = filesize;
-            Count = count;
-            IsFavorite = isFavorite;
-            IsCompleted = isCompleted;
-        }
+        public string FileSizeString { get { return FileUtils.ConvertFileSizeGigaByteString(Filesize); }}
+
     }
 }

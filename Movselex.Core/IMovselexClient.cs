@@ -26,6 +26,11 @@ namespace Movselex.Core
         IEnumerable<LibraryItem> Libraries { get; }
 
         /// <summary>
+        /// グループ情報。
+        /// </summary>
+        IEnumerable<GroupItem> Groups { get; }
+
+        /// <summary>
         /// 再生中情報。
         /// </summary>
         INowPlayingInfo NowPlayingInfo { get; }

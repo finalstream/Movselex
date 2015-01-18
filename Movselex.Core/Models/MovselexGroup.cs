@@ -1,8 +1,6 @@
-using System;
 using Livet;
-using Movselex.Core.Models;
 
-namespace Movselex.Core
+namespace Movselex.Core.Models
 {
     internal class MovselexGroup
     {

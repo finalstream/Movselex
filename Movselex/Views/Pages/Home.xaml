@@ -118,16 +118,16 @@
 		</ListBox>
 
 		<!-- GroupGrid -->
-		<DataGrid Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Groups}" AutoGenerateColumns="False" Height="200" Margin="5,10,0,0" BorderThickness="0">
+		<DataGrid Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Groups}" RowHeaderWidth="0" IsReadOnly="True" AutoGenerateColumns="False" Height="200" Margin="5,10,0,0" BorderThickness="0">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Group" Width="*"
-					Binding="{Binding GroupName}" />
-				<DataGridTextColumn Header="Drive" Width="100"
-									Binding="{Binding Drive}" />
-				<DataGridTextColumn Header="Filesize" Width="100"
-									Binding="{Binding Filesize}" />
-				<DataGridTextColumn Header="Cnt" Width="60"
-									Binding="{Binding Count}" />
+					Binding="{Binding GroupName}" ElementStyle="{StaticResource TextItem}" />
+				<DataGridTextColumn Header="Drive" Width="70"
+									Binding="{Binding Drive}" ElementStyle="{StaticResource TextItem}" />
+				<DataGridTextColumn Header="Size" Width="70"
+									Binding="{Binding FileSizeString}" ElementStyle="{StaticResource TextItemRight}" />
+				<DataGridTextColumn Header="Cnt" Width="50"
+									Binding="{Binding Count}" ElementStyle="{StaticResource TextItemRight}" />
 				<DataGridTextColumn Header="★" Width="50"
 									Binding="{Binding IsFavorite}" />
 				<DataGridTextColumn Header="E" Width="50"
@@ -143,7 +143,7 @@
 				<DataGridTextColumn Header="" Width="10"
 									 />
 				<DataGridTextColumn Header="Group" Width="100" 
-									Binding="{Binding GroupName}"  />
+									Binding="{Binding GroupName}" ElementStyle="{StaticResource TextItem}"  />
 				<DataGridTextColumn Header="Title" Width="*"
 									Binding="{Binding Title}" ElementStyle="{StaticResource TextItem}" />
 				<DataGridTextColumn Header="No" Width="60"

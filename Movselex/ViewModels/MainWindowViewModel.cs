@@ -30,7 +30,7 @@ namespace Movselex.ViewModels
         /// <summary>
         /// グループ情報。
         /// </summary>
-        public IEnumerable<GroupItem> Groups { get { return null; }}
+        public IEnumerable<GroupItem> Groups { get { return _client.Groups; }}
 
         /// <summary>
         /// ライブラリ情報。

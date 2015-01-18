@@ -117,10 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SQL" xml:space="preserve">
-    <value />
+  <data name="SelectGroupList" xml:space="preserve">
+    <value>SELECT GGPL.GID,GNAME GroupName,CNT Count,cast(FAVCNT as integer) FavoriteCount, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE IsCompleted
+FROM (SELECT GPL.GID,GPL.GROUPNAME GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE
+FROM (#LASTEXECSQL#) PL
+#JOIN#
+GROUP BY GPL.GROUPNAME
+ORDER BY GPL.LASTUPDATE DESC, GPL.GID DESC) GGPL
+LEFT JOIN (SELECT DSLIST.GID, SUMSTR(DSLIST.DRIVE) DRIVE FROM MOVLIST DSLIST GROUP BY DSLIST.GID) DL ON ifnull(GGPL.GID,'') = ifnull(DL.GID,'')
+LEFT JOIN (SELECT GID, SUM(FILESIZE) FILESIZE FROM MOVLIST GROUP BY GID) FSL ON ifnull(GGPL.GID,'') = ifnull(FSL.GID,'')</value>
+    <comment>グループリスト取得</comment>
   </data>
-  <data name="SQL001" xml:space="preserve">
+  <data name="SelectLibraryList" xml:space="preserve">
     <value>SELECT 
   PL.ID,
   FILEPATH,
@@ -140,7 +148,7 @@
 FROM MOVLIST PL 
 LEFT JOIN MOVGROUPLIST GPL
 ON PL.GID = GPL.GID</value>
-    <comment>PLAYLIST取得ベースSQL</comment>
+    <comment>ライブラリリスト取得</comment>
   </data>
   <data name="SQL002" xml:space="preserve">
     <value>SELECT 
@@ -213,17 +221,6 @@ SET
 LASTPLAYDATE = :LastPlayDate
 WHERE ID = :Id</value>
     <comment>プレイリスト詳細情報更新</comment>
-  </data>
-  <data name="SQL012" xml:space="preserve">
-    <value>SELECT GGPL.GID,GNAME,CNT,FAVCNT, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE
-FROM (SELECT GPL.GID,#condMode# GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE
-FROM (#LASTEXECSQL#) PL
-#JOIN#
-GROUP BY #condMode#
-ORDER BY GPL.LASTUPDATE DESC, GPL.GID DESC) GGPL
-#DRIVELISTJOIN#
-#FILESIZELISTJOIN#</value>
-    <comment>コンディションリスト生成</comment>
   </data>
   <data name="SQL016" xml:space="preserve">
     <value>SELECT sum(round((julianday('00:' || length)-julianday('00:00:00')) * 86400))

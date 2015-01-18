@@ -49,6 +49,14 @@ namespace Movselex.Core
                 return MovselexLibrary.LibraryItems;
             }
         }
+        public IEnumerable<GroupItem> Groups
+        {
+            get
+            {
+                return MovselexGroup.GroupItems;
+            }
+        }
+
         public INowPlayingInfo NowPlayingInfo { get; private set; }
         public MovselexAppConfig AppConfig { get; private set; }
         public DispatcherCollection<string> Databases { get; private set; }
@@ -72,7 +80,7 @@ namespace Movselex.Core
             
             AppConfig = new MovselexAppConfig();
             _actionExecuter = new ActionExecuter<MovselexClient>(this);
-            _databaseAccessor = new DatabaseAccessor(AppConfig.SelectDatabase);
+            _databaseAccessor = new DatabaseAccessor(AppConfig);
             MovselexFiltering = new MovselexFiltering();
             MovselexLibrary = new MovselexLibrary(_databaseAccessor);
             MovselexGroup = new MovselexGroup(_databaseAccessor);
