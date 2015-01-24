@@ -60,7 +60,8 @@ namespace FinalstreamUIComponents.Behaviors
             {
                 return;
             }
-            control.Background = this.defaultBackground;
+            control.Background = this.CreateVisualBrush("");
+            //control.Background = this.defaultBackground;
         }
 
         private void OnLostFocus(Object sender, EventArgs e)
@@ -80,14 +81,16 @@ namespace FinalstreamUIComponents.Behaviors
 
         private VisualBrush CreateVisualBrush(string placeHolder)
         {
+            //var style = Application.Current.FindResource(typeof(Label)) as Style;
             var visual = new Label
             {
                 Content = placeHolder,
                 Padding = new Thickness(5, 1, 1, 1),
                 Foreground = new SolidColorBrush(Colors.LightGray),
-                Background = this.defaultBackground,
+                //Background = this.defaultBackground,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center,
+                //Style = style
             };
 
             return new VisualBrush(visual)

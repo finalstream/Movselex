@@ -24,7 +24,7 @@
 		<Style TargetType="TextBlock" x:Key="Header">
 			<Setter Property="FontSize" Value="20" />
 		</Style>
-		<Style TargetType="TextBlock" x:Key="TextItem">
+        <Style TargetType="TextBlock" x:Key="TextItem">
 			<Setter Property="FontSize" Value="15" />
 		</Style>
 		<Style TargetType="TextBlock" x:Key="TextItemRight">
@@ -32,8 +32,27 @@
 			<Setter Property="TextAlignment" Value="Right" ></Setter>
 		</Style>
 
+        <!--
+        <Style TargetType="ListBoxItem" x:Key="ListItem">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={
+                        RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem }}}"
+                                 Value="True">
+                    <Setter Property="IsSelected" Value="True" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        -->
 
-		<Style TargetType="ContentControl" x:Key="icon">
+        <!-- データグリッドカラムスタイル -->
+        <Style  TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" x:Key="columnHeader">
+            <Setter Property="FontWeight" Value="Normal"></Setter>
+            <Setter Property="Height" Value="30"></Setter>
+            <Setter Property="Padding" Value="0"></Setter>
+        </Style>
+
+        <!-- アイコン汎用スタイル -->
+        <Style TargetType="ContentControl" x:Key="icon">
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="ContentControl">
@@ -100,7 +119,7 @@
 			</Button>
 			<!--<Path Grid.Column="0" Stretch="Uniform" Fill="Black" Data="F1 M 477.366,32.4489C 470.432,35.802 462.011,33.0596 458.558,26.3193C 455.103,19.5833 457.927,11.3994 464.867,8.04321C 471.8,4.69006 480.222,7.4342 483.675,14.1729C 487.123,20.9102 484.303,29.0901 477.366,32.4489 Z M 489.398,50.2073L 481.138,34.0914C 488.075,29.3633 490.6,20.2981 486.712,12.7021C 482.423,4.33691 471.967,0.928711 463.351,5.09277C 454.739,9.26074 451.234,19.4209 455.52,27.7913C 459.414,35.3821 468.384,38.8887 476.447,36.3619L 484.703,52.4756C 485.051,53.1487 485.924,53.4045 486.66,53.0488L 488.688,52.0686C 489.427,51.7129 489.742,50.8782 489.398,50.2073 Z " UseLayoutRounding="False" Width="15" Margin="5,2"/> -->
 			<ContentControl Grid.Column="2" Style="{StaticResource icon}" Content="{StaticResource icon-magnify}" Width="48" Height="48"  />
-			<TextBox Grid.Column="3" Height="25" Width="Auto" Margin="-10,0,5,0">
+            <TextBox Grid.Column="3" Height="25" Width="Auto" Margin="-10,0,5,0">
 				<i:Interaction.Behaviors>
 					<behaviors:TextBoxPlaceholderBehavior Placeholder="Search Library" />
 				</i:Interaction.Behaviors>
@@ -109,16 +128,36 @@
 		</Grid>
 
 		<!-- FilteringList -->
+        <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="210" Height="200" 
+                  GridLinesVisibility="None" AutoGenerateColumns="False" HeadersVisibility="None" 
+                  ItemsSource="{Binding Filterings}" SelectedItem="{Binding FilteringSelectedItem}" 
+                  HorizontalAlignment="Left" BorderThickness="0" Margin="5,10,5,0" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="" Width="*"
+									Binding="{Binding DisplayValue}" ElementStyle="{StaticResource TextItem}" />
+            </DataGrid.Columns>
+            
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+        <!--
 		<ListBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="210" Height="200" ItemsSource="{Binding Filterings}" SelectedItem="{Binding FilteringSelectedItem}" HorizontalAlignment="Left" BorderThickness="0" Margin="5,10,5,0">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<TextBlock Text="{Binding DisplayValue}" Style="{StaticResource TextItem}" />
+                    <ListBoxItem IsSelected="{Binding IsSelected}" Content="{Binding DisplayValue}">                       
+					</ListBoxItem>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
-		</ListBox>
+        </ListBox>
+        -->
 
 		<!-- GroupGrid -->
-		<DataGrid Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Groups}" RowHeaderWidth="0" IsReadOnly="True" AutoGenerateColumns="False" Height="200" Margin="5,10,0,0" BorderThickness="0">
+		<DataGrid Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Groups}" RowHeaderWidth="0" 
+                  IsReadOnly="True" AutoGenerateColumns="False" Height="200" Margin="5,10,0,0" 
+                  BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Group" Width="*"
 					Binding="{Binding GroupName}" ElementStyle="{StaticResource TextItem}" />
@@ -128,16 +167,19 @@
 									Binding="{Binding FileSizeString}" ElementStyle="{StaticResource TextItemRight}" />
 				<DataGridTextColumn Header="Cnt" Width="50"
 									Binding="{Binding Count}" ElementStyle="{StaticResource TextItemRight}" />
-				<DataGridTextColumn Header="★" Width="50"
+				<DataGridTextColumn Header="★" Width="50" CanUserSort="False"
 									Binding="{Binding IsFavorite}" />
 				<DataGridTextColumn Header="E" Width="50"
 									Binding="{Binding IsCompleted}" />
 			</DataGrid.Columns>
+          
 		</DataGrid>
 
 
 		<!-- LibraryGrid -->
-		<DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" RowHeaderWidth="0" IsReadOnly="True"  ItemsSource="{Binding Libraries}" AutoGenerateColumns="False" Margin="5,10,0,0" BorderThickness="0">
+		<DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" RowHeaderWidth="0" 
+                  IsReadOnly="True"  ItemsSource="{Binding Libraries}" AutoGenerateColumns="False" 
+                  Margin="5,10,0,0" BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}">
 			
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="" Width="10"
@@ -169,7 +211,9 @@
 		</DataGrid>
 
 		<!-- PlayingGrid -->
-		<DataGrid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="200"  ItemsSource="{Binding Playings}" AutoGenerateColumns="False" Margin="5,10,0,0" BorderThickness="0">
+		<DataGrid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="200"  
+                  ItemsSource="{Binding Playings}" AutoGenerateColumns="False" Margin="5,10,0,0" BorderThickness="0"
+                  IsReadOnly="True" ColumnHeaderStyle="{StaticResource columnHeader}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Time" Width="70"
 									Binding="{Binding Time}" />

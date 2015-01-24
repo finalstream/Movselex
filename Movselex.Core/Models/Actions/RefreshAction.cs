@@ -27,17 +27,9 @@ namespace Movselex.Core.Models.Actions
                 ApplicationDefinitions.DatabaseDirectory, "*.db", SearchOption.TopDirectoryOnly).Select(Path.GetFileNameWithoutExtension);
             client.Databases.DiffUpdate(dbnames.ToArray());
             
-            /*
-            client.Databases.Clear();
-            foreach (var dbname in dbnames)
-            {
-                client.Databases.Add(dbname);
-            }
-            client.AppConfig.SelectDatabase = _selectedDatabase;
-            */
             // フィルタリングロード
             client.MovselexFiltering.Load();
-
+            
             client.MovselexLibrary.Load();
 
             client.MovselexGroup.Load();

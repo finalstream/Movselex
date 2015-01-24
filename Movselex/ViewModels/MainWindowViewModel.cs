@@ -11,11 +11,13 @@ using Livet;
 using Livet.EventListeners;
 using Movselex.Core;
 using Movselex.Core.Models;
+using NLog;
 
 namespace Movselex.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
+        private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
         public MovselexAppConfig AppConfig { get { return _client.AppConfig; }}
 
@@ -206,7 +208,9 @@ namespace Movselex.ViewModels
 
         public void ChangeFiltering()
         {
-            _client.ExecEmpty();
+            if(_client.Filterings.FirstOrDefault(x=>x.IsSelected) != null) _log.Debug(_client.Filterings.FirstOrDefault(x=>x.IsSelected).DisplayValue);
+            //_client.ExecEmpty();
+
         }
 
         public void SwitchLibraryMode()
