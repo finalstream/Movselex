@@ -72,10 +72,12 @@
     <Compile Include="Models\Actions\RefreshAction.cs" />
     <Compile Include="Models\DatabaseAccessor.cs" />
     <Compile Include="Models\FilteringItem.cs" />
+    <Compile Include="Models\FilteringMode.cs" />
     <Compile Include="Models\GroupItem.cs" />
     <Compile Include="Models\IDatabaseAccessor.cs" />
     <Compile Include="Models\IMovselexFiltering.cs" />
     <Compile Include="Models\INowPlayingInfo.cs" />
+    <Compile Include="Models\LibraryCondition.cs" />
     <Compile Include="Models\LibraryItem.cs" />
     <Compile Include="Models\LibraryMode.cs" />
     <Compile Include="Models\MovselexGroup.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Models\MovselexLibrary.cs" />
     <Compile Include="Models\NowPlayingInfo.cs" />
     <Compile Include="Models\PlayingItem.cs" />
+    <Compile Include="Models\RatingType.cs" />
     <Compile Include="Models\SQLBuilder.cs" />
     <Compile Include="Models\SQLiteFunctions\IsMatchMigemoSQLiteFunction.cs" />
     <Compile Include="MovselexClient.cs" />

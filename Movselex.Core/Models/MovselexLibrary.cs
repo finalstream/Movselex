@@ -30,9 +30,10 @@ namespace Movselex.Core.Models
         /// <summary>
         /// ライブラリデータをロードします。
         /// </summary>
-        public void Load()
+        /// <param name="libCondition"></param>
+        public void Load(LibraryCondition libCondition)
         {
-            var libraries = _databaseAccessor.SelectLibrary();
+            var libraries = _databaseAccessor.SelectLibrary(libCondition);
 
             LibraryItems.Clear();
             foreach (var libraryItem in libraries)

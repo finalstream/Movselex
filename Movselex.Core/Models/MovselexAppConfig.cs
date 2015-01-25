@@ -28,9 +28,11 @@ namespace Movselex.Core.Models
 
         public int PlayCountUpMinutes { get; private set; }
 
-        public int SelectFilteringIndex { get; private set; }
+        public string SelectFiltering { get; set; }
 
         public string TitleFormat { get; private set; }
+
+        public FilteringMode FilteringMode { get; private set; }
 
 
         #region LibraryMode変更通知プロパティ
@@ -82,13 +84,14 @@ namespace Movselex.Core.Models
             MoveBaseDirectory = "";
             SelectDatabase = "library";
             PlayCountUpMinutes = 10;
-            SelectFilteringIndex = 0;
+            SelectFiltering = "ALL MOVIE";
             TitleFormat = "%TITLE% - %NO%";
             LibraryMode = LibraryMode.Normal;
             AccentColor = Colors.Orange;
+            FilteringMode = FilteringMode.SQL;
         }
 
-        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, int playCountUpMinutes, int selectFilteringIndex, string titleFormat, LibraryMode libraryMode, Color accentColor)
+        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, int playCountUpMinutes, string selectFiltering, string titleFormat, FilteringMode filteringMode)
         {
             AppVersion = appVersion;
             WindowBounds = windowBounds;
@@ -100,16 +103,15 @@ namespace Movselex.Core.Models
             MoveBaseDirectory = moveBaseDirectory;
             SelectDatabase = selectDatabase;
             PlayCountUpMinutes = playCountUpMinutes;
-            SelectFilteringIndex = selectFilteringIndex;
+            SelectFiltering = selectFiltering;
             TitleFormat = titleFormat;
-            LibraryMode = libraryMode;
-            AccentColor = accentColor;
+            FilteringMode = filteringMode;
         }
 
         
         public void Update(MovselexAppConfig newConfig)
         {
-            // PropertyChangedEventをひろうためにめんどーだけどひとつずつ設定する。
+            // MEMO: PropertyChangedEventをひろうためにめんどーだけどひとつずつ設定する。
             AppVersion = newConfig.AppVersion;
             WindowBounds = newConfig.WindowBounds;
             PlayerExePath = newConfig.PlayerExePath;
@@ -120,10 +122,12 @@ namespace Movselex.Core.Models
             MoveBaseDirectory = newConfig.MoveBaseDirectory;
             SelectDatabase = newConfig.SelectDatabase;
             PlayCountUpMinutes = newConfig.PlayCountUpMinutes;
-            SelectFilteringIndex = newConfig.SelectFilteringIndex;
+            SelectFiltering = newConfig.SelectFiltering;
             TitleFormat = newConfig.TitleFormat;
             LibraryMode = newConfig.LibraryMode;
             AccentColor = newConfig.AccentColor;
+            FilteringMode = newConfig.FilteringMode;
+
         }
     }
 }

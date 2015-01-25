@@ -64,9 +64,19 @@ namespace Movselex.Core.Models
         public int Rating { get; private set; }
 
         /// <summary>
+        /// レーティングを取得します。
+        /// </summary>
+        public bool IsFavorite { get { return Rating == (int)RatingType.Favorite; } }
+
+        /// <summary>
         /// ファイルの最終更新日時を取得します。
         /// </summary>
-        public DateTime FileLastUpdateDateTime { get; private set; }
+        public DateTime Date { get; private set; }
+
+        /// <summary>
+        /// ファイルの最終更新日を取得します。
+        /// </summary>
+        public string FileLastUpdateDate { get { return Date.ToString("yyyy-MM-dd"); }}
 
         /// <summary>
         /// 動画のサイズを取得します。

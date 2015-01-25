@@ -24,11 +24,11 @@
     "DisplayValue": "再生頻度が多いもの"
   },
   {
-    "Value": "AND length(LENGTH) &gt;= 6 ORDER BY LENGTH DESC",
+    "Value": "AND length(LENGTH) >= 6 ORDER BY LENGTH DESC",
     "DisplayValue": "映画っぽいもの"
   },
   {
-    "Value": "AND length(LENGTH) &lt;= 4 ORDER BY LENGTH DESC",
+    "Value": "AND length(LENGTH) <= 4 ORDER BY LENGTH DESC",
     "DisplayValue": "再生時間が１０分以内"
   },
   {

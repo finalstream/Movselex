@@ -111,9 +111,9 @@ namespace Movselex.Core
         /// <summary>
         /// すべてのデータをリフレッシュします。
         /// </summary>
-        public void Refresh(string selectedDatabase)
+        private void Refresh(FilteringMode filteringMode)
         {
-            var action = new RefreshAction(selectedDatabase);
+            var action = new RefreshAction(AppConfig.FilteringMode);
             action.AfterAction = () => OnRefreshed(EventArgs.Empty);
             _actionExecuter.Post(action);
         }
@@ -130,7 +130,7 @@ namespace Movselex.Core
             _databaseAccessor.ChangeDatabase(databaseName);
             AppConfig.SelectDatabase = databaseName;
             //DatabaseAccessor = new DatabaseAccessor(databaseName);
-            Refresh(databaseName);
+            Refresh(AppConfig.FilteringMode);
         }
 
         public void SwitchLibraryMode()
@@ -139,6 +139,14 @@ namespace Movselex.Core
             libMode++;
             if (libMode > Enum.GetValues(typeof (LibraryMode)).Cast<LibraryMode>().Max()) libMode =  LibraryMode.Normal;
             AppConfig.LibraryMode = libMode;
+            Refresh(AppConfig.FilteringMode);
+        }
+
+        public void ChangeFiltering(FilteringItem filteringItem)
+        {
+            if (Filterings.FirstOrDefault(x => x.IsSelected) != null) _log.Debug(Filterings.FirstOrDefault(x => x.IsSelected).DisplayValue);
+            AppConfig.SelectFiltering = filteringItem.DisplayValue;
+            Refresh(AppConfig.FilteringMode);
         }
 
         #region Dispose

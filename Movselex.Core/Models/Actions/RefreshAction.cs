@@ -13,11 +13,11 @@ namespace Movselex.Core.Models.Actions
     internal class RefreshAction : MovselexActionBase
     {
 
-        private string _selectedDatabase;
+        private FilteringMode _filteringMode;
 
-        public RefreshAction(string selectedDatabase)
+        public RefreshAction(FilteringMode filteringMode)
         {
-            _selectedDatabase = selectedDatabase;
+            _filteringMode = filteringMode;
         }
 
         public override void InvokeCore(MovselexClient client)
@@ -29,8 +29,10 @@ namespace Movselex.Core.Models.Actions
             
             // フィルタリングロード
             client.MovselexFiltering.Load();
-            
-            client.MovselexLibrary.Load();
+
+            var libCondition = new LibraryCondition(_filteringMode,
+                client.MovselexFiltering.FilteringItems.Where(x => x.IsSelected).Select(x=>x.Value).FirstOrDefault());
+            client.MovselexLibrary.Load(libCondition);
 
             client.MovselexGroup.Load();
 

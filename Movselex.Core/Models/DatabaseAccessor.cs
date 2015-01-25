@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Annotations;
 using FinalstreamCommons.Models;
 using Movselex.Core.Resources;
 
@@ -34,9 +35,9 @@ namespace Movselex.Core.Models
             _sqlBuilder = new SQLBuilder();
         }
 
-        public IEnumerable<LibraryItem> SelectLibrary()
+        public IEnumerable<LibraryItem> SelectLibrary(LibraryCondition libCondition)
         {
-            _lastLibrarySelectSQL = _sqlBuilder.CreateSelectLibrary();
+            _lastLibrarySelectSQL = _sqlBuilder.CreateSelectLibrary(_appConfig.LibraryMode, libCondition);
             return _sqlExecuter.Query<LibraryItem>(_lastLibrarySelectSQL);
 
         }

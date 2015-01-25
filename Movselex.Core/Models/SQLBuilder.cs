@@ -11,10 +11,31 @@ namespace Movselex.Core.Models
         /// ライブラリを取得するSQLを生成します。
         /// </summary>
         /// <returns></returns>
-        public string CreateSelectLibrary()
+        public string CreateSelectLibrary(LibraryMode libraryMode, LibraryCondition libCondition)
         {
-            var sql = SQLResource.SelectLibraryList;
-            return sql + " ORDER BY PL.DATE desc ";
+            bool isFullSql = false;
+            var sb = new StringBuilder();
+            sb.Append(SQLResource.SelectLibraryList);
+            sb.Append(" WHERE ");
+            sb.Append(CreateRatingWhereString(libraryMode));
+
+            var condSql = libCondition.ConditionSQL.ToUpper();
+
+            switch (libCondition.FilteringMode)
+            {
+                case FilteringMode.SQL:
+                    if (string.IsNullOrEmpty(condSql)) break;
+                    if (!(condSql.Substring(0, 3).Equals("AND")
+                          || condSql.Substring(0, 2).Equals("OR"))) isFullSql = true;
+                    sb.Append(condSql);
+                    break;
+            }
+            
+
+            var sql = sb.ToString();
+            if (isFullSql) sql = SQLResource.SelectLibraryList + " " + condSql;
+            if (!sql.ToUpper().Contains("ORDER BY")) sql += " ORDER BY PL.DATE desc ";
+            return sql;
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FinalstreamCommons.Extentions;
 using Livet;
 using Newtonsoft.Json;
 
@@ -16,7 +17,9 @@ namespace Movselex.Core.Models
     {
         public DispatcherCollection<FilteringItem> FilteringItems { get; private set; } 
 
-
+        /// <summary>
+        /// 新しいインスタンスを初期化します。
+        /// </summary>
         public MovselexFiltering()
         {
             FilteringItems = new DispatcherCollection<FilteringItem>(DispatcherHelper.UIDispatcher);
@@ -32,11 +35,13 @@ namespace Movselex.Core.Models
             var filters = JsonConvert.DeserializeObject<List<FilteringItem>>(
                 File.ReadAllText(absolutePath));
 
-            FilteringItems.Clear();
-            foreach (var filter in filters)
-            {
-                FilteringItems.Add(filter);
-            }
+            FilteringItems.DiffUpdate(filters, new FilteringItemComparer());
+
+            //FilteringItems.Clear();
+            //foreach (var filter in filters)
+            //{
+            //    FilteringItems.Add(filter);
+            //}
         }
 
     }

@@ -102,17 +102,17 @@ namespace Movselex.ViewModels
 
         #region FilteringSelectedItem変更通知プロパティ
 
-        private FilteringItem _filteringSelectedItem;
+        private FilteringItem _currentFiltering;
 
-        public FilteringItem FilteringSelectedItem
+        public FilteringItem CurrentFiltering
         {
-            get { return _filteringSelectedItem; }
+            get { return _currentFiltering; }
             set
             {
-                if (_filteringSelectedItem == value) return;
-                _filteringSelectedItem = value;
+                if (_currentFiltering == value) return;
+                _currentFiltering = value;
+                if (value != null) _client.ChangeFiltering(value);
                 RaisePropertyChanged();
-                ChangeFiltering();
             }
         }
 
@@ -132,6 +132,9 @@ namespace Movselex.ViewModels
             _client.Refreshed += (sender, args) =>
             {
                 LibraryCount = _client.Libraries.Count();
+                // フィルタリング選択復元
+                var filteringSelect = _client.Filterings.FirstOrDefault(x => x.DisplayValue == AppConfig.SelectFiltering);
+                if (filteringSelect != null) filteringSelect.IsSelected = true;
             };
 
 
@@ -204,13 +207,6 @@ namespace Movselex.ViewModels
             //var listener = new CollectionChangedEventListener(
             //    _client.Filterings.FilteringItems);
             //CompositeDisposable.Add(listener);
-        }
-
-        public void ChangeFiltering()
-        {
-            if(_client.Filterings.FirstOrDefault(x=>x.IsSelected) != null) _log.Debug(_client.Filterings.FirstOrDefault(x=>x.IsSelected).DisplayValue);
-            //_client.ExecEmpty();
-
         }
 
         public void SwitchLibraryMode()
