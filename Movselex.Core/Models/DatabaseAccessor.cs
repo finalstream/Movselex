@@ -35,6 +35,11 @@ namespace Movselex.Core.Models
             _sqlBuilder = new SQLBuilder();
         }
 
+        /// <summary>
+        /// ライブラリを取得します。
+        /// </summary>
+        /// <param name="libCondition"></param>
+        /// <returns></returns>
         public IEnumerable<LibraryItem> SelectLibrary(LibraryCondition libCondition)
         {
             _lastLibrarySelectSQL = _sqlBuilder.CreateSelectLibrary(_appConfig.LibraryMode, libCondition);
@@ -42,6 +47,11 @@ namespace Movselex.Core.Models
 
         }
 
+        /// <summary>
+        /// データベースを変更します。
+        /// </summary>
+        /// <param name="databaseName"></param>
+        /// <remarks>SQLExecuterでコネクションを管理しています。</remarks>
         public void ChangeDatabase(string databaseName)
         {
             DatabaseName = databaseName;
@@ -49,6 +59,10 @@ namespace Movselex.Core.Models
             _lastLibrarySelectSQL = SQLResource.SelectLibraryList;
         }
 
+        /// <summary>
+        /// グループを取得します。
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<GroupItem> SelectGroup()
         {
             return _sqlExecuter.Query<GroupItem>(

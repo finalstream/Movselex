@@ -80,6 +80,7 @@
     <Compile Include="Models\LibraryCondition.cs" />
     <Compile Include="Models\LibraryItem.cs" />
     <Compile Include="Models\LibraryMode.cs" />
+    <Compile Include="Models\MediaCrawler.cs" />
     <Compile Include="Models\MovselexGroup.cs" />
     <Compile Include="Models\MovselexSQLExecuterFactory.cs" />
     <Compile Include="Models\MovselexAppConfig.cs" />

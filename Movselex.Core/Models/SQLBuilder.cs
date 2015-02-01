@@ -74,7 +74,8 @@ namespace Movselex.Core.Models
                     join.Append(" GROUP BY PPPL.GID ");
                     join.Append(") ACL ON PL.GID = ACL.GID ");
                     join.Append("LEFT JOIN  MOVGROUPLIST GPL ON PL.GID = GPL.GID ");
-                    sql = sql.Replace("#CLASS1COUNT#", ",''");
+                    if (libraryMode == LibraryMode.Favorite) sql = sql.Replace("#CLASS1COUNT#", ",CNT ");
+                    if (libraryMode == LibraryMode.Exclude) sql = sql.Replace("#CLASS1COUNT#", ",'' ");
                     break;
             }
 

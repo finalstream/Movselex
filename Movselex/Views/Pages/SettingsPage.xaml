@@ -19,8 +19,9 @@
                                                                CommandTarget="{Binding ElementName=ContentFrame}" 
                                                                ToolTip="{x:Static modernUi:Resources.Back}"
                                                                WindowChrome.IsHitTestVisibleInChrome="True" />
-        <mui:ModernTab Grid.Row="1" Layout="List" SelectedSource="/Views/Pages/Settings/Appearance.xaml">
+        <mui:ModernTab Grid.Row="1" Layout="List" SelectedSource="/Views/Pages/Settings/Player.xaml">
             <mui:ModernTab.Links>
+                <mui:Link DisplayName="player" Source="/Views/Pages/Settings/Player.xaml" />
                 <mui:Link DisplayName="appearance" Source="/Views/Pages/Settings/Appearance.xaml" />
                 <mui:Link DisplayName="about" Source="/Views/Pages/Settings/About.xaml" />
             </mui:ModernTab.Links>

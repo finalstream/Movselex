@@ -1,40 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Concurrency;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace FinalstreamCommons.Models
+namespace Movselex.Core.Models
 {
+
+
     /// <summary>
-    /// アクションを実行するものを表します。
+    /// 外部のプレイヤーから再生情報を収集します。
     /// </summary>
-    public class ActionExecuter<T> : IDisposable
+    class MediaCrawler : IDisposable
     {
 
-        private readonly EventLoopScheduler _scheduler = new EventLoopScheduler();
+        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-        private readonly ISubject<IGeneralAction<T>> _subject;
-        private readonly IDisposable _handle;
-
-        public ActionExecuter(T param)
+        /// <summary>
+        /// 新しいインスタンスを生成します。
+        /// </summary>
+        public MediaCrawler()
         {
-            _subject = new Subject<IGeneralAction<T>>();
+            
+            // タスクを開始する。
+            Task.Factory.StartNew(() =>
+            {
 
-            _handle = _subject.ObserveOn(_scheduler)
-                .Subscribe(x => x.Invoke(param));
+                Task.Delay(1000).Wait();
+            }, 
+            _cancellationTokenSource.Token,
+            TaskCreationOptions.LongRunning,
+            TaskScheduler.Default);
+
 
         }
 
 
-        public void Post(IGeneralAction<T> action)
-        {
-            _subject.OnNext(action);
-        }
 
         #region Dispose
 
@@ -58,7 +60,7 @@ namespace FinalstreamCommons.Models
             {
                 // Free any other managed objects here.
                 //
-                _handle.Dispose();
+                _cancellationTokenSource.Cancel();
             }
 
             // Free any unmanaged objects here.
@@ -67,7 +69,5 @@ namespace FinalstreamCommons.Models
         }
 
         #endregion
-
-        
     }
 }

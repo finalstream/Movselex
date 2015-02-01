@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FinalstreamCommons.Utils;
+using Livet;
 
 namespace Movselex.Core.Models
 {
-    public class GroupItem
+    public class GroupItem : NotificationObject
     {
         /// <summary>
         /// グループID。
@@ -44,10 +45,24 @@ namespace Movselex.Core.Models
         /// </summary>
         public string Keyword { get; private set; }
 
+
         /// <summary>
         /// お気に入りかどうか。
         /// </summary>
-        public bool IsFavorite { get; private set; }
+        #region IsFavorite変更通知プロパティ
+        private bool _isFavorite;
+
+        public bool IsFavorite
+        {
+            get { return _isFavorite || (FavoriteCount > 0 && FavoriteCount == Count); }
+            set
+            {
+                if (_isFavorite == value) return;
+                _isFavorite = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
 
         /// <summary>
         /// コンプリートしているかどうか。
@@ -55,6 +70,14 @@ namespace Movselex.Core.Models
         public bool IsCompleted { get; private set; }
 
         public string FileSizeString { get { return FileUtils.ConvertFileSizeGigaByteString(Filesize); }}
+
+        /// <summary>
+        /// お気に入りを変更します。
+        /// </summary>
+        public void SwitchFavorite()
+        {
+            IsFavorite = !IsFavorite;
+        }
 
     }
 }
