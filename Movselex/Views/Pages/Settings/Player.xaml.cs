@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Movselex.ViewModels.Pages.Settings;
 
 namespace Movselex.Views.Pages.Settings
 {
@@ -23,6 +24,7 @@ namespace Movselex.Views.Pages.Settings
         public Player()
         {
             InitializeComponent();
+            this.DataContext = new PlayerViewModel();
         }
     }
 }

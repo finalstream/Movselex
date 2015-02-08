@@ -34,6 +34,8 @@ namespace Movselex.Core.Models
 
         public FilteringMode FilteringMode { get; private set; }
 
+        public string MpcExePath { get; set; }
+
 
         #region LibraryMode変更通知プロパティ
 
@@ -89,9 +91,10 @@ namespace Movselex.Core.Models
             LibraryMode = LibraryMode.Normal;
             AccentColor = Colors.Orange;
             FilteringMode = FilteringMode.SQL;
+            MpcExePath = "";
         }
 
-        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, int playCountUpMinutes, string selectFiltering, string titleFormat, FilteringMode filteringMode)
+        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, int playCountUpMinutes, string selectFiltering, string titleFormat, FilteringMode filteringMode, string mpcExePath)
         {
             AppVersion = appVersion;
             WindowBounds = windowBounds;
@@ -106,6 +109,7 @@ namespace Movselex.Core.Models
             SelectFiltering = selectFiltering;
             TitleFormat = titleFormat;
             FilteringMode = filteringMode;
+            MpcExePath = mpcExePath;
         }
 
         
@@ -127,6 +131,7 @@ namespace Movselex.Core.Models
             LibraryMode = newConfig.LibraryMode;
             AccentColor = newConfig.AccentColor;
             FilteringMode = newConfig.FilteringMode;
+            MpcExePath = newConfig.MpcExePath;
 
         }
     }

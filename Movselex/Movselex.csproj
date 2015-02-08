@@ -73,6 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\Pages\Settings\AppearanceViewModel.cs" />
+    <Compile Include="ViewModels\Pages\Settings\PlayerViewModel.cs" />
     <Compile Include="Views\Converters\IsFavoriteConverter.cs" />
     <Compile Include="Views\Converters\IsCompleteConverter.cs" />
     <Compile Include="Views\Converters\IsPlayedConverter.cs" />
