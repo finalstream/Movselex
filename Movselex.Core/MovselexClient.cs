@@ -20,6 +20,11 @@ namespace Movselex.Core
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
+        private readonly string _appConfigFilePath;
+        private readonly ActionExecuter<MovselexClient> _actionExecuter;
+        private readonly IDatabaseAccessor _databaseAccessor;
+        private readonly PlayerMediaCrawler _playerMediaCrawler;
+
         #region Refreshedイベント
 
         // Event object
@@ -64,10 +69,7 @@ namespace Movselex.Core
         public MovselexLibrary MovselexLibrary { get; private set; }
         public MovselexGroup MovselexGroup { get; private set; }
 
-        private readonly string _appConfigFilePath;
-        private readonly ActionExecuter<MovselexClient> _actionExecuter;
-
-        private readonly IDatabaseAccessor _databaseAccessor;
+        
 
 
         /// <summary>
@@ -79,12 +81,15 @@ namespace Movselex.Core
             _appConfigFilePath = appConfigFilePath;
             
             AppConfig = new MovselexAppConfig();
+            AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
             _actionExecuter = new ActionExecuter<MovselexClient>(this);
             _databaseAccessor = new DatabaseAccessor(AppConfig);
             MovselexFiltering = new MovselexFiltering();
             MovselexLibrary = new MovselexLibrary(_databaseAccessor);
             MovselexGroup = new MovselexGroup(_databaseAccessor);
             Databases = new DispatcherCollection<string>(DispatcherHelper.UIDispatcher);
+            _playerMediaCrawler = new PlayerMediaCrawler(AppConfig.MpcExePath);
+            NowPlayingInfo = new NowPlayingInfo();
         }
 
         /// <summary>
@@ -93,10 +98,11 @@ namespace Movselex.Core
         protected override void InitializeCore()
         {
 
-            AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
+            
 
-            NowPlayingInfo = new NowPlayingInfo("ここにたいとるがはいります。");
-
+            _playerMediaCrawler.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
+            _playerMediaCrawler.Start();
+            
             _log.Debug("Initialized MovselexClinet.");
         }
 

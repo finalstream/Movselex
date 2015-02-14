@@ -45,9 +45,15 @@ namespace Movselex.ViewModels
         }
 
         /// <summary>
-        /// 再生中情報。
+        /// 再生中リスト情報。
         /// </summary>
         public IEnumerable<PlayingItem> Playings { get { return null; } }
+
+        /// <summary>
+        /// 再生中情報。
+        /// </summary>
+        public INowPlayingInfo NowPlayingInfo {get { return _client.NowPlayingInfo; }}
+
 
         #region LibraryCount変更通知プロパティ
 

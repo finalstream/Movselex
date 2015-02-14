@@ -80,19 +80,22 @@
     <Compile Include="Models\LibraryCondition.cs" />
     <Compile Include="Models\LibraryItem.cs" />
     <Compile Include="Models\LibraryMode.cs" />
-    <Compile Include="Models\MediaCrawler.cs" />
+    <Compile Include="Models\PlayerMediaCrawler.cs" />
     <Compile Include="Models\MovselexGroup.cs" />
     <Compile Include="Models\MovselexSQLExecuterFactory.cs" />
     <Compile Include="Models\MovselexAppConfig.cs" />
     <Compile Include="Models\MovselexFiltering.cs" />
     <Compile Include="Models\MovselexLibrary.cs" />
     <Compile Include="Models\NowPlayingInfo.cs" />
+    <Compile Include="Models\PlayerMediaInfo.cs" />
     <Compile Include="Models\PlayingItem.cs" />
     <Compile Include="Models\RatingType.cs" />
     <Compile Include="Models\SQLBuilder.cs" />
     <Compile Include="Models\SQLiteFunctions\IsMatchMigemoSQLiteFunction.cs" />
     <Compile Include="MovselexClient.cs" />
     <Compile Include="MovselexClientFactory.cs" />
+    <Compile Include="MpcPlayerInfoGetter.cs" />
+    <Compile Include="PlayerInfoGetter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\SQLResource1.Designer.cs">
       <AutoGen>True</AutoGen>
