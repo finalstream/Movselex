@@ -7,6 +7,7 @@ namespace Movselex.Core.Models
 // ReSharper disable once InconsistentNaming
     internal class SQLBuilder
     {
+
         /// <summary>
         /// ライブラリを取得するSQLを生成します。
         /// </summary>

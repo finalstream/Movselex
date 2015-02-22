@@ -481,4 +481,8 @@ WHERE Id = :Id</value>
     <value>SELECT FILEPATH FROM MOVLIST GROUP BY FILEPATH</value>
     <comment>重複チェック用SQL（ファイルパス）</comment>
   </data>
+  <data name="SelectShuffleLibrary" xml:space="preserve">
+    <value>SELECT * FROM (#LastExecSql#) ORDER BY random() limit @LimitNum</value>
+    <comment>ライブラリシャッフル用</comment>
+  </data>
 </root>

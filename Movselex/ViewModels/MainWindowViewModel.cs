@@ -220,6 +220,11 @@ namespace Movselex.ViewModels
             _client.SwitchLibraryMode();
         }
 
+        public void Shuffle()
+        {
+            _client.ShuffleLibrary();
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

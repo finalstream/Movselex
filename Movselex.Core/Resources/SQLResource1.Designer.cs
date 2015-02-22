@@ -104,6 +104,15 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   SELECT * FROM (#LastExecSql#) ORDER BY random() limit @LimitNum に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectShuffleLibrary {
+            get {
+                return ResourceManager.GetString("SelectShuffleLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   SELECT 
         ///  COUNT(ID) 
         ///FROM MOVLIST 

@@ -153,6 +153,13 @@ namespace Movselex.Core
             Refresh(AppConfig.FilteringMode);
         }
 
+        public void ShuffleLibrary()
+        {
+            var action = new ShuffleLibraryAction(AppConfig.LimitNum);
+            action.AfterAction = () => OnRefreshed(EventArgs.Empty);
+            _actionExecuter.Post(action);
+        }
+
         #region Dispose
 
         // Flag: Has Dispose already been called?

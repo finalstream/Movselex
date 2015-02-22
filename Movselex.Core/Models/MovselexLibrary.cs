@@ -42,5 +42,15 @@ namespace Movselex.Core.Models
             }
         }
 
+        public void Shuffle(int limitNum)
+        {
+            var libraries = _databaseAccessor.ShuffleLibrary(limitNum);
+
+            LibraryItems.Clear();
+            foreach (var libraryItem in libraries)
+            {
+                LibraryItems.Add(libraryItem);
+            }
+        }
     }
 }

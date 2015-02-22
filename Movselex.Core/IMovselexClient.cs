@@ -51,10 +51,26 @@ namespace Movselex.Core
 
         void ExecEmpty();
 
+        /// <summary>
+        /// データベースを変更します。
+        /// </summary>
+        /// <param name="databaseName"></param>
         void ChangeDatabase(string databaseName);
 
+        /// <summary>
+        /// ライブラリモードをスイッチします。
+        /// </summary>
         void SwitchLibraryMode();
 
+        /// <summary>
+        /// フィルタリングを変更します。
+        /// </summary>
+        /// <param name="filteringItem"></param>
         void ChangeFiltering(FilteringItem filteringItem);
+
+        /// <summary>
+        /// ライブラリをシャッフルします。
+        /// </summary>
+        void ShuffleLibrary();
     }
 }

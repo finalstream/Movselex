@@ -30,6 +30,7 @@ namespace Movselex.Core.Models.Actions
             // フィルタリングロード
             client.MovselexFiltering.Load();
 
+            // 選択状態のフィルタのSQLを取得してロード
             var libCondition = new LibraryCondition(_filteringMode,
                 client.MovselexFiltering.FilteringItems.Where(x => x.IsSelected).Select(x=>x.Value).FirstOrDefault());
             client.MovselexLibrary.Load(libCondition);

@@ -56,7 +56,7 @@ namespace Movselex.Core.Models
         {
             DatabaseName = databaseName;
             _sqlExecuter = MovselexSQLExecuterFactory.Create(databaseName);
-            _lastLibrarySelectSQL = SQLResource.SelectLibraryList;
+            //_lastLibrarySelectSQL = SQLResource.SelectLibraryList;
         }
 
         /// <summary>
@@ -67,6 +67,15 @@ namespace Movselex.Core.Models
         {
             return _sqlExecuter.Query<GroupItem>(
                 _sqlBuilder.CreateSelectGroup(_appConfig.LibraryMode, _lastLibrarySelectSQL));
+        }
+
+        public IEnumerable<LibraryItem> ShuffleLibrary(int limitNum)
+        {
+            if (string.IsNullOrEmpty(_lastLibrarySelectSQL)) return Enumerable.Empty<LibraryItem>();
+            var sql = SQLResource.SelectShuffleLibrary.Replace("#LastExecSql#", _lastLibrarySelectSQL);
+            return _sqlExecuter.Query<LibraryItem>(
+                sql, 
+                new { LimitNum = limitNum });
         }
 
         #region Dispose

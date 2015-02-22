@@ -10,5 +10,6 @@ namespace Movselex.Core.Models
         IEnumerable<LibraryItem> SelectLibrary(LibraryCondition libCondition);
         void ChangeDatabase(string databaseName);
         IEnumerable<GroupItem> SelectGroup();
+        IEnumerable<LibraryItem> ShuffleLibrary(int limitNum);
     }
 }
