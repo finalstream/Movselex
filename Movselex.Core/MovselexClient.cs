@@ -160,6 +160,12 @@ namespace Movselex.Core
             _actionExecuter.Post(action);
         }
 
+        public void Throw(int librarySelectIndex)
+        {
+            var filePaths = MovselexLibrary.LibraryItems.Skip(librarySelectIndex).Take(AppConfig.LimitNum).Select(x=>x.FilePath);
+            _actionExecuter.Post(new ThrowAction(filePaths.ToArray()));
+        }
+
         #region Dispose
 
         // Flag: Has Dispose already been called?

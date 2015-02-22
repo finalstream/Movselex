@@ -124,6 +124,22 @@ namespace Movselex.ViewModels
 
         #endregion
 
+        #region LibrarySelectIndex変更通知プロパティ
+
+        private int _librarySelectIndex;
+
+        public int LibrarySelectIndex
+        {
+            get { return _librarySelectIndex; }
+            set
+            {
+                if (_librarySelectIndex == value) return;
+                _librarySelectIndex = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         private readonly IMovselexClient _client;
 
@@ -224,6 +240,12 @@ namespace Movselex.ViewModels
         {
             _client.ShuffleLibrary();
         }
+
+        public void Throw()
+        {
+            _client.Throw(LibrarySelectIndex);
+        }
+
 
         protected override void Dispose(bool disposing)
         {
