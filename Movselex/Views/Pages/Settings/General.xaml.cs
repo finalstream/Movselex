@@ -17,14 +17,14 @@ using Movselex.ViewModels.Pages.Settings;
 namespace Movselex.Views.Pages.Settings
 {
     /// <summary>
-    /// Player.xaml の相互作用ロジック
+    /// General.xaml の相互作用ロジック
     /// </summary>
-    public partial class Player : UserControl
+    public partial class General : UserControl
     {
-        public Player()
+        public General()
         {
             InitializeComponent();
-            this.DataContext = new PlayerViewModel();
+            this.DataContext = new GeneralViewModel();
         }
     }
 }

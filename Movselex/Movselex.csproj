@@ -73,7 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\Pages\Settings\AppearanceViewModel.cs" />
-    <Compile Include="ViewModels\Pages\Settings\PlayerViewModel.cs" />
+    <Compile Include="ViewModels\Pages\Settings\GeneralViewModel.cs" />
     <Compile Include="Views\Converters\IsFavoriteConverter.cs" />
     <Compile Include="Views\Converters\IsCompleteConverter.cs" />
     <Compile Include="Views\Converters\IsPlayedConverter.cs" />
@@ -89,8 +89,8 @@
     <Compile Include="Views\Pages\Settings\Appearance.xaml.cs">
       <DependentUpon>Appearance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\Settings\Player.xaml.cs">
-      <DependentUpon>Player.xaml</DependentUpon>
+    <Compile Include="Views\Pages\Settings\General.xaml.cs">
+      <DependentUpon>General.xaml</DependentUpon>
     </Compile>
     <Page Include="Themes\ModernWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -126,7 +126,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Pages\Settings\Player.xaml">
+    <Page Include="Views\Pages\Settings\General.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

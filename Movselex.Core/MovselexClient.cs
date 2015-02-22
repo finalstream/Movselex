@@ -23,7 +23,7 @@ namespace Movselex.Core
         private readonly string _appConfigFilePath;
         private readonly ActionExecuter<MovselexClient> _actionExecuter;
         private readonly IDatabaseAccessor _databaseAccessor;
-        private readonly PlayerMediaCrawler _playerMediaCrawler;
+        private PlayerMediaCrawler _playerMediaCrawler;
 
         #region Refreshedイベント
 
@@ -81,14 +81,12 @@ namespace Movselex.Core
             _appConfigFilePath = appConfigFilePath;
             
             AppConfig = new MovselexAppConfig();
-            AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
             _actionExecuter = new ActionExecuter<MovselexClient>(this);
             _databaseAccessor = new DatabaseAccessor(AppConfig);
             MovselexFiltering = new MovselexFiltering();
             MovselexLibrary = new MovselexLibrary(_databaseAccessor);
             MovselexGroup = new MovselexGroup(_databaseAccessor);
             Databases = new DispatcherCollection<string>(DispatcherHelper.UIDispatcher);
-            _playerMediaCrawler = new PlayerMediaCrawler(AppConfig.MpcExePath);
             NowPlayingInfo = new NowPlayingInfo();
         }
 
@@ -97,8 +95,8 @@ namespace Movselex.Core
         /// </summary>
         protected override void InitializeCore()
         {
-
-            
+            AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
+            _playerMediaCrawler = new PlayerMediaCrawler(AppConfig.MpcExePath);
 
             _playerMediaCrawler.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
             _playerMediaCrawler.Start();

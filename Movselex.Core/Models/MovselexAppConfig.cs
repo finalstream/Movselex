@@ -20,7 +20,7 @@ namespace Movselex.Core.Models
 
         public string[] SupportExtentions { get; private set; }
 
-        public int LimitNum { get; private set; }
+        public int LimitNum { get; set; }
 
         public string MoveBaseDirectory { get; private set; }
 

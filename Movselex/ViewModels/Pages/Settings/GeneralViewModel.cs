@@ -17,7 +17,7 @@ using Movselex.Models;
 
 namespace Movselex.ViewModels.Pages.Settings
 {
-    public class PlayerViewModel : ViewModel
+    public class GeneralViewModel : ViewModel
     {
         /* コマンド、プロパティの定義にはそれぞれ 
          * 
@@ -66,10 +66,10 @@ namespace Movselex.ViewModels.Pages.Settings
             
         }
 
-        public PlayerViewModel()
+        public GeneralViewModel()
         {
             _players = new DispatcherCollection<DisplayableStringItem>(DispatcherHelper.UIDispatcher);
-            _players.Add(new DisplayableStringItem("mpc", "Media Player Classic"));
+            _players.Add(new DisplayableStringItem("mpc", "Media General Classic"));
         }
 
         #region Players変更通知プロパティ
@@ -101,6 +101,24 @@ namespace Movselex.ViewModels.Pages.Settings
                 if (_exePath == value) return;
                 _exePath = value;
                 App.Config.MpcExePath = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region LimitNum変更通知プロパティ
+
+        private int _limitNum;
+
+        public int LimitNum
+        {
+            get { return App.Config.LimitNum; }
+            set
+            {
+                if (_limitNum == value) return;
+                _limitNum = value;
+                App.Config.LimitNum = value;
                 RaisePropertyChanged();
             }
         }
