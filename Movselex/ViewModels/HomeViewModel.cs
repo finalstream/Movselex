@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Windows.Media;
+using System.Threading;
 using FirstFloor.ModernUI.Presentation;
 using Livet;
 using Livet.EventListeners;
@@ -17,67 +14,97 @@ namespace Movselex.ViewModels
 {
     public class HomeViewModel : ViewModel
     {
+        private readonly IMovselexClient _client;
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
-        public MovselexAppConfig AppConfig { get { return _client.AppConfig; }}
-
         /// <summary>
-        /// データベース情報。
+        ///     データベース情報。
         /// </summary>
         private ReadOnlyDispatcherCollection<DatabaseViewModel> _databases;
-        public ReadOnlyDispatcherCollection<DatabaseViewModel> Databases
-        {
-            get
-            {
-                return _databases;
-            }
-        }
 
         /// <summary>
-        /// フィルタリング情報。
+        ///     フィルタリング情報。
         /// </summary>
         private ReadOnlyDispatcherCollection<FilteringViewModel> _filterings;
-        public ReadOnlyDispatcherCollection<FilteringViewModel> Filterings {
-            get
-            {
-                return _filterings;
-            } 
-        }
 
         /// <summary>
-        /// グループ情報。
+        ///     グループ情報。
         /// </summary>
         private ReadOnlyDispatcherCollection<GroupViewModel> _groups;
-        public ReadOnlyDispatcherCollection<GroupViewModel> Groups
-        {
-            get
-            {
-                return _groups;
-            }
-        }
 
         /// <summary>
-        /// ライブラリ情報。
+        ///     ライブラリ情報。
         /// </summary>
         private ReadOnlyDispatcherCollection<LibraryViewModel> _libraries;
+
+        /// <summary>
+        ///     新しいインスタンスを初期化します。
+        /// </summary>
+        public HomeViewModel()
+        {
+            _client = MovselexClientFactory.Create(
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
+
+            CreateReadOnlyDispatcherCollection();
+            CreateListener();
+
+            //_client.Refreshed += (sender, args) =>
+            //{
+            //    //LibraryCount = _client.Libraries.Count();
+            //    // フィルタリング選択復元
+            //    //var filteringSelect = _filterings.FirstOrDefault(x => x.Model.DisplayValue == AppConfig.SelectFiltering);
+            //    //if (filteringSelect != null) filteringSelect.IsSelected = true;
+            //    // データベース選択復元
+            //    //CurrentDatabase = Databases.SingleOrDefault(x=> x.Name == _client.AppConfig.SelectDatabase);
+            //};
+
+            _client.Initialize();
+
+
+            _client.ChangeDatabase(AppConfig.SelectDatabase);
+            NowPlayingTitle = _client.NowPlayingInfo.Title;
+        }
+
+        public MovselexAppConfig AppConfig
+        {
+            get { return _client.AppConfig; }
+        }
+
+        public ReadOnlyDispatcherCollection<DatabaseViewModel> Databases
+        {
+            get { return _databases; }
+        }
+
+        public ReadOnlyDispatcherCollection<FilteringViewModel> Filterings
+        {
+            get { return _filterings; }
+        }
+
+        public ReadOnlyDispatcherCollection<GroupViewModel> Groups
+        {
+            get { return _groups; }
+        }
+
         public ReadOnlyDispatcherCollection<LibraryViewModel> Libraries
         {
-            get
-            {
-                return _libraries;
-            } 
+            get { return _libraries; }
         }
 
         /// <summary>
-        /// 再生中リスト情報。
+        ///     再生中リスト情報。
         /// </summary>
-        public IEnumerable<PlayingItem> Playings { get { return null; } }
+        public IEnumerable<PlayingItem> Playings
+        {
+            get { return null; }
+        }
 
         /// <summary>
-        /// 再生中情報。
+        ///     再生中情報。
         /// </summary>
-        public INowPlayingInfo NowPlayingInfo {get { return _client.NowPlayingInfo; }}
-
+        public INowPlayingInfo NowPlayingInfo
+        {
+            get { return _client.NowPlayingInfo; }
+        }
 
         #region IsThrowable変更通知プロパティ
 
@@ -132,7 +159,6 @@ namespace Movselex.ViewModels
 
         #endregion
 
-
         #region NowPlayingTitle変更通知プロパティ
 
         private string _nowPlayingTitle;
@@ -159,34 +185,16 @@ namespace Movselex.ViewModels
             get { return _currentDatabase; }
             set
             {
+                var isFirst = _currentDatabase == null;
                 if (_currentDatabase == value) return;
                 _currentDatabase = value;
-                _client.ChangeDatabase(value.Name);
+                if (!isFirst) _client.ChangeDatabase(value.Name);
                 AppConfig.SelectDatabase = value.Name;
                 RaisePropertyChanged();
             }
         }
 
         #endregion
-
-        /*
-        #region CurrentDatabase変更通知プロパティ
-
-        public string CurrentDatabase
-        {
-            get { return _client.AppConfig.SelectDatabase; }
-            set
-            {
-                if (_client.AppConfig.SelectDatabase == value) return;
-                AppConfig.SelectDatabase = value;
-                _client.ChangeDatabase(value);
-                RaisePropertyChanged();
-                
-            }
-        }
-
-        #endregion
-        */
 
         #region FilteringSelectedItem変更通知プロパティ
 
@@ -223,56 +231,27 @@ namespace Movselex.ViewModels
 
         #endregion
 
-        private readonly IMovselexClient _client;
 
         /// <summary>
-        /// 新しいインスタンスを初期化します。
-        /// </summary>
-        public HomeViewModel()
-        {
-            _client = MovselexClientFactory.Create(
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
-
-            CreateReadOnlyDispatcherCollection();
-            CreateListener();
-
-            //_client.Refreshed += (sender, args) =>
-            //{
-            //    //LibraryCount = _client.Libraries.Count();
-            //    // フィルタリング選択復元
-            //    //var filteringSelect = _filterings.FirstOrDefault(x => x.Model.DisplayValue == AppConfig.SelectFiltering);
-            //    //if (filteringSelect != null) filteringSelect.IsSelected = true;
-            //    // データベース選択復元
-            //    //CurrentDatabase = Databases.SingleOrDefault(x=> x.Name == _client.AppConfig.SelectDatabase);
-            //};
-
-            _client.Initialize();
-
-
-            _client.ChangeDatabase(AppConfig.SelectDatabase);
-            NowPlayingTitle = _client.NowPlayingInfo.Title;
-        }
-
-        /// <summary>
-        /// VM用のコレクションを生成します。
+        ///     VM用のコレクションを生成します。
         /// </summary>
         private void CreateReadOnlyDispatcherCollection()
         {
             _databases = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Databases,
-                        s => new DatabaseViewModel(s), DispatcherHelper.UIDispatcher);
+                s => new DatabaseViewModel(s), DispatcherHelper.UIDispatcher);
 
             _filterings = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Filterings,
-                        m => new FilteringViewModel(m), DispatcherHelper.UIDispatcher);
+                m => new FilteringViewModel(m), DispatcherHelper.UIDispatcher);
 
             _groups = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Groups,
-                        m => new GroupViewModel(m), DispatcherHelper.UIDispatcher);
+                m => new GroupViewModel(m), DispatcherHelper.UIDispatcher);
 
             _libraries = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Libraries,
-                        m => new LibraryViewModel(m), DispatcherHelper.UIDispatcher);
+                m => new LibraryViewModel(m), DispatcherHelper.UIDispatcher);
         }
 
         /// <summary>
-        /// リスナーを生成します。
+        ///     リスナーを生成します。
         /// </summary>
         private void CreateListener()
         {
@@ -282,7 +261,7 @@ namespace Movselex.ViewModels
                 (sender, args) =>
                 {
                     // データベース選択復元
-                    CurrentDatabase = Databases.SingleOrDefault(x=> x.Name == _client.AppConfig.SelectDatabase);
+                    CurrentDatabase = Databases.SingleOrDefault(x => x.Name == _client.AppConfig.SelectDatabase);
                 }
             };
             CompositeDisposable.Add(databaseListener);
@@ -300,7 +279,8 @@ namespace Movselex.ViewModels
                 (sender, args) =>
                 {
                     // フィルタリング選択復元
-                    var filteringSelect = _filterings.FirstOrDefault(x => x.Model.DisplayValue == AppConfig.SelectFiltering);
+                    FilteringViewModel filteringSelect =
+                        _filterings.FirstOrDefault(x => x.Model.DisplayValue == AppConfig.SelectFiltering);
                     if (filteringSelect != null) filteringSelect.IsSelected = true;
                 }
             };
@@ -309,7 +289,7 @@ namespace Movselex.ViewModels
             // 設定変更イベントリスナー
             var configListener = new PropertyChangedEventListener(AppConfig)
             {
-                {"AccentColor", (sender, args) => AppearanceManager.Current.AccentColor = AppConfig.AccentColor },
+                {"AccentColor", (sender, args) => AppearanceManager.Current.AccentColor = AppConfig.AccentColor},
             };
             CompositeDisposable.Add(configListener);
         }
@@ -355,10 +335,9 @@ namespace Movselex.ViewModels
          * LivetのViewModelではプロパティ変更通知(RaisePropertyChanged)やDispatcherCollectionを使ったコレクション変更通知は
          * 自動的にUIDispatcher上での通知に変換されます。変更通知に際してUIDispatcherを操作する必要はありません。
          */
+
         public void Initialize()
         {
-            
-
             //_filterings = _client.Filterings.FilteringItems;
 
             //foreach (var filteringItem in client.Filterings.FilteringItems)
@@ -393,6 +372,5 @@ namespace Movselex.ViewModels
             _client.Finish();
             _client.Dispose();
         }
-
     }
 }
