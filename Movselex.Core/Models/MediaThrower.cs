@@ -1,27 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Build.Utilities;
+﻿using System.Diagnostics;
+using FinalstreamCommons.Builders;
+using NLog;
 
 namespace Movselex.Core.Models
 {
     /// <summary>
-    /// メディアファイルをプレイヤーに投げるやつを表します。
+    ///     メディアファイルをプレイヤーに投げるやつを表します。
     /// </summary>
-    abstract class MediaThrower
+    internal abstract class MediaThrower
     {
-        private readonly string _playerExePath;
+        private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
-        private readonly CommandLineBuilder _commandLineBuilder;
+        protected readonly IMovselexAppConfig AppConfig;
 
-        protected MediaThrower(string playerExePath)
+        protected readonly CommandLineBuilder CommandLineBuilder;
+
+        /// <summary>
+        ///     新しいインスタンスを生成します。
+        /// </summary>
+        /// <param name="appConfig"></param>
+        protected MediaThrower(IMovselexAppConfig appConfig)
         {
-            _playerExePath = playerExePath;
-            _commandLineBuilder = new CommandLineBuilder();
+            AppConfig = appConfig;
+            CommandLineBuilder = new CommandLineBuilder();
         }
 
+        protected abstract string CreateCommandLineParameter(string filepath, bool isFirst);
 
+        /// <summary>
+        ///  メディアファイルをプレイヤーに投げます。
+        /// </summary>
+        /// <param name="filepaths"></param>
+        public void Throw(string[] filepaths)
+        {
+            // TODO: exeパスが設定されていないときはボタンを押せないようにする。
+            int i = 0;
+            foreach (var filepath in filepaths)
+            {
+                CommandLineBuilder.Clear();
+                
+                var param = CreateCommandLineParameter(filepath, i==0);
+                var exePath = "\"" + AppConfig.MpcExePath + "\"";
+
+                _log.Debug("[Throw {0}] {1} {2}", i, exePath, param);
+                var process = Process.Start(exePath, param);
+                process.WaitForInputIdle();
+
+                i++;
+            }
+
+            
+        }
     }
 }

@@ -34,6 +34,7 @@
     <Reference Include="Livet">
       <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\Livet.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
@@ -78,11 +79,13 @@
     <Compile Include="Models\FilteringMode.cs" />
     <Compile Include="Models\GroupItem.cs" />
     <Compile Include="Models\IDatabaseAccessor.cs" />
+    <Compile Include="Models\IMovselexAppConfig.cs" />
     <Compile Include="Models\IMovselexFiltering.cs" />
     <Compile Include="Models\INowPlayingInfo.cs" />
     <Compile Include="Models\LibraryCondition.cs" />
     <Compile Include="Models\LibraryItem.cs" />
     <Compile Include="Models\LibraryMode.cs" />
+    <Compile Include="Models\MediaPlayerClassicThrower.cs" />
     <Compile Include="Models\MediaThrower.cs" />
     <Compile Include="Models\PlayerMediaCrawler.cs" />
     <Compile Include="Models\MovselexGroup.cs" />

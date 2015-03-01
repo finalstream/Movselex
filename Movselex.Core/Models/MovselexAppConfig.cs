@@ -5,7 +5,7 @@ using Livet;
 
 namespace Movselex.Core.Models
 {
-    public class MovselexAppConfig : NotificationObject, IAppConfig
+    public class MovselexAppConfig : NotificationObject, IAppConfig, IMovselexAppConfig
     {
 
         public string AppVersion { get; private set; }

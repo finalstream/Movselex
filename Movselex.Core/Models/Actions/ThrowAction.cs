@@ -18,7 +18,9 @@ namespace Movselex.Core.Models.Actions
 
         public override void InvokeCore(MovselexClient client)
         {
-            
+            var thrower = new MediaPlayerClassicThrower(client.AppConfig);
+
+            thrower.Throw(FilePaths);
         }
     }
 }
