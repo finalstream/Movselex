@@ -20,7 +20,7 @@ namespace Movselex
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
-        public static MainWindowViewModel ViewModelRoot { get; private set; }
+        public static HomeViewModel ViewModelRoot { get; private set; }
 
         public static MovselexAppConfig Config { get; private set; }
 
@@ -31,7 +31,7 @@ namespace Movselex
             DispatcherHelper.UIDispatcher = Dispatcher;
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomainUnhandledException);
 
-            ViewModelRoot = new MainWindowViewModel();
+            ViewModelRoot = new HomeViewModel();
             Config = ViewModelRoot.AppConfig;
             this.MainWindow = new MainWindow { DataContext = ViewModelRoot };
             this.MainWindow.Show();

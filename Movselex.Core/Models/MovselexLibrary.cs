@@ -13,7 +13,7 @@ namespace Movselex.Core.Models
     /// </summary>
     class MovselexLibrary : NotificationObject
     {
-        public DispatcherCollection<LibraryItem> LibraryItems { get; private set; }
+        public ObservableCollection<LibraryItem> LibraryItems { get; private set; }
 
         private readonly IDatabaseAccessor _databaseAccessor;
 
@@ -24,7 +24,7 @@ namespace Movselex.Core.Models
         public MovselexLibrary(IDatabaseAccessor databaseAccessor)
         {
             _databaseAccessor = databaseAccessor;
-            LibraryItems = new DispatcherCollection<LibraryItem>(DispatcherHelper.UIDispatcher);
+            LibraryItems = new ObservableCollection<LibraryItem>();
         }
 
         /// <summary>

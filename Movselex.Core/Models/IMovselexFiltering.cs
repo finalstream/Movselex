@@ -1,10 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Livet;
 
 namespace Movselex.Core.Models
 {
     public interface IMovselexFiltering
     {
-        DispatcherCollection<FilteringItem> FilteringItems { get; }
+        ObservableCollection<FilteringItem> FilteringItems { get; }
     }
 }

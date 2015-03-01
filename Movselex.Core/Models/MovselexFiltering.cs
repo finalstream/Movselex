@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,14 +16,14 @@ namespace Movselex.Core.Models
     /// </summary>
     internal class MovselexFiltering : NotificationObject, IMovselexFiltering
     {
-        public DispatcherCollection<FilteringItem> FilteringItems { get; private set; } 
+        public ObservableCollection<FilteringItem> FilteringItems { get; private set; } 
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
         /// </summary>
         public MovselexFiltering()
         {
-            FilteringItems = new DispatcherCollection<FilteringItem>(DispatcherHelper.UIDispatcher);
+            FilteringItems = new ObservableCollection<FilteringItem>();
         }
 
         /// <summary>

@@ -15,32 +15,56 @@ using NLog;
 
 namespace Movselex.ViewModels
 {
-    public class MainWindowViewModel : ViewModel
+    public class HomeViewModel : ViewModel
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
         public MovselexAppConfig AppConfig { get { return _client.AppConfig; }}
 
-
-        public IEnumerable<string> Databases {get { return _client.Databases; }} 
+        /// <summary>
+        /// データベース情報。
+        /// </summary>
+        private ReadOnlyDispatcherCollection<DatabaseViewModel> _databases;
+        public ReadOnlyDispatcherCollection<DatabaseViewModel> Databases
+        {
+            get
+            {
+                return _databases;
+            }
+        }
 
         /// <summary>
         /// フィルタリング情報。
         /// </summary>
-        public IEnumerable<FilteringItem> Filterings { get { return _client.Filterings; } }
+        private ReadOnlyDispatcherCollection<FilteringViewModel> _filterings;
+        public ReadOnlyDispatcherCollection<FilteringViewModel> Filterings {
+            get
+            {
+                return _filterings;
+            } 
+        }
 
         /// <summary>
         /// グループ情報。
         /// </summary>
-        public IEnumerable<GroupItem> Groups { get { return _client.Groups; }}
+        private ReadOnlyDispatcherCollection<GroupViewModel> _groups;
+        public ReadOnlyDispatcherCollection<GroupViewModel> Groups
+        {
+            get
+            {
+                return _groups;
+            }
+        }
 
         /// <summary>
         /// ライブラリ情報。
         /// </summary>
-        public IEnumerable<LibraryItem> Libraries {
+        private ReadOnlyDispatcherCollection<LibraryViewModel> _libraries;
+        public ReadOnlyDispatcherCollection<LibraryViewModel> Libraries
+        {
             get
             {
-                return _client.Libraries;
+                return _libraries;
             } 
         }
 
@@ -55,6 +79,40 @@ namespace Movselex.ViewModels
         public INowPlayingInfo NowPlayingInfo {get { return _client.NowPlayingInfo; }}
 
 
+        #region IsThrowable変更通知プロパティ
+
+        private bool _isThrowable;
+
+        public bool IsThrowable
+        {
+            get { return _isThrowable; }
+            set
+            {
+                if (_isThrowable == value) return;
+                _isThrowable = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region IsShufflable変更通知プロパティ
+
+        private bool _isShufflable;
+
+        public bool IsShufflable
+        {
+            get { return _isShufflable; }
+            set
+            {
+                if (_isShufflable == value) return;
+                _isShufflable = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         #region LibraryCount変更通知プロパティ
 
         private int _libraryCount;
@@ -66,6 +124,8 @@ namespace Movselex.ViewModels
             {
                 if (_libraryCount == value) return;
                 _libraryCount = value;
+                IsThrowable = !String.IsNullOrEmpty(AppConfig.MpcExePath) && value > 0 && value <= AppConfig.LimitNum;
+                IsShufflable = value > 0;
                 RaisePropertyChanged();
             }
         }
@@ -92,12 +152,33 @@ namespace Movselex.ViewModels
 
         #region CurrentDatabase変更通知プロパティ
 
+        private DatabaseViewModel _currentDatabase;
+
+        public DatabaseViewModel CurrentDatabase
+        {
+            get { return _currentDatabase; }
+            set
+            {
+                if (_currentDatabase == value) return;
+                _currentDatabase = value;
+                _client.ChangeDatabase(value.Name);
+                AppConfig.SelectDatabase = value.Name;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        /*
+        #region CurrentDatabase変更通知プロパティ
+
         public string CurrentDatabase
         {
             get { return _client.AppConfig.SelectDatabase; }
             set
             {
                 if (_client.AppConfig.SelectDatabase == value) return;
+                AppConfig.SelectDatabase = value;
                 _client.ChangeDatabase(value);
                 RaisePropertyChanged();
                 
@@ -105,19 +186,20 @@ namespace Movselex.ViewModels
         }
 
         #endregion
+        */
 
         #region FilteringSelectedItem変更通知プロパティ
 
-        private FilteringItem _currentFiltering;
+        private FilteringViewModel _currentFiltering;
 
-        public FilteringItem CurrentFiltering
+        public FilteringViewModel CurrentFiltering
         {
             get { return _currentFiltering; }
             set
             {
                 if (_currentFiltering == value) return;
                 _currentFiltering = value;
-                if (value != null) _client.ChangeFiltering(value);
+                _client.ChangeFiltering(value.Model);
                 RaisePropertyChanged();
             }
         }
@@ -146,19 +228,83 @@ namespace Movselex.ViewModels
         /// <summary>
         /// 新しいインスタンスを初期化します。
         /// </summary>
-        public MainWindowViewModel()
+        public HomeViewModel()
         {
             _client = MovselexClientFactory.Create(
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
 
-            _client.Refreshed += (sender, args) =>
-            {
-                LibraryCount = _client.Libraries.Count();
-                // フィルタリング選択復元
-                var filteringSelect = _client.Filterings.FirstOrDefault(x => x.DisplayValue == AppConfig.SelectFiltering);
-                if (filteringSelect != null) filteringSelect.IsSelected = true;
-            };
+            CreateReadOnlyDispatcherCollection();
+            CreateListener();
 
+            //_client.Refreshed += (sender, args) =>
+            //{
+            //    //LibraryCount = _client.Libraries.Count();
+            //    // フィルタリング選択復元
+            //    //var filteringSelect = _filterings.FirstOrDefault(x => x.Model.DisplayValue == AppConfig.SelectFiltering);
+            //    //if (filteringSelect != null) filteringSelect.IsSelected = true;
+            //    // データベース選択復元
+            //    //CurrentDatabase = Databases.SingleOrDefault(x=> x.Name == _client.AppConfig.SelectDatabase);
+            //};
+
+            _client.Initialize();
+
+
+            _client.ChangeDatabase(AppConfig.SelectDatabase);
+            NowPlayingTitle = _client.NowPlayingInfo.Title;
+        }
+
+        /// <summary>
+        /// VM用のコレクションを生成します。
+        /// </summary>
+        private void CreateReadOnlyDispatcherCollection()
+        {
+            _databases = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Databases,
+                        s => new DatabaseViewModel(s), DispatcherHelper.UIDispatcher);
+
+            _filterings = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Filterings,
+                        m => new FilteringViewModel(m), DispatcherHelper.UIDispatcher);
+
+            _groups = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Groups,
+                        m => new GroupViewModel(m), DispatcherHelper.UIDispatcher);
+
+            _libraries = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Libraries,
+                        m => new LibraryViewModel(m), DispatcherHelper.UIDispatcher);
+        }
+
+        /// <summary>
+        /// リスナーを生成します。
+        /// </summary>
+        private void CreateListener()
+        {
+            // データベース変更イベントリスナー
+            var databaseListener = new CollectionChangedEventListener(_client.Databases)
+            {
+                (sender, args) =>
+                {
+                    // データベース選択復元
+                    CurrentDatabase = Databases.SingleOrDefault(x=> x.Name == _client.AppConfig.SelectDatabase);
+                }
+            };
+            CompositeDisposable.Add(databaseListener);
+
+            // ライブラリ変更イベントリスナー
+            var libraryListener = new CollectionChangedEventListener(_client.Libraries)
+            {
+                (sender, args) => LibraryCount = _client.Libraries.Count()
+            };
+            CompositeDisposable.Add(libraryListener);
+
+            // フィルタリング変更イベントリスナー
+            var filteringListener = new CollectionChangedEventListener(_client.Filterings)
+            {
+                (sender, args) =>
+                {
+                    // フィルタリング選択復元
+                    var filteringSelect = _filterings.FirstOrDefault(x => x.Model.DisplayValue == AppConfig.SelectFiltering);
+                    if (filteringSelect != null) filteringSelect.IsSelected = true;
+                }
+            };
+            CompositeDisposable.Add(filteringListener);
 
             // 設定変更イベントリスナー
             var configListener = new PropertyChangedEventListener(AppConfig)
@@ -166,12 +312,6 @@ namespace Movselex.ViewModels
                 {"AccentColor", (sender, args) => AppearanceManager.Current.AccentColor = AppConfig.AccentColor },
             };
             CompositeDisposable.Add(configListener);
-
-            _client.Initialize();
-
-            //CurrentDatabase = _client.AppConfig.SelectDatabase;
-            _client.ChangeDatabase(_client.AppConfig.SelectDatabase);
-            NowPlayingTitle = _client.NowPlayingInfo.Title;
         }
 
         /* コマンド、プロパティの定義にはそれぞれ 

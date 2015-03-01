@@ -11,7 +11,7 @@
 			 xmlns:conv="clr-namespace:Movselex.Views.Converters"
 			 mc:Ignorable="d"
 			 d:DesignHeight="600" d:DesignWidth="1100"
-			 d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
+			 d:DataContext="{d:DesignInstance viewModels:HomeViewModel}"
 			 >
 
 	<!--
@@ -106,7 +106,7 @@
 				<ColumnDefinition />
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-			<ComboBox Grid.Column="0" Width="120" Height="25" Margin="5,0,5,0" ItemsSource="{Binding Databases}" SelectedValue="{Binding CurrentDatabase}">
+			<ComboBox Grid.Column="0" Width="120" Height="25" Margin="5,0,5,0" ItemsSource="{Binding Databases}" SelectedItem="{Binding CurrentDatabase}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal">
@@ -140,12 +140,12 @@
 				  HorizontalAlignment="Left" BorderThickness="0" Margin="5,10,5,0" IsReadOnly="True">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="" Width="*"
-									Binding="{Binding DisplayValue}" ElementStyle="{StaticResource TextItem}" />
+									Binding="{Binding Model.DisplayValue}" ElementStyle="{StaticResource TextItem}" />
 			</DataGrid.Columns>
 			
 			<DataGrid.RowStyle>
 				<Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
-					<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+					<Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 				</Style>
 			</DataGrid.RowStyle>
 		</DataGrid>
@@ -166,19 +166,19 @@
 				  BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Group" Width="*"
-					Binding="{Binding GroupName}" ElementStyle="{StaticResource TextItem}" />
+					Binding="{Binding Model.GroupName}" ElementStyle="{StaticResource TextItem}" />
 				<DataGridTextColumn Header="Drive" Width="70"
-									Binding="{Binding Drive}" ElementStyle="{StaticResource TextItem}" />
+									Binding="{Binding Model.Drive}" ElementStyle="{StaticResource TextItem}" />
 				<DataGridTextColumn Header="Size" Width="70"
-									Binding="{Binding FileSizeString}" ElementStyle="{StaticResource TextItemRight}" />
+									Binding="{Binding Model.FileSizeString}" ElementStyle="{StaticResource TextItemRight}" />
 				<DataGridTextColumn Header="Cnt" Width="50"
-									Binding="{Binding Count}" ElementStyle="{StaticResource TextItemRight}" />
+									Binding="{Binding Model.Count}" ElementStyle="{StaticResource TextItemRight}" />
 				<!--<DataGridTextColumn Header="★" Width="50" CanUserSort="False"
 									Binding="{Binding IsFavorite}" />-->
 				<DataGridTemplateColumn Header="" Width="30" CanUserSort="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Image Source="{Binding IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16">
+							<Image Source="{Binding Model.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16">
 								<i:Interaction.Triggers>
 									<i:EventTrigger EventName="MouseUp">
 										<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="SwitchFavorite"/>
@@ -191,7 +191,7 @@
 				<DataGridTemplateColumn Header="" Width="30" CanUserSort="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Image Source="{Binding IsCompleted, Converter={StaticResource IsCompleteConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
+							<Image Source="{Binding Model.IsCompleted, Converter={StaticResource IsCompleteConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
@@ -204,43 +204,43 @@
 		<DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" RowHeaderWidth="0" 
 				  IsReadOnly="True"  ItemsSource="{Binding Libraries}" AutoGenerateColumns="False" 
 				  Margin="5,10,0,0" BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}"
-                  SelectedIndex="{Binding LibrarySelectIndex}">
+				  SelectedIndex="{Binding LibrarySelectIndex}">
 			
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="" Width="10"
 									 />
 				<DataGridTextColumn Header="Group" Width="100" 
-									Binding="{Binding GroupName}" ElementStyle="{StaticResource TextItem}"  />
+									Binding="{Binding Model.GroupName}" ElementStyle="{StaticResource TextItem}"  />
 				<DataGridTextColumn Header="Title" Width="*"
-									Binding="{Binding Title}" ElementStyle="{StaticResource TextItem}" />
+									Binding="{Binding Model.Title}" ElementStyle="{StaticResource TextItem}" />
 				<DataGridTextColumn Header="No" Width="60"
-									Binding="{Binding No}" ElementStyle="{StaticResource TextItemRight}">
+									Binding="{Binding Model.No}" ElementStyle="{StaticResource TextItemRight}">
 				</DataGridTextColumn>
 				<DataGridTextColumn Header="Length" Width="80"
-									Binding="{Binding Length}" ElementStyle="{StaticResource TextItemRight}" >
+									Binding="{Binding Model.Length}" ElementStyle="{StaticResource TextItemRight}" >
 				</DataGridTextColumn>
 				<DataGridTemplateColumn Header="" Width="30" CanUserSort="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Image Source="{Binding IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
+							<Image Source="{Binding Model.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 				<DataGridTemplateColumn Header="" Width="30" CanUserSort="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Image Source="{Binding IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
+							<Image Source="{Binding Model.IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 				<DataGridTextColumn Header="Date" Width="100"
-									Binding="{Binding FileLastUpdateDate}" ElementStyle="{StaticResource TextItem}" />
+									Binding="{Binding Model.FileLastUpdateDate}" ElementStyle="{StaticResource TextItem}" />
 				<DataGridTextColumn Header="VideoSize" Width="100"
-									Binding="{Binding VideoSize}" ElementStyle="{StaticResource TextItem}" />
+									Binding="{Binding Model.VideoSize}" ElementStyle="{StaticResource TextItem}" />
 				<DataGridTextColumn Header="D" Width="50"
-									Binding="{Binding Drive}" ElementStyle="{StaticResource TextItem}" />
+									Binding="{Binding Model.Drive}" ElementStyle="{StaticResource TextItem}" />
 				<DataGridTextColumn Header="Cnt" Width="60"
-									Binding="{Binding PlayCount}" ElementStyle="{StaticResource TextItemRight}">
+									Binding="{Binding Model.PlayCount}" ElementStyle="{StaticResource TextItemRight}">
 				</DataGridTextColumn>
 			</DataGrid.Columns>
 		</DataGrid>
@@ -263,14 +263,14 @@
 				<ColumnDefinition />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
-			<Button Content="Throw" Margin="5">
+			<Button Content="Throw" Margin="5" IsEnabled="{Binding IsThrowable}">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="Click">
 						<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="Throw"/>
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 			</Button>
-			<Button Grid.Column="1" Content="Shuffle" Margin="0,5,0,5">
+			<Button Grid.Column="1" Content="Shuffle" Margin="0,5,0,5" IsEnabled="{Binding IsShufflable}">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="Click">
 						<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="Shuffle"/>

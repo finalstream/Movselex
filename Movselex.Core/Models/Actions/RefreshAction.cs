@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using FinalstreamCommons.Utils;
 using FinalstreamCommons.Extentions;
+using NLog;
 
 namespace Movselex.Core.Models.Actions
 {
     internal class RefreshAction : MovselexActionBase
     {
-
+        private readonly Logger _log = LogManager.GetCurrentClassLogger();
         private FilteringMode _filteringMode;
 
         public RefreshAction(FilteringMode filteringMode)
@@ -25,8 +26,9 @@ namespace Movselex.Core.Models.Actions
             // データベース一覧
             var dbnames = Directory.GetFiles(
                 ApplicationDefinitions.DatabaseDirectory, "*.db", SearchOption.TopDirectoryOnly).Select(Path.GetFileNameWithoutExtension);
+
             client.Databases.DiffUpdate(dbnames.ToArray());
-            
+
             // フィルタリングロード
             client.MovselexFiltering.Load();
 

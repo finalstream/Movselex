@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Livet;
 
 namespace Movselex.Core.Models
@@ -5,14 +6,14 @@ namespace Movselex.Core.Models
     internal class MovselexGroup
     {
 
-        public DispatcherCollection<GroupItem> GroupItems { get; private set; }
+        public ObservableCollection<GroupItem> GroupItems { get; private set; }
 
         private readonly IDatabaseAccessor _databaseAccessor;
 
         public MovselexGroup(IDatabaseAccessor databaseAccessor)
         {
             _databaseAccessor = databaseAccessor;
-            GroupItems = new DispatcherCollection<GroupItem>(DispatcherHelper.UIDispatcher);
+            GroupItems = new ObservableCollection<GroupItem>();
         }
 
 

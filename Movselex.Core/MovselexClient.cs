@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -41,20 +42,20 @@ namespace Movselex.Core
 
         #endregion
 
-        public IEnumerable<FilteringItem> Filterings { 
+        public ObservableCollection<FilteringItem> Filterings { 
             get
             {
                 return MovselexFiltering.FilteringItems;
             } 
         }
-        public IEnumerable<LibraryItem> Libraries
+        public ObservableCollection<LibraryItem> Libraries
         {
             get
             {
                 return MovselexLibrary.LibraryItems;
             }
         }
-        public IEnumerable<GroupItem> Groups
+        public ObservableCollection<GroupItem> Groups
         {
             get
             {
@@ -64,7 +65,7 @@ namespace Movselex.Core
 
         public INowPlayingInfo NowPlayingInfo { get; private set; }
         public MovselexAppConfig AppConfig { get; private set; }
-        public DispatcherCollection<string> Databases { get; private set; }
+        public ObservableCollection<string> Databases { get; private set; }
         public MovselexFiltering MovselexFiltering { get; private set; }
         public MovselexLibrary MovselexLibrary { get; private set; }
         public MovselexGroup MovselexGroup { get; private set; }
@@ -86,7 +87,7 @@ namespace Movselex.Core
             MovselexFiltering = new MovselexFiltering();
             MovselexLibrary = new MovselexLibrary(_databaseAccessor);
             MovselexGroup = new MovselexGroup(_databaseAccessor);
-            Databases = new DispatcherCollection<string>(DispatcherHelper.UIDispatcher);
+            Databases = new ObservableCollection<string>();
             NowPlayingInfo = new NowPlayingInfo();
         }
 
@@ -132,7 +133,6 @@ namespace Movselex.Core
         {
             if (databaseName == null) return;
             _databaseAccessor.ChangeDatabase(databaseName);
-            AppConfig.SelectDatabase = databaseName;
             //DatabaseAccessor = new DatabaseAccessor(databaseName);
             Refresh(AppConfig.FilteringMode);
         }

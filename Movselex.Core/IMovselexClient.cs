@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -18,17 +19,17 @@ namespace Movselex.Core
         /// <summary>
         /// フィルタリング情報。
         /// </summary>
-        IEnumerable<FilteringItem> Filterings { get; }
+        ObservableCollection<FilteringItem> Filterings { get; }
 
         /// <summary>
         /// ライブラリ情報。
         /// </summary>
-        IEnumerable<LibraryItem> Libraries { get; }
+        ObservableCollection<LibraryItem> Libraries { get; }
 
         /// <summary>
         /// グループ情報。
         /// </summary>
-        IEnumerable<GroupItem> Groups { get; }
+        ObservableCollection<GroupItem> Groups { get; }
 
         /// <summary>
         /// 再生中情報。
@@ -40,7 +41,7 @@ namespace Movselex.Core
         /// </summary>
         MovselexAppConfig AppConfig { get; }
 
-        DispatcherCollection<string> Databases { get; }
+        ObservableCollection<string> Databases { get; }
 
         /// <summary>
         /// 初期化を行います。
