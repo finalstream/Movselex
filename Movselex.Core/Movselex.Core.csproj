@@ -70,10 +70,12 @@
     <Compile Include="ApplicationDefinitions.cs" />
     <Compile Include="IMovselexClient.cs" />
     <Compile Include="Models\Actions\EmptyAction.cs" />
+    <Compile Include="Models\Actions\InitializeAction.cs" />
     <Compile Include="Models\Actions\MovselexActionBase.cs" />
     <Compile Include="Models\Actions\RefreshAction.cs" />
     <Compile Include="Models\Actions\ShuffleLibraryAction.cs" />
     <Compile Include="Models\Actions\ThrowAction.cs" />
+    <Compile Include="Models\Actions\UpdateLibraryAction.cs" />
     <Compile Include="Models\DatabaseAccessor.cs" />
     <Compile Include="Models\FilteringItem.cs" />
     <Compile Include="Models\FilteringMode.cs" />
@@ -81,10 +83,13 @@
     <Compile Include="Models\IDatabaseAccessor.cs" />
     <Compile Include="Models\IMovselexAppConfig.cs" />
     <Compile Include="Models\IMovselexFiltering.cs" />
+    <Compile Include="Models\IMovselexGroup.cs" />
+    <Compile Include="Models\IMovselexLibrary.cs" />
     <Compile Include="Models\INowPlayingInfo.cs" />
     <Compile Include="Models\LibraryCondition.cs" />
     <Compile Include="Models\LibraryItem.cs" />
     <Compile Include="Models\LibraryMode.cs" />
+    <Compile Include="Models\LibraryUpdater.cs" />
     <Compile Include="Models\MediaPlayerClassicThrower.cs" />
     <Compile Include="Models\MediaThrower.cs" />
     <Compile Include="Models\PlayerMediaCrawler.cs" />
@@ -104,6 +109,11 @@
     <Compile Include="MpcPlayerInfoGetter.cs" />
     <Compile Include="PlayerInfoGetter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\SQLResource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -120,6 +130,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\SQLResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>

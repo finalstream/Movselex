@@ -16,6 +16,12 @@ namespace Movselex.Core.Models.Actions
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
         private FilteringMode _filteringMode;
 
+
+        public RefreshAction()
+        {
+            
+        }
+
         public RefreshAction(FilteringMode filteringMode)
         {
             _filteringMode = filteringMode;

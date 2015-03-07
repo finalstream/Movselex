@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Mime;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +27,22 @@ namespace Movselex.Core
         private readonly ActionExecuter<MovselexClient> _actionExecuter;
         private readonly IDatabaseAccessor _databaseAccessor;
         private PlayerMediaCrawler _playerMediaCrawler;
+
+        #region Initializedイベント
+
+        // Event object
+        public event EventHandler Initialized;
+
+        protected virtual void OnInitialized(EventArgs e)
+        {
+            var handler = this.Initialized;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        #endregion
 
         #region Refreshedイベント
 
@@ -69,6 +87,7 @@ namespace Movselex.Core
         public MovselexFiltering MovselexFiltering { get; private set; }
         public MovselexLibrary MovselexLibrary { get; private set; }
         public MovselexGroup MovselexGroup { get; private set; }
+        public LibraryUpdater LibraryUpdater { get; private set; }
 
         
 
@@ -89,6 +108,7 @@ namespace Movselex.Core
             MovselexGroup = new MovselexGroup(_databaseAccessor);
             Databases = new ObservableCollection<string>();
             NowPlayingInfo = new NowPlayingInfo();
+            LibraryUpdater = new LibraryUpdater();
         }
 
         /// <summary>
@@ -101,9 +121,18 @@ namespace Movselex.Core
 
             _playerMediaCrawler.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
             _playerMediaCrawler.Start();
+
+            // 初回データベース読み込みを行う
+            this.Initialized += (sender, args) =>
+            {
+                UpdateLibrary();
+                _log.Debug("Initialized MovselexClinet.");
+            };
+            Initialize(AppConfig.SelectDatabase);
             
-            _log.Debug("Initialized MovselexClinet.");
         }
+
+        
 
         /// <summary>
         /// 終了します。
@@ -123,11 +152,20 @@ namespace Movselex.Core
             _actionExecuter.Post(action);
         }
 
-
         public void ExecEmpty()
         {
             _actionExecuter.Post(new EmptyAction());
         }
+
+
+        public void Initialize(string databaseName)
+        {
+            _databaseAccessor.ChangeDatabase(databaseName);
+            var action = new InitializeAction();
+            action.AfterAction = () => OnInitialized(EventArgs.Empty);
+            _actionExecuter.Post(action);
+        }
+
 
         public void ChangeDatabase(string databaseName)
         {
@@ -164,6 +202,11 @@ namespace Movselex.Core
         {
             var filePaths = MovselexLibrary.LibraryItems.Skip(librarySelectIndex).Take(AppConfig.LimitNum).Select(x=>x.FilePath);
             _actionExecuter.Post(new ThrowAction(filePaths.ToArray()));
+        }
+
+        private void UpdateLibrary()
+        {
+            _actionExecuter.Post(new UpdateLibraryAction());
         }
 
         #region Dispose

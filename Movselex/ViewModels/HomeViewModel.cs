@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading;
+using System.Windows;
+using FirstFloor.ModernUI;
 using FirstFloor.ModernUI.Presentation;
 using Livet;
 using Livet.EventListeners;
 using Movselex.Core;
 using Movselex.Core.Models;
 using NLog;
+using Resources = Movselex.Properties.Resources;
 
 namespace Movselex.ViewModels
 {
@@ -37,34 +41,6 @@ namespace Movselex.ViewModels
         /// </summary>
         private ReadOnlyDispatcherCollection<LibraryViewModel> _libraries;
 
-        /// <summary>
-        ///     新しいインスタンスを初期化します。
-        /// </summary>
-        public HomeViewModel()
-        {
-            _client = MovselexClientFactory.Create(
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
-
-            CreateReadOnlyDispatcherCollection();
-            CreateListener();
-
-            //_client.Refreshed += (sender, args) =>
-            //{
-            //    //LibraryCount = _client.Libraries.Count();
-            //    // フィルタリング選択復元
-            //    //var filteringSelect = _filterings.FirstOrDefault(x => x.Model.DisplayValue == AppConfig.SelectFiltering);
-            //    //if (filteringSelect != null) filteringSelect.IsSelected = true;
-            //    // データベース選択復元
-            //    //CurrentDatabase = Databases.SingleOrDefault(x=> x.Name == _client.AppConfig.SelectDatabase);
-            //};
-
-            _client.Initialize();
-
-
-            _client.ChangeDatabase(AppConfig.SelectDatabase);
-            NowPlayingTitle = _client.NowPlayingInfo.Title;
-        }
-
         public MovselexAppConfig AppConfig
         {
             get { return _client.AppConfig; }
@@ -91,19 +67,19 @@ namespace Movselex.ViewModels
         }
 
         /// <summary>
-        ///     再生中リスト情報。
-        /// </summary>
-        public IEnumerable<PlayingItem> Playings
-        {
-            get { return null; }
-        }
-
-        /// <summary>
         ///     再生中情報。
         /// </summary>
         public INowPlayingInfo NowPlayingInfo
         {
             get { return _client.NowPlayingInfo; }
+        }
+
+        /// <summary>
+        ///     再生中リスト情報。
+        /// </summary>
+        public IEnumerable<PlayingItem> Playings
+        {
+            get { return null; }
         }
 
         #region IsThrowable変更通知プロパティ
@@ -153,23 +129,6 @@ namespace Movselex.ViewModels
                 _libraryCount = value;
                 IsThrowable = !String.IsNullOrEmpty(AppConfig.MpcExePath) && value > 0 && value <= AppConfig.LimitNum;
                 IsShufflable = value > 0;
-                RaisePropertyChanged();
-            }
-        }
-
-        #endregion
-
-        #region NowPlayingTitle変更通知プロパティ
-
-        private string _nowPlayingTitle;
-
-        public string NowPlayingTitle
-        {
-            get { return _nowPlayingTitle; }
-            set
-            {
-                if (_nowPlayingTitle == value) return;
-                _nowPlayingTitle = value;
                 RaisePropertyChanged();
             }
         }
@@ -230,6 +189,31 @@ namespace Movselex.ViewModels
         }
 
         #endregion
+
+
+        /// <summary>
+        ///     新しいインスタンスを初期化します。
+        /// </summary>
+        public HomeViewModel()
+        {
+            _client = MovselexClientFactory.Create(
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
+
+            CreateReadOnlyDispatcherCollection();
+            CreateListener();
+
+            //_client.Refreshed += (sender, args) =>
+            //{
+            //    //LibraryCount = _client.Libraries.Count();
+            //    // フィルタリング選択復元
+            //    //var filteringSelect = _filterings.FirstOrDefault(x => x.Model.DisplayValue == AppConfig.SelectFiltering);
+            //    //if (filteringSelect != null) filteringSelect.IsSelected = true;
+            //    // データベース選択復元
+            //    //CurrentDatabase = Databases.SingleOrDefault(x=> x.Name == _client.AppConfig.SelectDatabase);
+            //};
+
+            _client.Initialize();
+        }
 
 
         /// <summary>

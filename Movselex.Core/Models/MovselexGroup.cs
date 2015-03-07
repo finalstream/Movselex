@@ -3,7 +3,7 @@ using Livet;
 
 namespace Movselex.Core.Models
 {
-    internal class MovselexGroup
+    internal class MovselexGroup : IMovselexGroup
     {
 
         public ObservableCollection<GroupItem> GroupItems { get; private set; }

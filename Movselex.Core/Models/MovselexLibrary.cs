@@ -11,7 +11,7 @@ namespace Movselex.Core.Models
     /// <summary>
     /// Movselexで扱うライブラリを表します。
     /// </summary>
-    class MovselexLibrary : NotificationObject
+    class MovselexLibrary : NotificationObject, IMovselexLibrary
     {
         public ObservableCollection<LibraryItem> LibraryItems { get; private set; }
 

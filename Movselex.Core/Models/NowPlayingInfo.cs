@@ -16,7 +16,7 @@ namespace Movselex.Core.Models
 
         public string Title
         {
-            get { return _title; }
+            get { return string.IsNullOrEmpty(_title) ? "" : string.Format("{0} {1}", Properties.Resources.NowPlayingLabel , _title); }
             set
             {
                 if (_title == value) return;
