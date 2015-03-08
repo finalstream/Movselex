@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using FinalstreamCommons.Utils;
 
@@ -17,8 +18,8 @@ namespace Movselex.Core.Models
         /// <summary>
         /// グループID
         /// </summary>
-        /// <remarks>0は未登録を表します。</remarks>
-        public long GroupId { get; private set; }
+        /// <remarks>nullは未登録を表します。</remarks>
+        public long? GroupId { get; private set; }
 
         public string GroupName { get; private set; }
 
@@ -72,7 +73,9 @@ namespace Movselex.Core.Models
 
         public MediaFile(string filepath)
         {
+            GroupId = null;
             FilePath = filepath;
+            Rating = RatingType.Nothing;
 
             var s = Path.GetFileNameWithoutExtension(FilePath).Replace("　", " ").Replace("（", "(").Replace("）", ")").Replace("［", "[").Replace("］", "]").Replace("#", "").Replace("RAW", "");
             MovieTitle = Regex.Replace(s, @"[(\[].+?[)\]]", "").Trim();
