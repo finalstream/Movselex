@@ -79,5 +79,8 @@ namespace Movselex.Core
         /// </summary>
         /// <param name="librarySelectIndex"></param>
         void Throw(int librarySelectIndex);
+
+
+        void InterruptThrow(int librarySelectIndex);
     }
 }

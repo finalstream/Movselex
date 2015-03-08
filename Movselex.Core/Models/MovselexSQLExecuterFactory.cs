@@ -22,7 +22,13 @@ namespace Movselex.Core.Models
 
             if (!File.Exists(databaseFilePath)) CreateBlankDatabase(databaseDirectory, databaseFilePath);
 
-            return new SQLExecuter(databaseFilePath, new [] { typeof(SumStringSQLiteFunction), typeof(GetFileSizeSQLiteFunction), typeof(IsMatchMigemoSQLiteFunction) });
+            return new SQLExecuter(databaseFilePath, new []
+            {
+                typeof(SumStringSQLiteFunction), 
+                typeof(GetFileSizeSQLiteFunction), 
+                typeof(IsMatchMigemoSQLiteFunction),
+                typeof(GetDirectoryPathSQLiteFunction)
+            });
         }
 
         private static void CreateBlankDatabase(string databaseDirecotry, string databaseFilePath)

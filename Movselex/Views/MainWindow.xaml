@@ -13,7 +13,7 @@
 		Title="Movselex" Height="600" Width="1100"
 		WindowStartupLocation="CenterScreen"
 		ContentSource="/Views/Pages/Home.xaml"
-		Style="{StaticResource ModernWindowEx}"  
+		Style="{StaticResource ModernWindowEx}" Icon="/Movselex;component/movselex.ico"  
 		>
 
 	<!--

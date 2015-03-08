@@ -242,7 +242,12 @@
 									Binding="{Binding Model.PlayCount}" ElementStyle="{StaticResource TextItemRight}">
 				</DataGridTextColumn>
 			</DataGrid.Columns>
-		</DataGrid>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DoubleClickLibrary"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
 
 		<!-- PlayingGrid -->
 		<DataGrid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="200"  

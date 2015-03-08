@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using FinalstreamCommons.Builders;
+using FinalstreamCommons.Models;
 using NLog;
 
 namespace Movselex.Core.Models
@@ -48,7 +50,6 @@ namespace Movselex.Core.Models
 
                 i++;
             }
-
             
         }
     }

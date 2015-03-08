@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Net.Mime;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using FinalstreamCommons;
+using System.Reflection;
 using FinalstreamCommons.Models;
-using Livet;
-using Livet.EventListeners;
 using Movselex.Core.Models;
 using Movselex.Core.Models.Actions;
 using NLog;
@@ -25,7 +15,7 @@ namespace Movselex.Core
 
         private readonly string _appConfigFilePath;
         private readonly ActionExecuter<MovselexClient> _actionExecuter;
-        private readonly IDatabaseAccessor _databaseAccessor;
+        private readonly IMovselexDatabaseAccessor _databaseAccessor;
         private PlayerMediaCrawler _playerMediaCrawler;
 
         #region Initializedイベント
@@ -88,27 +78,27 @@ namespace Movselex.Core
         public MovselexLibrary MovselexLibrary { get; private set; }
         public MovselexGroup MovselexGroup { get; private set; }
         public LibraryUpdater LibraryUpdater { get; private set; }
-
-        
-
+        public LinkedListEx<string> PlayingList { get; private set; }
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
         /// </summary>
         /// <param name="appConfigFilePath"></param>
-        public MovselexClient(string appConfigFilePath) : base()
+        public MovselexClient(Assembly executingAssembly, string appConfigFilePath)
+            : base(executingAssembly)
         {
             _appConfigFilePath = appConfigFilePath;
             
             AppConfig = new MovselexAppConfig();
             _actionExecuter = new ActionExecuter<MovselexClient>(this);
-            _databaseAccessor = new DatabaseAccessor(AppConfig);
+            _databaseAccessor = new MovselexDatabaseAccessor(AppConfig);
             MovselexFiltering = new MovselexFiltering();
-            MovselexLibrary = new MovselexLibrary(_databaseAccessor);
             MovselexGroup = new MovselexGroup(_databaseAccessor);
+            MovselexLibrary = new MovselexLibrary(_databaseAccessor, MovselexGroup);
             Databases = new ObservableCollection<string>();
             NowPlayingInfo = new NowPlayingInfo();
-            LibraryUpdater = new LibraryUpdater();
+            LibraryUpdater = new LibraryUpdater(MovselexLibrary, AppConfig.SupportExtentions);
+            PlayingList = new LinkedListEx<string>();
         }
 
         /// <summary>
@@ -116,6 +106,8 @@ namespace Movselex.Core
         /// </summary>
         protected override void InitializeCore()
         {
+
+
             AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
             _playerMediaCrawler = new PlayerMediaCrawler(AppConfig.MpcExePath);
 
@@ -145,7 +137,7 @@ namespace Movselex.Core
         /// <summary>
         /// すべてのデータをリフレッシュします。
         /// </summary>
-        private void Refresh(FilteringMode filteringMode)
+        private void Refresh()
         {
             var action = new RefreshAction(AppConfig.FilteringMode);
             action.AfterAction = () => OnRefreshed(EventArgs.Empty);
@@ -171,8 +163,8 @@ namespace Movselex.Core
         {
             if (databaseName == null) return;
             _databaseAccessor.ChangeDatabase(databaseName);
-            //DatabaseAccessor = new DatabaseAccessor(databaseName);
-            Refresh(AppConfig.FilteringMode);
+            //MovselexDatabaseAccessor = new MovselexDatabaseAccessor(databaseName);
+            Refresh();
         }
 
         public void SwitchLibraryMode()
@@ -181,14 +173,14 @@ namespace Movselex.Core
             libMode++;
             if (libMode > Enum.GetValues(typeof (LibraryMode)).Cast<LibraryMode>().Max()) libMode =  LibraryMode.Normal;
             AppConfig.LibraryMode = libMode;
-            Refresh(AppConfig.FilteringMode);
+            Refresh();
         }
 
         public void ChangeFiltering(FilteringItem filteringItem)
         {
             if (Filterings.FirstOrDefault(x => x.IsSelected) != null) _log.Debug(Filterings.FirstOrDefault(x => x.IsSelected).DisplayValue);
             AppConfig.SelectFiltering = filteringItem.DisplayValue;
-            Refresh(AppConfig.FilteringMode);
+            Refresh();
         }
 
         public void ShuffleLibrary()
@@ -204,6 +196,11 @@ namespace Movselex.Core
             _actionExecuter.Post(new ThrowAction(filePaths.ToArray()));
         }
 
+        public void InterruptThrow(int librarySelectIndex)
+        {
+            _actionExecuter.Post(new ThrowAction(MovselexLibrary.LibraryItems[librarySelectIndex].FilePath));
+        }
+
         private void UpdateLibrary()
         {
             _actionExecuter.Post(new UpdateLibraryAction());
@@ -213,6 +210,7 @@ namespace Movselex.Core
 
         // Flag: Has Dispose already been called?
         private bool disposed = false;
+        
 
         // Public implementation of Dispose pattern callable by consumers.
         public void Dispose()

@@ -157,7 +157,7 @@ FROM MOVLIST
 WHERE FILEPATH = :FilePath</value>
     <comment>既にDBに存在するか確認するSQL(filepath)</comment>
   </data>
-  <data name="SQL003" xml:space="preserve">
+  <data name="InsertLibrary" xml:space="preserve">
     <value>INSERT INTO MOVLIST(
   FILEPATH,
   TITLE,
@@ -178,28 +178,28 @@ WHERE FILEPATH = :FilePath</value>
   FILESIZE,
   PLAYED
 ) VALUES (
-  :FilePath,
-  :Title,
-  :No,
-  :Gid,
-  :Length,
-  :Codec,
-  :Rating,
-  :VideoSize,
-  :PlayCount,
-  :Date,
-  :NotFound,
-  :Option,
-  :Tag,
-  :AddDate,
-  :LastPlayDate,
-  SUBSTR(:FilePath,1,1),
-  :Filesize,
-  :Played
+  @FilePath,
+  @Title,
+  @No,
+  @Gid,
+  @Length,
+  @Codec,
+  @Rating,
+  @VideoSize,
+  @PlayCount,
+  @Date,
+  @NotFound,
+  @Option,
+  @Tag,
+  @AddDate,
+  @LastPlayDate,
+  SUBSTR(@FilePath,1,1),
+  @Filesize,
+  @Played
 )</value>
     <comment>プレイリストにレコードを挿入するSQL</comment>
   </data>
-  <data name="SQL004" xml:space="preserve">
+  <data name="SelectLastInsertRowid" xml:space="preserve">
     <value>SELECT last_insert_rowid() AS LASTROWID</value>
     <comment>LASTROWIDを取得</comment>
   </data>
@@ -279,19 +279,19 @@ GID = :Gid
 WHERE ID = :Id</value>
     <comment>GIDを更新</comment>
   </data>
-  <data name="SQL026" xml:space="preserve">
+  <data name="UpdateGroupLastUpdateDatetime" xml:space="preserve">
     <value>UPDATE MOVGROUPLIST 
 SET
 LASTUPDATE = :LastUpdate
 WHERE GID = :Gid</value>
     <comment>グループ最終更新日時更新</comment>
   </data>
-  <data name="SQL027" xml:space="preserve">
+  <data name="SelectGroupKeyword" xml:space="preserve">
     <value>SELECT 
   GID,
   GROUPNAME
 FROM MOVGROUPLIST 
-WHERE KEYWORD = :Keyword</value>
+WHERE KEYWORD = @Keyword</value>
     <comment>キーワード検索</comment>
   </data>
   <data name="SQL028" xml:space="preserve">
@@ -391,17 +391,17 @@ FROM MOVLIST ML inner join MOVGROUPLIST MGL ON ML.GID= MGL.GID
 WHERE FILEPATH like :FilePath limit 1</value>
     <comment>再生中のGID取得</comment>
   </data>
-  <data name="SQL043" xml:space="preserve">
+  <data name="SelectGroupIdCount" xml:space="preserve">
     <value>SELECT count(GID) GCNT
 FROM MOVLIST
-WHERE GID = :Gid
+WHERE GID = @Gid
 GROUP BY GID</value>
     <comment>GID指定で件数取得</comment>
   </data>
-  <data name="SQL044" xml:space="preserve">
+  <data name="SelectFavGroupIdCount" xml:space="preserve">
     <value>SELECT count(ID)
 FROM MOVLIST
-WHERE GID = :Gid
+WHERE GID = @Gid
 AND RATING = 9</value>
     <comment>GIDのお気に入りの件数取得</comment>
   </data>
@@ -477,12 +477,16 @@ NOTFOUND = 0
 WHERE Id = :Id</value>
     <comment>ファイルパス更新</comment>
   </data>
-  <data name="SQL054" xml:space="preserve">
+  <data name="SelectAllFilePath" xml:space="preserve">
     <value>SELECT FILEPATH FROM MOVLIST GROUP BY FILEPATH</value>
     <comment>重複チェック用SQL（ファイルパス）</comment>
   </data>
   <data name="SelectShuffleLibrary" xml:space="preserve">
     <value>SELECT * FROM (#LastExecSql#) ORDER BY random() limit @LimitNum</value>
     <comment>ライブラリシャッフル用</comment>
+  </data>
+  <data name="SelectMostUseDirectoryPath" xml:space="preserve">
+    <value>SELECT GETDIRPATH(FILEPATH) FP, COUNT(*) CNT FROM MOVLIST GROUP BY FP ORDER BY CNT DESC</value>
+    <comment>一番使用しているディレクトリを取得。</comment>
   </data>
 </root>

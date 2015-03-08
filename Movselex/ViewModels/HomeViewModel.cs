@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Reflection;
 using System.Threading;
 using System.Windows;
+using FinalstreamCommons.Extentions;
+using FinalstreamCommons.Models;
 using FirstFloor.ModernUI;
 using FirstFloor.ModernUI.Presentation;
 using Livet;
@@ -196,7 +199,8 @@ namespace Movselex.ViewModels
         /// </summary>
         public HomeViewModel()
         {
-            _client = MovselexClientFactory.Create(
+            
+            _client = MovselexClientFactory.Create(Assembly.GetExecutingAssembly(),
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
 
             CreateReadOnlyDispatcherCollection();
@@ -349,6 +353,11 @@ namespace Movselex.ViewModels
             _client.Throw(LibrarySelectIndex);
         }
 
+        public void DoubleClickLibrary()
+        {
+            _log.Debug("Library DoubleClicked. {0}", Libraries[LibrarySelectIndex].ToJson());
+            _client.InterruptThrow(LibrarySelectIndex);
+        }
 
         protected override void Dispose(bool disposing)
         {

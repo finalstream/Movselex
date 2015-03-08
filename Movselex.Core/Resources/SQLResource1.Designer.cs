@@ -61,6 +61,99 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   INSERT INTO MOVLIST(
+        ///  FILEPATH,
+        ///  TITLE,
+        ///  NO,
+        ///  GID,
+        ///  LENGTH,
+        ///  CODEC,
+        ///  RATING,
+        ///  VIDEOSIZE,
+        ///  PLAYCOUNT,
+        ///  DATE,
+        ///  NOTFOUND,
+        ///  OPTION,
+        ///  TAG,
+        ///  ADDDATE,
+        ///  LASTPLAYDATE,
+        ///  DRIVE,
+        ///  FILESIZE,
+        ///  PLAYED
+        ///) VALUES (
+        ///  @FilePath,
+        ///  @Title,
+        ///  @No,
+        ///  @Gid,
+        ///  @Length,
+        ///  @Codec,
+        ///  @Rating,
+        ///  @VideoSize,
+        ///  @PlayCount,
+        ///  @Date,
+        ///  @NotFound,
+        ///  @Option,
+        ///  @Tag,
+        ///  @AddDate,
+        ///  @LastPlayDate,
+        ///  SUBSTR(@FilePath,1,1),
+        ///  @Filesize,
+        ///  @Played
+        ///) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string InsertLibrary {
+            get {
+                return ResourceManager.GetString("InsertLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   SELECT FILEPATH FROM MOVLIST GROUP BY FILEPATH に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectAllFilePath {
+            get {
+                return ResourceManager.GetString("SelectAllFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   SELECT count(ID)
+        ///FROM MOVLIST
+        ///WHERE GID = @Gid
+        ///AND RATING = 9 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectFavGroupIdCount {
+            get {
+                return ResourceManager.GetString("SelectFavGroupIdCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   SELECT count(GID) GCNT
+        ///FROM MOVLIST
+        ///WHERE GID = @Gid
+        ///GROUP BY GID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectGroupIdCount {
+            get {
+                return ResourceManager.GetString("SelectGroupIdCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   SELECT 
+        ///  GID,
+        ///  GROUPNAME
+        ///FROM MOVGROUPLIST 
+        ///WHERE KEYWORD = @Keyword に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectGroupKeyword {
+            get {
+                return ResourceManager.GetString("SelectGroupKeyword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   SELECT GGPL.GID,GNAME GroupName,CNT Count,cast(FAVCNT as integer) FavoriteCount, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE IsCompleted
         ///FROM (SELECT GPL.GID,GPL.GROUPNAME GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE
         ///FROM (#LASTEXECSQL#) PL
@@ -73,6 +166,15 @@ namespace Movselex.Core.Resources {
         internal static string SelectGroupList {
             get {
                 return ResourceManager.GetString("SelectGroupList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   SELECT last_insert_rowid() AS LASTROWID に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectLastInsertRowid {
+            get {
+                return ResourceManager.GetString("SelectLastInsertRowid", resourceCulture);
             }
         }
         
@@ -104,6 +206,15 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   SELECT GETDIRPATH(FILEPATH) FP, COUNT(*) CNT FROM MOVLIST GROUP BY FP ORDER BY CNT DESC に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectMostUseDirectoryPath {
+            get {
+                return ResourceManager.GetString("SelectMostUseDirectoryPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   SELECT * FROM (#LastExecSql#) ORDER BY random() limit @LimitNum に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SelectShuffleLibrary {
@@ -121,62 +232,6 @@ namespace Movselex.Core.Resources {
         internal static string SQL002 {
             get {
                 return ResourceManager.GetString("SQL002", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   INSERT INTO MOVLIST(
-        ///  FILEPATH,
-        ///  TITLE,
-        ///  NO,
-        ///  GID,
-        ///  LENGTH,
-        ///  CODEC,
-        ///  RATING,
-        ///  VIDEOSIZE,
-        ///  PLAYCOUNT,
-        ///  DATE,
-        ///  NOTFOUND,
-        ///  OPTION,
-        ///  TAG,
-        ///  ADDDATE,
-        ///  LASTPLAYDATE,
-        ///  DRIVE,
-        ///  FILESIZE,
-        ///  PLAYED
-        ///) VALUES (
-        ///  :FilePath,
-        ///  :Title,
-        ///  :No,
-        ///  :Gid,
-        ///  :Length,
-        ///  :Codec,
-        ///  :Rating,
-        ///  :VideoSize,
-        ///  :PlayCount,
-        ///  :Date,
-        ///  :NotFound,
-        ///  :Option,
-        ///  :Tag,
-        ///  :AddDate,
-        ///  :LastPlayDate,
-        ///  SUBSTR(:FilePath,1,1),
-        ///  :Filesize,
-        ///  :Played
-        ///) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL003 {
-            get {
-                return ResourceManager.GetString("SQL003", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   SELECT last_insert_rowid() AS LASTROWID に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL004 {
-            get {
-                return ResourceManager.GetString("SQL004", resourceCulture);
             }
         }
         
@@ -308,31 +363,6 @@ namespace Movselex.Core.Resources {
         internal static string SQL025 {
             get {
                 return ResourceManager.GetString("SQL025", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   UPDATE MOVGROUPLIST 
-        ///SET
-        ///LASTUPDATE = :LastUpdate
-        ///WHERE GID = :Gid に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL026 {
-            get {
-                return ResourceManager.GetString("SQL026", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   SELECT 
-        ///  GID,
-        ///  GROUPNAME
-        ///FROM MOVGROUPLIST 
-        ///WHERE KEYWORD = :Keyword に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL027 {
-            get {
-                return ResourceManager.GetString("SQL027", resourceCulture);
             }
         }
         
@@ -509,30 +539,6 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   SELECT count(GID) GCNT
-        ///FROM MOVLIST
-        ///WHERE GID = :Gid
-        ///GROUP BY GID に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL043 {
-            get {
-                return ResourceManager.GetString("SQL043", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   SELECT count(ID)
-        ///FROM MOVLIST
-        ///WHERE GID = :Gid
-        ///AND RATING = 9 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL044 {
-            get {
-                return ResourceManager.GetString("SQL044", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   UPDATE MOVLIST
         ///SET TITLE = :Title
         ///WHERE ID = :Id に類似しているローカライズされた文字列を検索します。
@@ -650,11 +656,14 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   SELECT FILEPATH FROM MOVLIST GROUP BY FILEPATH に類似しているローカライズされた文字列を検索します。
+        ///   UPDATE MOVGROUPLIST 
+        ///SET
+        ///LASTUPDATE = :LastUpdate
+        ///WHERE GID = :Gid に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string SQL054 {
+        internal static string UpdateGroupLastUpdateDatetime {
             get {
-                return ResourceManager.GetString("SQL054", resourceCulture);
+                return ResourceManager.GetString("UpdateGroupLastUpdateDatetime", resourceCulture);
             }
         }
     }
