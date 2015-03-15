@@ -78,6 +78,7 @@
     <Compile Include="Models\Actions\EmptyAction.cs" />
     <Compile Include="Models\Actions\InitializeAction.cs" />
     <Compile Include="Models\Actions\MovselexActionBase.cs" />
+    <Compile Include="Models\Actions\PlayerMediaCrawlerAction.cs" />
     <Compile Include="Models\Actions\RefreshAction.cs" />
     <Compile Include="Models\Actions\ShuffleLibraryAction.cs" />
     <Compile Include="Models\Actions\ThrowAction.cs" />

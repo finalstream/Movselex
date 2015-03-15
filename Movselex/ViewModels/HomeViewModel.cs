@@ -355,9 +355,11 @@ namespace Movselex.ViewModels
 
         public void DoubleClickLibrary()
         {
-            _log.Debug("Library DoubleClicked. {0}", Libraries[LibrarySelectIndex].ToJson());
+            Libraries[LibrarySelectIndex].DebugWriteJson();
             _client.InterruptThrow(LibrarySelectIndex);
         }
+
+        
 
         protected override void Dispose(bool disposing)
         {

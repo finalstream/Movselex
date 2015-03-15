@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-
+﻿using FinalstreamCommons.Extentions;
 using Livet;
-using Livet.Commands;
-using Livet.Messaging;
-using Livet.Messaging.IO;
-using Livet.EventListeners;
-using Livet.Messaging.Windows;
 using Movselex.Core.Models;
-using Movselex.Models;
+using NLog;
 
 namespace Movselex.ViewModels
 {
     public class LibraryViewModel : ViewModel
     {
+        private readonly Logger _log = LogManager.GetCurrentClassLogger();
+
         /* コマンド、プロパティの定義にはそれぞれ 
          * 
          *  lvcom   : ViewModelCommand
@@ -59,17 +51,30 @@ namespace Movselex.ViewModels
          * 自動的にUIDispatcher上での通知に変換されます。変更通知に際してUIDispatcherを操作する必要はありません。
          */
 
-        public void Initialize()
-        {
-        }
-
         private readonly LibraryItem _model;
-
-        public LibraryItem Model { get { return _model; }}
 
         public LibraryViewModel(LibraryItem model)
         {
             _model = model;
+        }
+
+        public LibraryItem Model
+        {
+            get { return _model; }
+        }
+
+        public void Initialize()
+        {
+        }
+
+        /// <summary>
+        ///     再生済みの状態を変更します。
+        /// </summary>
+        /// <param name="item"></param>
+        public void ModifyIsPlayed(LibraryItem item)
+        {
+            item.DebugWriteJson();
+            item.SwitchIsPlayed();
         }
     }
 }

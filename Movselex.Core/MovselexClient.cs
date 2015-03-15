@@ -16,7 +16,7 @@ namespace Movselex.Core
         private readonly string _appConfigFilePath;
         private readonly ActionExecuter<MovselexClient> _actionExecuter;
         private readonly IMovselexDatabaseAccessor _databaseAccessor;
-        private PlayerMediaCrawler _playerMediaCrawler;
+        private BackgroundWorker _backgroundWorker;
 
         #region Initializedイベント
 
@@ -109,10 +109,14 @@ namespace Movselex.Core
 
 
             AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
-            _playerMediaCrawler = new PlayerMediaCrawler(AppConfig.MpcExePath);
 
-            _playerMediaCrawler.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
-            _playerMediaCrawler.Start();
+            var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
+            
+
+            playerMediaCrawlerAction.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
+
+            _backgroundWorker = new BackgroundWorker(new []{ playerMediaCrawlerAction });
+            _backgroundWorker.Start();
 
             // 初回データベース読み込みを行う
             this.Initialized += (sender, args) =>
@@ -229,6 +233,7 @@ namespace Movselex.Core
             {
                 // Free any other managed objects here.
                 //
+                if(_backgroundWorker != null) _backgroundWorker.Dispose();
                 if (_databaseAccessor != null) _databaseAccessor.Dispose();
             }
 

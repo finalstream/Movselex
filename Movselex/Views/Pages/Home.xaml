@@ -227,9 +227,20 @@
 				</DataGridTemplateColumn>
 				<DataGridTemplateColumn Header="" Width="30" CanUserSort="False">
 					<DataGridTemplateColumn.CellTemplate>
-						<DataTemplate>
-							<Image Source="{Binding Model.IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
-						</DataTemplate>
+                        <DataTemplate>
+                            <Button>
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Image Source="{Binding Model.IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="ModifyIsPlayed" MethodParameter="{Binding Model}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+                        </DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 				<DataGridTextColumn Header="Date" Width="100"
@@ -242,12 +253,12 @@
 									Binding="{Binding Model.PlayCount}" ElementStyle="{StaticResource TextItemRight}">
 				</DataGridTextColumn>
 			</DataGrid.Columns>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DoubleClickLibrary"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </DataGrid>
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="MouseDoubleClick">
+					<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DoubleClickLibrary"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</DataGrid>
 
 		<!-- PlayingGrid -->
 		<DataGrid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="200"  

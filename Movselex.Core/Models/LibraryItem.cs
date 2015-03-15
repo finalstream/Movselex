@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Livet;
 
 namespace Movselex.Core.Models
 {
     /// <summary>
     /// ライブラリ情報を表します。
     /// </summary>
-    public class LibraryItem
+    public class LibraryItem : NotificationObject
     {
 
         /// <summary>
@@ -56,7 +57,22 @@ namespace Movselex.Core.Models
         /// <summary>
         /// 再生済みかどうかを取得します。
         /// </summary>
-        public bool IsPlayed { get; private set; }
+
+        #region IsPlayed変更通知プロパティ
+        private bool _isPlayed;
+
+        public bool IsPlayed
+        {
+            get { return _isPlayed; }
+            set
+            {
+                if (_isPlayed == value) return;
+                _isPlayed = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// レーティングを取得します。
@@ -103,8 +119,10 @@ namespace Movselex.Core.Models
         /// </summary>
         public DateTime LastPlayedDateTime { get; private set; }
 
-        
 
-
+        public void SwitchIsPlayed()
+        {
+            IsPlayed = !IsPlayed;
+        }
     }
 }
