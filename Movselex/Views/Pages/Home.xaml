@@ -234,7 +234,15 @@
 				<DataGridTemplateColumn Header="" Width="30" CanUserSort="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Button>
+                            <Image Source="{Binding Model.IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseUp">
+                                        <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="ModifyIsPlayed" MethodParameter="{Binding Model}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                            <!--
+                            <Button>
 								<Button.Template>
 									<ControlTemplate>
 										<Image Source="{Binding Model.IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
@@ -246,6 +254,7 @@
 									</i:EventTrigger>
 								</i:Interaction.Triggers>
 							</Button>
+                            -->
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>

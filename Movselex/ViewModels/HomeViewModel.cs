@@ -24,6 +24,8 @@ namespace Movselex.ViewModels
         private readonly IMovselexClient _client;
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
+        public IMovselexClient Client { get { return _client; }}
+
         /// <summary>
         ///     データベース情報。
         /// </summary>

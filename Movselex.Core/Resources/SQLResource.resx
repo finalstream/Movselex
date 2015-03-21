@@ -379,10 +379,10 @@ SET COMPLETE = :COMPLETE
 WHERE GID = :GID</value>
     <comment>コンプリートを更新</comment>
   </data>
-  <data name="SQL041" xml:space="preserve">
+  <data name="UpdateLibraryIsPlayed" xml:space="preserve">
     <value>UPDATE MOVLIST
-SET PLAYED = :Played
-WHERE ID = :Id</value>
+SET PLAYED = @Played
+WHERE ID = @Id</value>
     <comment>再生済みを更新</comment>
   </data>
   <data name="SQL042" xml:space="preserve">

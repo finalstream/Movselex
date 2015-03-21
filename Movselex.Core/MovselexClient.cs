@@ -157,6 +157,12 @@ namespace Movselex.Core
             _actionExecuter.Post(action);
         }
 
+        public void ModifyIsPlayed(LibraryItem library)
+        {
+            var action = new ModifyIsPlayedAction(library);
+            _actionExecuter.Post(action);
+        }
+
         public void ExecEmpty()
         {
             _actionExecuter.Post(new EmptyAction());

@@ -169,5 +169,12 @@ namespace Movselex.Core.Models
                 tran.Commit();
             }
         }
+
+        public void ModifyIsPlayed(LibraryItem libraryItem)
+        {
+            var newIsPlayed = !libraryItem.IsPlayed;
+            _databaseAccessor.UpdateLibraryIsPlayed(libraryItem.Id, newIsPlayed);
+            libraryItem.ModifyIsPlayed(newIsPlayed);
+        }
     }
 }

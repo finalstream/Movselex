@@ -523,17 +523,6 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   UPDATE MOVLIST
-        ///SET PLAYED = :Played
-        ///WHERE ID = :Id に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL041 {
-            get {
-                return ResourceManager.GetString("SQL041", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   SELECT MGL.GROUPNAME
         ///FROM MOVLIST ML inner join MOVGROUPLIST MGL ON ML.GID= MGL.GID 
         ///WHERE FILEPATH like :FilePath limit 1 に類似しているローカライズされた文字列を検索します。
@@ -657,6 +646,17 @@ namespace Movselex.Core.Resources {
         internal static string UpdateGroupLastUpdateDatetime {
             get {
                 return ResourceManager.GetString("UpdateGroupLastUpdateDatetime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UPDATE MOVLIST
+        ///SET PLAYED = @Played
+        ///WHERE ID = @Id に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdateLibraryIsPlayed {
+            get {
+                return ResourceManager.GetString("UpdateLibraryIsPlayed", resourceCulture);
             }
         }
         

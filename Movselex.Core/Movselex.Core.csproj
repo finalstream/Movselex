@@ -118,6 +118,7 @@
     <Compile Include="Models\RatingType.cs" />
     <Compile Include="Models\SQLBuilder.cs" />
     <Compile Include="Models\SQLiteFunctions\IsMatchMigemoSQLiteFunction.cs" />
+    <Compile Include="ModifyIsPlayedAction.cs" />
     <Compile Include="MovselexClient.cs" />
     <Compile Include="MovselexClientFactory.cs" />
     <Compile Include="MpcPlayerInfoGetter.cs" />

@@ -74,7 +74,8 @@ namespace Movselex.ViewModels
         public void ModifyIsPlayed(LibraryItem item)
         {
             item.DebugWriteJson();
-            item.SwitchIsPlayed();
+
+            App.Client.ModifyIsPlayed(item);
         }
     }
 }

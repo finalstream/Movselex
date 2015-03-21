@@ -178,12 +178,6 @@ namespace Movselex.Core.Models
         /// </summary>
         public DateTime LastPlayedDateTime { get; private set; }
 
-
-        public void SwitchIsPlayed()
-        {
-            IsPlayed = !IsPlayed;
-        }
-
         public void IncrementPlayCount()
         {
             PlayCount += 1;
@@ -194,6 +188,11 @@ namespace Movselex.Core.Models
             Length = mediaFile.Length;
             Codec = mediaFile.Codec;
             VideoSize = mediaFile.VideoSize;
+        }
+
+        public void ModifyIsPlayed(bool isPlayed)
+        {
+            IsPlayed = isPlayed;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 
 using Livet;
+using Movselex.Core;
 using Movselex.Core.Models;
 using Movselex.ViewModels;
 using Movselex.Views;
@@ -24,6 +25,8 @@ namespace Movselex
 
         public static MovselexAppConfig Config { get; private set; }
 
+        public static IMovselexClient Client { get; private set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -32,6 +35,7 @@ namespace Movselex
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomainUnhandledException);
 
             ViewModelRoot = new HomeViewModel();
+            Client = ViewModelRoot.Client;
             Config = ViewModelRoot.AppConfig;
             this.MainWindow = new MainWindow { DataContext = ViewModelRoot };
             this.MainWindow.Show();
