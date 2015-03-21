@@ -282,8 +282,8 @@ WHERE ID = :Id</value>
   <data name="UpdateGroupLastUpdateDatetime" xml:space="preserve">
     <value>UPDATE MOVGROUPLIST 
 SET
-LASTUPDATE = :LastUpdate
-WHERE GID = :Gid</value>
+LASTUPDATE = @LastUpdate
+WHERE GID = @Gid</value>
     <comment>グループ最終更新日時更新</comment>
   </data>
   <data name="SelectGroupKeyword" xml:space="preserve">
@@ -362,11 +362,11 @@ WHERE GID = :Gid</value>
     <value>SELECT max(sort) FROM PLAYINGLIST</value>
     <comment>MAX SORT値取得</comment>
   </data>
-  <data name="SQL038" xml:space="preserve">
+  <data name="UpdatePlayCount" xml:space="preserve">
     <value>UPDATE MOVLIST
 SET PLAYCOUNT = PLAYCOUNT + 1,
-LASTPLAYDATE = :LastPlayDate
-WHERE FILEPATH like :FilePath</value>
+LASTPLAYDATE = @LastPlayDate
+WHERE ID = @Id</value>
     <comment>再生カウントアップ</comment>
   </data>
   <data name="SQL039" xml:space="preserve">
@@ -427,13 +427,13 @@ WHERE FILEPATH like :FilePath
 ORDER BY ADDDATE DESC LIMIT 1</value>
     <comment>再生中タイトル取得</comment>
   </data>
-  <data name="SQL048" xml:space="preserve">
+  <data name="UpdateMediaInfo" xml:space="preserve">
     <value>UPDATE MOVLIST
-SET LENGTH = :Length,
-CODEC = :Codec,
-VIDEOSIZE = :VideoSize
-WHERE ID = :Id</value>
-    <comment>ファイル情報再取得</comment>
+SET LENGTH = @Length,
+CODEC = @Codec,
+VIDEOSIZE = @VideoSize
+WHERE ID = @Id</value>
+    <comment>メディア情報更新</comment>
   </data>
   <data name="SQL049" xml:space="preserve">
     <value>SELECT ID,
@@ -488,5 +488,13 @@ WHERE Id = :Id</value>
   <data name="SelectMostUseDirectoryPath" xml:space="preserve">
     <value>SELECT GETDIRPATH(FILEPATH) FP, COUNT(*) CNT FROM MOVLIST GROUP BY FP ORDER BY CNT DESC</value>
     <comment>一番使用しているディレクトリを取得。</comment>
+  </data>
+  <data name="SelectIdFromFileName" xml:space="preserve">
+    <value>SELECT ID FROM MOVLIST WHERE FILEPATH LIKE @FileName </value>
+    <comment>ファイル名からIDを取得</comment>
+  </data>
+  <data name="SelectInCompleteIdFilePaths" xml:space="preserve">
+    <value>SELECT ID, FILEPATH FROM MOVLIST WHERE LENGTH = @Length</value>
+    <comment>不完全ID、ファイルパスリスト取得</comment>
   </data>
 </root>

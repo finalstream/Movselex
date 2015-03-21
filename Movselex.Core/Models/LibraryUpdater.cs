@@ -44,9 +44,9 @@ namespace Movselex.Core.Models
 
                 _movselexLibrary.Regist(registFiles);
             }
-            
 
-
+            // 不完全なものを再スキャン
+            _movselexLibrary.ReScan(_movselexLibrary.GetInCompleteIds());
         }
 
     }

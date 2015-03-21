@@ -120,11 +120,16 @@ namespace Movselex.Core
             AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
 
             var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
-            
+            var playCountUpAction = new PlayCountMonitoringAction(this.NowPlayingInfo);
 
             playerMediaCrawlerAction.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
+            playCountUpAction.CountUpTimePlayed += (sender, s) => _actionExecuter.Post(new IncrementPlayCountAction(s));
 
-            _backgroundWorker = new BackgroundWorker(new []{ playerMediaCrawlerAction });
+            _backgroundWorker = new BackgroundWorker(new BackgroundAction[]
+            {
+                playerMediaCrawlerAction, 
+                playCountUpAction
+            });
             _backgroundWorker.Start();
 
             

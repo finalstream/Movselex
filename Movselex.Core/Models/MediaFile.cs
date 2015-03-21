@@ -7,7 +7,7 @@ using FinalstreamCommons.Utils;
 
 namespace Movselex.Core.Models
 {
-    internal class MediaFile
+    internal class MediaFile : IMediaFile
     {
         public long Id { get; private set; }
 
@@ -77,8 +77,7 @@ namespace Movselex.Core.Models
             FilePath = filepath;
             Rating = RatingType.Nothing;
 
-            var s = Path.GetFileNameWithoutExtension(FilePath).Replace("　", " ").Replace("（", "(").Replace("）", ")").Replace("［", "[").Replace("］", "]").Replace("#", "").Replace("RAW", "");
-            MovieTitle = Regex.Replace(s, @"[(\[].+?[)\]]", "").Trim();
+            MovieTitle = MovselexUtils.ReplaceTitle(FilePath);
 
             try
             {

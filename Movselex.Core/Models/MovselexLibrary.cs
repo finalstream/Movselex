@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FinalstreamCommons.Extentions;
 using Livet;
@@ -31,6 +32,11 @@ namespace Movselex.Core.Models
             _databaseAccessor = databaseAccessor;
             _movselexGroup = movselexGroup;
             LibraryItems = new ObservableCollection<LibraryItem>();
+        }
+
+        public LibraryItem GetLibraryItem(long id)
+        {
+            return LibraryItems.SingleOrDefault(x => x.Id == id);
         }
 
         /// <summary>
@@ -81,14 +87,11 @@ namespace Movselex.Core.Models
                         // 未登録の場合のみ登録する
                         var mediaFile = new MediaFile(registFile);
                         _movselexGroup.SetMovGroup(mediaFile);
-                        var isSuccess = _databaseAccessor.RegistMediaFile(mediaFile);
+                        var isSuccess = _databaseAccessor.InsertMediaFile(mediaFile);
                         if (isSuccess)
                         {
-#if DEBUG
-                            _log.Info("Registed Media File. Id:{0} Title:{1} Group:{2} Detail:{3}", mediaFile.Id, mediaFile.MovieTitle, mediaFile.GroupName, mediaFile.ToJson());
-#else
                             _log.Info("Registed Media File. Id:{0} Title:{1} Group:{2}", mediaFile.Id, mediaFile.MovieTitle, mediaFile.GroupName);
-#endif
+                            mediaFile.DebugWriteJson("RegistMedia");
                             existsFiles.Add(registFile);
                         }
                         else
@@ -105,6 +108,66 @@ namespace Movselex.Core.Models
             }
 
 
+        }
+
+        /// <summary>
+        /// 再生カウントをインクリメントします。
+        /// </summary>
+        /// <param name="id"></param>
+        public void IncrementPlayCount(long id)
+        {
+            _databaseAccessor.UpdatePlayCount(id);
+
+            // ライブラリデータ更新
+            var item = GetLibraryItem(id);
+            if (item == null) return;
+
+            item.IncrementPlayCount();
+            _log.Info("Increment PlayCount. Id:{0} Title:{1} PlayCount:{2}",
+                item.Id, item.Title, item.PlayCount);
+        }
+
+        /// <summary>
+        /// ファイル名からIdを取得します。
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public long FindId(string filename)
+        {
+            return _databaseAccessor.GetIdFromFileName(filename);
+        }
+
+        public Dictionary<long, string> GetInCompleteIds()
+        {
+            return _databaseAccessor.SelectInCompleteIds();
+        }
+
+        public void ReScan(Dictionary<long, string> iddic)
+        {
+            using (var tran = _databaseAccessor.BeginTransaction())
+            {
+
+                foreach (var kv in iddic)
+                {
+                    var mediaFile = new MediaFile(kv.Value);
+                    mediaFile.UpdateId(kv.Key);
+                    var isSuccess = _databaseAccessor.UpdateMediaFile(mediaFile);
+                    if (isSuccess)
+                    {
+                        _log.Info("Updated Media File. Id:{0} Title:{1}", mediaFile.Id, mediaFile.MovieTitle);
+                        mediaFile.DebugWriteJson("UpdateMedia");
+
+                        // ライブラリ更新
+                        var item = GetLibraryItem(mediaFile.Id);
+                        if (item != null) item.UpdateMediaInfo(mediaFile);
+                    }
+                    else
+                    {
+                        _log.Error("Updated Regist Media File. Id:{0} Title:{1} Detail:{2}", mediaFile.Id, mediaFile.MovieTitle, mediaFile.ToJson());
+                    }
+                }
+                tran.Commit();
+            }
         }
     }
 }

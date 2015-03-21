@@ -36,6 +36,10 @@ namespace Movselex.Core.Models
             }
         }
 
+        /// <summary>
+        /// メディアファイルにグループを設定します。
+        /// </summary>
+        /// <param name="mediaFile"></param>
         public void SetMovGroup(MediaFile mediaFile)
         {
             var keywords = CreateKeyworkds(mediaFile.MovieTitle);

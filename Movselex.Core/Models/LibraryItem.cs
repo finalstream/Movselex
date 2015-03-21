@@ -45,14 +45,44 @@ namespace Movselex.Core.Models
         public string No { get; private set; }
 
         /// <summary>
-        /// 再生時間(sec)を取得します。
+        /// 再生時間を取得します。
         /// </summary>
-        public string Length { get; private set; }
+
+        #region Length変更通知プロパティ
+        private string _length;
+
+        public string Length
+        {
+            get { return _length; }
+            set
+            {
+                if (_length == value) return;
+                _length = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// コーデックを取得します。
         /// </summary>
-        public string Codec { get; private set; }
+
+        #region Codec変更通知プロパティ
+        private string _codec;
+
+        public string Codec
+        {
+            get { return _codec; }
+            set
+            {
+                if (_codec == value) return;
+                _codec = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 再生済みかどうかを取得します。
@@ -97,7 +127,21 @@ namespace Movselex.Core.Models
         /// <summary>
         /// 動画のサイズを取得します。
         /// </summary>
-        public string VideoSize { get; private set; }
+        #region VideoSize変更通知プロパティ
+        private string _videoSize;
+
+        public string VideoSize
+        {
+            get { return _videoSize; }
+            set
+            {
+                if (_videoSize == value) return;
+                _videoSize = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// ファイルが格納されているドライブレターを取得します。
@@ -107,7 +151,22 @@ namespace Movselex.Core.Models
         /// <summary>
         /// 再生回数を取得します。
         /// </summary>
-        public int PlayCount { get; private set; }
+        #region PlayCount変更通知プロパティ
+
+        private int _playCount;
+
+        public int PlayCount
+        {
+            get { return _playCount; }
+            set
+            {
+                if (_playCount == value) return;
+                _playCount = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 追加された日時を取得します。
@@ -123,6 +182,18 @@ namespace Movselex.Core.Models
         public void SwitchIsPlayed()
         {
             IsPlayed = !IsPlayed;
+        }
+
+        public void IncrementPlayCount()
+        {
+            PlayCount += 1;
+        }
+
+        public void UpdateMediaInfo(IMediaFile mediaFile)
+        {
+            Length = mediaFile.Length;
+            Codec = mediaFile.Codec;
+            VideoSize = mediaFile.VideoSize;
         }
     }
 }

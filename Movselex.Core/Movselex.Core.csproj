@@ -75,6 +75,9 @@
   <ItemGroup>
     <Compile Include="ApplicationDefinitions.cs" />
     <Compile Include="IMovselexClient.cs" />
+    <Compile Include="Models\Actions\IncrementPlayCountAction.cs" />
+    <Compile Include="Models\Actions\PlayCountMonitoringAction.cs" />
+    <Compile Include="Models\IMediaFile.cs" />
     <Compile Include="Models\IProgressInfo.cs" />
     <Compile Include="Models\Actions\EmptyAction.cs" />
     <Compile Include="Models\Actions\InitializeAction.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="Models\LibraryUpdater.cs" />
     <Compile Include="Models\MediaPlayerClassicThrower.cs" />
     <Compile Include="Models\MediaThrower.cs" />
+    <Compile Include="Models\MovselexUtils.cs" />
     <Compile Include="Models\PlayerMediaCrawler.cs" />
     <Compile Include="Models\MovselexGroup.cs" />
     <Compile Include="Models\MovselexSQLExecuterFactory.cs" />

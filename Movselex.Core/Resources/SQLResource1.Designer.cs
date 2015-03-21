@@ -170,6 +170,24 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   SELECT ID FROM MOVLIST WHERE FILEPATH LIKE @FileName  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectIdFromFileName {
+            get {
+                return ResourceManager.GetString("SelectIdFromFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   SELECT ID, FILEPATH FROM MOVLIST WHERE LENGTH = @Length に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectInCompleteIdFilePaths {
+            get {
+                return ResourceManager.GetString("SelectInCompleteIdFilePaths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   SELECT last_insert_rowid() AS LASTROWID に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SelectLastInsertRowid {
@@ -485,18 +503,6 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   UPDATE MOVLIST
-        ///SET PLAYCOUNT = PLAYCOUNT + 1,
-        ///LASTPLAYDATE = :LastPlayDate
-        ///WHERE FILEPATH like :FilePath に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL038 {
-            get {
-                return ResourceManager.GetString("SQL038", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   SELECT GID FROM MOVLIST WHERE ID = :Id に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SQL039 {
@@ -576,19 +582,6 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   UPDATE MOVLIST
-        ///SET LENGTH = :Length,
-        ///CODEC = :Codec,
-        ///VIDEOSIZE = :VideoSize
-        ///WHERE ID = :Id に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL048 {
-            get {
-                return ResourceManager.GetString("SQL048", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   SELECT ID,
         ///FILEPATH
         ///FROM MOVLIST
@@ -658,12 +651,37 @@ namespace Movselex.Core.Resources {
         /// <summary>
         ///   UPDATE MOVGROUPLIST 
         ///SET
-        ///LASTUPDATE = :LastUpdate
-        ///WHERE GID = :Gid に類似しているローカライズされた文字列を検索します。
+        ///LASTUPDATE = @LastUpdate
+        ///WHERE GID = @Gid に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string UpdateGroupLastUpdateDatetime {
             get {
                 return ResourceManager.GetString("UpdateGroupLastUpdateDatetime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UPDATE MOVLIST
+        ///SET LENGTH = @Length,
+        ///CODEC = @Codec,
+        ///VIDEOSIZE = @VideoSize
+        ///WHERE ID = @Id に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdateMediaInfo {
+            get {
+                return ResourceManager.GetString("UpdateMediaInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UPDATE MOVLIST
+        ///SET PLAYCOUNT = PLAYCOUNT + 1,
+        ///LASTPLAYDATE = @LastPlayDate
+        ///WHERE ID = @Id に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdatePlayCount {
+            get {
+                return ResourceManager.GetString("UpdatePlayCount", resourceCulture);
             }
         }
     }
