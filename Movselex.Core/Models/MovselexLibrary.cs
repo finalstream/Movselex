@@ -176,5 +176,13 @@ namespace Movselex.Core.Models
             _databaseAccessor.UpdateLibraryIsPlayed(libraryItem.Id, newIsPlayed);
             libraryItem.ModifyIsPlayed(newIsPlayed);
         }
+
+        public void ModifyIsFavorite(LibraryItem libraryItem)
+        {
+            var newRating = libraryItem.IsFavorite? RatingType.Normal : RatingType.Favorite; // 逆にする
+            _databaseAccessor.UpdateLibraryRating(libraryItem.Id, newRating);
+            libraryItem.ModifyRating(newRating);
+
+        }
     }
 }

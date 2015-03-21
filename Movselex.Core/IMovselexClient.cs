@@ -88,5 +88,6 @@ namespace Movselex.Core
         void UpdateLibrary();
         void Refresh();
         void ModifyIsPlayed(LibraryItem item);
+        void ModifyIsFavorite(LibraryItem item);
     }
 }

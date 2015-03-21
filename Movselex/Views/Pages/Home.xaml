@@ -184,11 +184,6 @@
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<Image Source="{Binding Model.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16">
-								<i:Interaction.Triggers>
-									<i:EventTrigger EventName="MouseUp">
-										<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="SwitchFavorite"/>
-									</i:EventTrigger>
-								</i:Interaction.Triggers>
 							</Image>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
@@ -227,22 +222,28 @@
 				<DataGridTemplateColumn Header="" Width="30" CanUserSort="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Image Source="{Binding Model.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
+							<Image Source="{Binding Model.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16">
+								<i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+										<behaviors1:LivetCallMethodAction MethodTarget="{Binding}" MethodName="ModifyIsFavorite" MethodParameter="{Binding Model}" />
+									</i:EventTrigger>
+								</i:Interaction.Triggers>
+							</Image>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 				<DataGridTemplateColumn Header="" Width="30" CanUserSort="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-                            <Image Source="{Binding Model.IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseUp">
-                                        <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="ModifyIsPlayed" MethodParameter="{Binding Model}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Image>
-                            <!--
-                            <Button>
+							<Image Source="{Binding Model.IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16">
+								<i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+										<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="ModifyIsPlayed" MethodParameter="{Binding Model}" />
+									</i:EventTrigger>
+								</i:Interaction.Triggers>
+							</Image>
+							<!--
+							<Button>
 								<Button.Template>
 									<ControlTemplate>
 										<Image Source="{Binding Model.IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
@@ -254,7 +255,7 @@
 									</i:EventTrigger>
 								</i:Interaction.Triggers>
 							</Button>
-                            -->
+							-->
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>

@@ -159,8 +159,12 @@ namespace Movselex.Core
 
         public void ModifyIsPlayed(LibraryItem library)
         {
-            var action = new ModifyIsPlayedAction(library);
-            _actionExecuter.Post(action);
+            _actionExecuter.Post(new ModifyIsPlayedAction(library));
+        }
+
+        public void ModifyIsFavorite(LibraryItem library)
+        {
+            _actionExecuter.Post(new ModifyIsFavoriteAction(library));
         }
 
         public void ExecEmpty()

@@ -107,12 +107,42 @@ namespace Movselex.Core.Models
         /// <summary>
         /// レーティングを取得します。
         /// </summary>
-        public int Rating { get; private set; }
+
+        #region Rating変更通知プロパティ
+        private RatingType _rating;
+
+        public RatingType Rating
+        {
+            get { return _rating; }
+            set
+            {
+                if (_rating == value) return;
+                _rating = value;
+                IsFavorite = value == RatingType.Favorite;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// レーティングを取得します。
         /// </summary>
-        public bool IsFavorite { get { return Rating == (int)RatingType.Favorite; } }
+        #region IsFavorite変更通知プロパティ
+        private bool _isFavorite;
+
+        public bool IsFavorite
+        {
+            get { return _isFavorite; }
+            set
+            {
+                if (_isFavorite == value) return;
+                _isFavorite = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// ファイルの最終更新日時を取得します。
@@ -193,6 +223,11 @@ namespace Movselex.Core.Models
         public void ModifyIsPlayed(bool isPlayed)
         {
             IsPlayed = isPlayed;
+        }
+
+        public void ModifyRating(RatingType newRating)
+        {
+            Rating = newRating;
         }
     }
 }

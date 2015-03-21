@@ -662,6 +662,17 @@ namespace Movselex.Core.Resources {
         
         /// <summary>
         ///   UPDATE MOVLIST
+        ///SET RATING = @Rating
+        ///WHERE ID = @Id に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdateLibraryRating {
+            get {
+                return ResourceManager.GetString("UpdateLibraryRating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UPDATE MOVLIST
         ///SET LENGTH = @Length,
         ///CODEC = @Codec,
         ///VIDEOSIZE = @VideoSize

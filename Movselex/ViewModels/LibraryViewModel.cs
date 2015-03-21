@@ -77,5 +77,16 @@ namespace Movselex.ViewModels
 
             App.Client.ModifyIsPlayed(item);
         }
+
+        /// <summary>
+        ///     再生済みの状態を変更します。
+        /// </summary>
+        /// <param name="item"></param>
+        public void ModifyIsFavorite(LibraryItem item)
+        {
+            item.DebugWriteJson();
+
+            App.Client.ModifyIsFavorite(item);
+        }
     }
 }

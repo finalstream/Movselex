@@ -497,4 +497,10 @@ WHERE Id = :Id</value>
     <value>SELECT ID, FILEPATH FROM MOVLIST WHERE LENGTH = @Length</value>
     <comment>不完全ID、ファイルパスリスト取得</comment>
   </data>
+  <data name="UpdateLibraryRating" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET RATING = @Rating
+WHERE ID = @Id</value>
+    <comment>レーティング更新</comment>
+  </data>
 </root>
