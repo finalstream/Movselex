@@ -29,11 +29,7 @@ namespace Movselex.Core.Models.Actions
 
         public override void InvokeCore(MovselexClient client)
         {
-            // データベース一覧
-            var dbnames = Directory.GetFiles(
-                ApplicationDefinitions.DatabaseDirectory, "*.db", SearchOption.TopDirectoryOnly).Select(Path.GetFileNameWithoutExtension);
-
-            client.Databases.DiffUpdate(dbnames.ToArray());
+            LoadDatabase(client);
 
             // フィルタリングロード
             client.MovselexFiltering.Load();
@@ -44,6 +40,18 @@ namespace Movselex.Core.Models.Actions
             client.MovselexLibrary.Load(libCondition);
 
             client.MovselexGroup.Load();
+        }
+
+        /// <summary>
+        /// データベースをロードします。
+        /// </summary>
+        protected void LoadDatabase(MovselexClient client)
+        {
+            // データベース一覧
+            var dbnames = Directory.GetFiles(
+                ApplicationDefinitions.DatabaseDirectory, "*.db", SearchOption.TopDirectoryOnly).Select(Path.GetFileNameWithoutExtension);
+
+            client.Databases.DiffUpdate(dbnames.ToArray());
 
         }
     }

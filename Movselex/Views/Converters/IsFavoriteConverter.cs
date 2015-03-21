@@ -16,8 +16,8 @@ namespace Movselex.Views.Converters
 
         public IsFavoriteConverter()
         {
-            _favorite = new BitmapImage(new Uri("..\\..\\images\\star-favorite.png", UriKind.Relative));
-            _normal = new BitmapImage(new Uri("..\\..\\images\\star-normal.png", UriKind.Relative));
+            _favorite = new BitmapImage(new Uri("..\\..\\images\\rating-favorite.png", UriKind.Relative));
+            _normal = new BitmapImage(new Uri("..\\..\\images\\rating-normal.png", UriKind.Relative));
         }
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

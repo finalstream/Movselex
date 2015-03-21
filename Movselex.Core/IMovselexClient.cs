@@ -14,7 +14,7 @@ namespace Movselex.Core
     public interface IMovselexClient : IDisposable
     {
 
-        event EventHandler Refreshed;
+        event EventHandler Initialized;
 
         /// <summary>
         /// フィルタリング情報。
@@ -42,6 +42,8 @@ namespace Movselex.Core
         MovselexAppConfig AppConfig { get; }
 
         ObservableCollection<string> Databases { get; }
+
+        IProgressInfo ProgressInfo { get; }
 
         /// <summary>
         /// 初期化を行います。
@@ -82,5 +84,8 @@ namespace Movselex.Core
 
 
         void InterruptThrow(int librarySelectIndex);
+
+        void UpdateLibrary();
+        void Refresh();
     }
 }

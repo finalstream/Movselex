@@ -105,7 +105,7 @@
     <Compile Include="Views\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\Settings\About.xaml.cs">
+    <Compile Include="Views\Pages\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\Settings\Appearance.xaml.cs">
@@ -140,7 +140,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Pages\Settings\About.xaml">
+    <Page Include="Views\Pages\About.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -217,10 +217,10 @@
     <Content Include="images\played-on.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\star-favorite.png">
+    <Content Include="images\rating-favorite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\star-normal.png">
+    <Content Include="images\rating-normal.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="InfrastructureAssemblies\Design\Livet.Design.dll" />

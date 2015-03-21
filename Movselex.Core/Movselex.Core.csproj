@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="ApplicationDefinitions.cs" />
     <Compile Include="IMovselexClient.cs" />
+    <Compile Include="Models\IProgressInfo.cs" />
     <Compile Include="Models\Actions\EmptyAction.cs" />
     <Compile Include="Models\Actions\InitializeAction.cs" />
     <Compile Include="Models\Actions\MovselexActionBase.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Models\NowPlayingInfo.cs" />
     <Compile Include="Models\PlayerMediaInfo.cs" />
     <Compile Include="Models\PlayingItem.cs" />
+    <Compile Include="Models\ProgressInfo.cs" />
     <Compile Include="Models\RatingType.cs" />
     <Compile Include="Models\SQLBuilder.cs" />
     <Compile Include="Models\SQLiteFunctions\IsMatchMigemoSQLiteFunction.cs" />

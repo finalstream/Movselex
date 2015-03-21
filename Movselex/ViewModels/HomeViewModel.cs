@@ -193,13 +193,20 @@ namespace Movselex.ViewModels
 
         #endregion
 
+        /// <summary>
+        /// 処理中かどうかを取得します。
+        /// </summary>
+        public IProgressInfo ProgressInfo
+        {
+            get { return _client.ProgressInfo; }
+        }
 
         /// <summary>
         ///     新しいインスタンスを初期化します。
         /// </summary>
         public HomeViewModel()
         {
-            
+
             _client = MovselexClientFactory.Create(Assembly.GetExecutingAssembly(),
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
 
@@ -215,6 +222,13 @@ namespace Movselex.ViewModels
             //    // データベース選択復元
             //    //CurrentDatabase = Databases.SingleOrDefault(x=> x.Name == _client.AppConfig.SelectDatabase);
             //};
+
+            // 初回データベース読み込みを行う
+            _client.Initialized += (sender, args) =>
+            {
+                _client.UpdateLibrary();
+                _log.Debug("Initialized MovselexClinet.");
+            };
 
             _client.Initialize();
         }
@@ -359,6 +373,11 @@ namespace Movselex.ViewModels
             _client.InterruptThrow(LibrarySelectIndex);
         }
 
+        public void UpdateLibrary()
+        {
+            _client.UpdateLibrary();
+            _client.Refresh();
+        }
         
 
         protected override void Dispose(bool disposing)

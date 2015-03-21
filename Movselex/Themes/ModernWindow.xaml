@@ -9,7 +9,7 @@
         <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/TextBlock.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Thickness x:Key="ContentMarginEx">8,0,8,8</Thickness>
+    <Thickness x:Key="ContentMarginEx">8,0,8,-10</Thickness>
 
     <Style x:Key="ContentRootEx" TargetType="FrameworkElement">
         <Setter Property="Margin" Value="{StaticResource ContentMarginEx}" />

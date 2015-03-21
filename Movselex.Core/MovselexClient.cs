@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using FinalstreamCommons.Models;
+using Livet;
 using Movselex.Core.Models;
 using Movselex.Core.Models.Actions;
 using NLog;
@@ -71,6 +72,13 @@ namespace Movselex.Core
             }
         }
 
+
+        public bool IsProgressing
+        {
+            set { ProgressInfo.UpdateProgress(value); }
+            get { return ProgressInfo.IsProgressing; }
+        }
+
         public INowPlayingInfo NowPlayingInfo { get; private set; }
         public MovselexAppConfig AppConfig { get; private set; }
         public ObservableCollection<string> Databases { get; private set; }
@@ -79,6 +87,7 @@ namespace Movselex.Core
         public MovselexGroup MovselexGroup { get; private set; }
         public LibraryUpdater LibraryUpdater { get; private set; }
         public LinkedListEx<string> PlayingList { get; private set; }
+        public IProgressInfo ProgressInfo { get; private set; } 
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
@@ -99,6 +108,7 @@ namespace Movselex.Core
             NowPlayingInfo = new NowPlayingInfo();
             LibraryUpdater = new LibraryUpdater(MovselexLibrary, AppConfig.SupportExtentions);
             PlayingList = new LinkedListEx<string>();
+            ProgressInfo = new ProgressInfo();
         }
 
         /// <summary>
@@ -106,8 +116,7 @@ namespace Movselex.Core
         /// </summary>
         protected override void InitializeCore()
         {
-
-
+            
             AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
 
             var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
@@ -118,12 +127,7 @@ namespace Movselex.Core
             _backgroundWorker = new BackgroundWorker(new []{ playerMediaCrawlerAction });
             _backgroundWorker.Start();
 
-            // 初回データベース読み込みを行う
-            this.Initialized += (sender, args) =>
-            {
-                UpdateLibrary();
-                _log.Debug("Initialized MovselexClinet.");
-            };
+            
             Initialize(AppConfig.SelectDatabase);
             
         }
@@ -141,7 +145,7 @@ namespace Movselex.Core
         /// <summary>
         /// すべてのデータをリフレッシュします。
         /// </summary>
-        private void Refresh()
+        public void Refresh()
         {
             var action = new RefreshAction(AppConfig.FilteringMode);
             action.AfterAction = () => OnRefreshed(EventArgs.Empty);
@@ -205,10 +209,11 @@ namespace Movselex.Core
             _actionExecuter.Post(new ThrowAction(MovselexLibrary.LibraryItems[librarySelectIndex].FilePath));
         }
 
-        private void UpdateLibrary()
+        public void UpdateLibrary()
         {
             _actionExecuter.Post(new UpdateLibraryAction());
         }
+
 
         #region Dispose
 
