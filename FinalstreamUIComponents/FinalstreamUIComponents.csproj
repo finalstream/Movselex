@@ -51,6 +51,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\FileDropBehavior.cs" />
     <Compile Include="Behaviors\PlaceHolderBehavior.cs" />
   </ItemGroup>
   <ItemGroup>

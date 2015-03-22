@@ -97,5 +97,6 @@ namespace Movselex.Core
         void ModifyIsFavorite(LibraryItem item);
         void ModifyIsFavorite(GroupItem item);
         void ModifyIsComplete(GroupItem item);
+        void RegistFiles(IEnumerable<string> enumerable);
     }
 }

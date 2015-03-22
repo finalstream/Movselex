@@ -39,8 +39,7 @@ namespace Movselex.Core.Models
             foreach (var searchDirectoryPath in SearchDirectoryPaths)
             {
                 // 検索対象ディレクトリからサポートしている拡張子のファイルだけ抜く。
-                var registFiles = Directory.GetFiles(searchDirectoryPath, "*", SearchOption.TopDirectoryOnly)
-                    .Where(x => _supportExts.Contains(Path.GetExtension(x).ToLower()));
+                var registFiles = GetSupportFiles(searchDirectoryPath);
 
                 _movselexLibrary.Regist(registFiles);
             }
@@ -49,5 +48,21 @@ namespace Movselex.Core.Models
             _movselexLibrary.ReScan(_movselexLibrary.GetInCompleteIds());
         }
 
+        public void RegistFiles(string[] files)
+        {
+            var registFiles = files.SelectMany(x => Directory.Exists(x) ? GetSupportFiles(x) : new[] {x});
+            _movselexLibrary.Regist(registFiles);
+        }
+
+        /// <summary>
+        /// 検索対象のディレクトリからサポートしている拡張子のファイルだけを取得します。
+        /// </summary>
+        /// <param name="directoryPath"></param>
+        /// <returns></returns>
+        private IEnumerable<string> GetSupportFiles(string directoryPath)
+        {
+            return Directory.GetFiles(directoryPath, "*", SearchOption.TopDirectoryOnly)
+                    .Where(x => _supportExts.Contains(Path.GetExtension(x).ToLower()));
+        }
     }
 }

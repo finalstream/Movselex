@@ -6,11 +6,13 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 using FinalstreamCommons.Extentions;
 using FinalstreamCommons.Models;
 using FirstFloor.ModernUI;
 using FirstFloor.ModernUI.Presentation;
 using Livet;
+using Livet.Commands;
 using Livet.EventListeners;
 using Movselex.Core;
 using Movselex.Core.Models;
@@ -219,6 +221,21 @@ namespace Movselex.ViewModels
         public IProgressInfo ProgressInfo
         {
             get { return _client.ProgressInfo; }
+        }
+
+        // 実装
+        ListenerCommand<IEnumerable<string>> m_dropFileCommand;
+        // ICommandを公開する
+        public ICommand DropFileCommand
+        {
+            get
+            {
+                if (m_dropFileCommand == null)
+                {
+                    m_dropFileCommand = new ListenerCommand<IEnumerable<string>>(enumerable => Client.RegistFiles(enumerable));
+                }
+                return m_dropFileCommand;
+            }
         }
 
         /// <summary>

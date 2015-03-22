@@ -76,9 +76,11 @@
     <Compile Include="ApplicationDefinitions.cs" />
     <Compile Include="IMovselexClient.cs" />
     <Compile Include="Models\Actions\IncrementPlayCountAction.cs" />
+    <Compile Include="Models\Actions\ModifyIsCompleteAction.cs" />
     <Compile Include="Models\Actions\ModifyIsFavoriteAction.cs" />
     <Compile Include="Models\Actions\ModifyIsPlayedAction.cs" />
     <Compile Include="Models\Actions\PlayMonitoringAction.cs" />
+    <Compile Include="Models\Actions\RegistFileAction.cs" />
     <Compile Include="Models\Actions\UpdateNowPlayInfoAction.cs" />
     <Compile Include="Models\IMediaFile.cs" />
     <Compile Include="Models\IProgressInfo.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="Models\MediaThrower.cs" />
     <Compile Include="Models\MovselexUtils.cs" />
     <Compile Include="Models\MpcPlayerInfoGetter.cs" />
+    <Compile Include="Models\PlayerInfoGetter.cs" />
     <Compile Include="Models\PlayerMediaCrawler.cs" />
     <Compile Include="Models\MovselexGroup.cs" />
     <Compile Include="Models\MovselexSQLExecuterFactory.cs" />
@@ -122,10 +125,8 @@
     <Compile Include="Models\RatingType.cs" />
     <Compile Include="Models\SQLBuilder.cs" />
     <Compile Include="Models\SQLiteFunctions\IsMatchMigemoSQLiteFunction.cs" />
-    <Compile Include="ModifyIsCompleteAction.cs" />
     <Compile Include="MovselexClient.cs" />
     <Compile Include="MovselexClientFactory.cs" />
-    <Compile Include="PlayerInfoGetter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

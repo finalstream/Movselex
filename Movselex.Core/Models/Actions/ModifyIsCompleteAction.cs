@@ -1,8 +1,4 @@
-using System;
-using Movselex.Core.Models;
-using Movselex.Core.Models.Actions;
-
-namespace Movselex.Core
+namespace Movselex.Core.Models.Actions
 {
     internal class ModifyIsCompleteAction : MovselexActionBase
     {

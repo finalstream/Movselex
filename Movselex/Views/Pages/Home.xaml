@@ -291,7 +291,10 @@
 					<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DoubleClickLibrary"/>
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
-		</DataGrid>
+            <i:Interaction.Behaviors>
+                <behaviors:FileDropBehavior Command="{Binding DropFileCommand}" />
+            </i:Interaction.Behaviors>
+        </DataGrid>
 
 		<!-- PlayingGrid -->
 		<DataGrid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="200"  

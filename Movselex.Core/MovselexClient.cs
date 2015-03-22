@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
@@ -178,6 +179,13 @@ namespace Movselex.Core
             _actionExecuter.Post(new ModifyIsCompleteAction(group));
         }
 
+        public void RegistFiles(IEnumerable<string> files)
+        {
+            var action = new RegistFileAction(files);
+            action.AfterAction = Refresh;
+            _actionExecuter.Post(action);
+        }
+
         public void ExecEmpty()
         {
             _actionExecuter.Post(new EmptyAction());
@@ -280,6 +288,8 @@ namespace Movselex.Core
             {
                 // Free any other managed objects here.
                 //
+                //_actionExecuter.Dispose();
+                _actionExecuter.Dispose();
                 if(_backgroundWorker != null) _backgroundWorker.Dispose();
                 if (_databaseAccessor != null) _databaseAccessor.Dispose();
             }
