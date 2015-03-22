@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
-
+using FinalstreamCommons.Extentions;
 using Livet;
 using Livet.Commands;
 using Livet.Messaging;
@@ -72,6 +72,32 @@ namespace Movselex.ViewModels
             _model = model;
         }
 
+        #region IsSelected変更通知プロパティ
 
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (_isSelected == value) return;
+                _isSelected = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        ///     お気に入りの状態を変更します。
+        /// </summary>
+        /// <param name="item"></param>
+        public void ModifyIsFavorite(GroupItem item)
+        {
+            item.DebugWriteJson();
+
+            App.Client.ModifyIsFavorite(item);
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
+using System.Linq;
 using FinalstreamCommons.Extentions;
 using FinalstreamCommons.Utils;
 using Livet;
@@ -35,6 +36,20 @@ namespace Movselex.Core.Models
                 GroupItems.Add(groupItem);
             }
         }
+
+        public void Load(IEnumerable<long> gids)
+        {
+            var groups = _databaseAccessor.SelectGroup().ToArray();
+
+            GroupItems.Clear();
+            foreach (var gid in gids)
+            {
+                var groupItem = groups.FirstOrDefault(x => x.Gid == gid);
+                if (groupItem != null) GroupItems.Add(groupItem);
+            }
+        }
+
+
 
         /// <summary>
         /// メディアファイルにグループを設定します。
@@ -107,6 +122,23 @@ namespace Movselex.Core.Models
             }
 
             return wordList.ToArray();
+        }
+
+
+        public void ModifyRating(GroupItem group, RatingType rating)
+        {
+
+            using (var tran = _databaseAccessor.BeginTransaction())
+            {
+                var ids = _databaseAccessor.SelectIdFromGid(group.Gid);
+                foreach (var id in ids)
+                {
+                    _databaseAccessor.UpdateLibraryRating(id, rating);
+                }
+                tran.Commit();
+            }
+
+            group.ModifyIsFavorite(rating == RatingType.Favorite);
         }
     }
 }

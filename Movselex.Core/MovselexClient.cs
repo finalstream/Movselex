@@ -120,15 +120,16 @@ namespace Movselex.Core
             AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
 
             var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
-            var playCountUpAction = new PlayCountMonitoringAction(this.NowPlayingInfo);
+            var playMonitoringAction = new PlayMonitoringAction(this.NowPlayingInfo);
 
             playerMediaCrawlerAction.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
-            playCountUpAction.CountUpTimePlayed += (sender, s) => _actionExecuter.Post(new IncrementPlayCountAction(s));
+            playMonitoringAction.CountUpTimePlayed += (sender, l) => _actionExecuter.Post(new IncrementPlayCountAction(l));
+            playMonitoringAction.SwitchTitle += (sender, s) => _actionExecuter.Post(new UpdateNowPlayInfoAction(s));
 
             _backgroundWorker = new BackgroundWorker(new BackgroundAction[]
             {
                 playerMediaCrawlerAction, 
-                playCountUpAction
+                playMonitoringAction
             });
             _backgroundWorker.Start();
 
@@ -167,6 +168,11 @@ namespace Movselex.Core
             _actionExecuter.Post(new ModifyIsFavoriteAction(library));
         }
 
+        public void ModifyIsFavorite(GroupItem group)
+        {
+            _actionExecuter.Post(new ModifyIsFavoriteAction(group));
+        }
+
         public void ExecEmpty()
         {
             _actionExecuter.Post(new EmptyAction());
@@ -203,6 +209,22 @@ namespace Movselex.Core
         {
             if (Filterings.FirstOrDefault(x => x.IsSelected) != null) _log.Debug(Filterings.FirstOrDefault(x => x.IsSelected).DisplayValue);
             AppConfig.SelectFiltering = filteringItem.DisplayValue;
+            AppConfig.FilteringMode = FilteringMode.SQL;
+            foreach (var groupItem in Groups)
+            {
+                groupItem.IsSelected = false;
+            }
+            Refresh();
+        }
+
+        public void ChangeGroup(GroupItem groupItem)
+        {
+            if (Groups.FirstOrDefault(x => x.IsSelected) != null) _log.Debug(Groups.FirstOrDefault(x => x.IsSelected).GroupName);
+            AppConfig.FilteringMode = FilteringMode.Group;
+            foreach (var filteringItem in Filterings)
+            {
+                filteringItem.IsSelected = false;
+            }
             Refresh();
         }
 

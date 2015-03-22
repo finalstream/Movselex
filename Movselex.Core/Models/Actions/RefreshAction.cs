@@ -34,12 +34,26 @@ namespace Movselex.Core.Models.Actions
             // フィルタリングロード
             client.MovselexFiltering.Load();
 
-            // 選択状態のフィルタのSQLを取得してロード
-            var libCondition = new LibraryCondition(_filteringMode,
-                client.MovselexFiltering.FilteringItems.Where(x => x.IsSelected).Select(x=>x.Value).FirstOrDefault());
+            LibraryCondition libCondition;
+            switch (_filteringMode)
+            {
+                case FilteringMode.SQL:
+                    // 選択状態のフィルタのSQLを取得してロード
+                    libCondition = new LibraryCondition(_filteringMode,
+                        client.MovselexFiltering.FilteringItems.Where(x => x.IsSelected).Select(x => x.Value).FirstOrDefault());
+                    break;
+                case FilteringMode.Group:
+                    // 選択状態のグループのSQLを取得してロード
+                    libCondition = new LibraryCondition(_filteringMode,
+                        client.MovselexGroup.GroupItems.Where(x => x.IsSelected).Select(x => x.GroupName).FirstOrDefault());
+                    break;
+                default:
+                    return;
+            }
+            
             client.MovselexLibrary.Load(libCondition);
 
-            client.MovselexGroup.Load();
+            if(_filteringMode == FilteringMode.SQL) client.MovselexGroup.Load();
         }
 
         /// <summary>

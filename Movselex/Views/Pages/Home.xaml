@@ -168,7 +168,8 @@
 		<!-- GroupGrid -->
 		<DataGrid Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Groups}" RowHeaderWidth="0" 
 				  IsReadOnly="True" AutoGenerateColumns="False" Height="200" Margin="5,10,0,0" 
-				  BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}">
+				  BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}"
+				  SelectedItem="{Binding CurrentGroup}">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Group" Width="*"
 					Binding="{Binding Model.GroupName}" ElementStyle="{StaticResource TextItem}" />
@@ -184,6 +185,11 @@
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<Image Source="{Binding Model.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16">
+								<i:Interaction.Triggers>
+									<i:EventTrigger EventName="MouseLeftButtonUp">
+										<behaviors1:LivetCallMethodAction MethodTarget="{Binding}" MethodName="ModifyIsFavorite" MethodParameter="{Binding Model}" />
+									</i:EventTrigger>
+								</i:Interaction.Triggers>
 							</Image>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
@@ -196,7 +202,12 @@
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 			</DataGrid.Columns>
-		  
+
+			<DataGrid.RowStyle>
+				<Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
+					<Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+				</Style>
+			</DataGrid.RowStyle>
 		</DataGrid>
 
 
@@ -224,7 +235,7 @@
 						<DataTemplate>
 							<Image Source="{Binding Model.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16">
 								<i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+									<i:EventTrigger EventName="MouseLeftButtonUp">
 										<behaviors1:LivetCallMethodAction MethodTarget="{Binding}" MethodName="ModifyIsFavorite" MethodParameter="{Binding Model}" />
 									</i:EventTrigger>
 								</i:Interaction.Triggers>
@@ -237,7 +248,7 @@
 						<DataTemplate>
 							<Image Source="{Binding Model.IsPlayed, Converter={StaticResource IsPlayedConverter}}" Stretch="Uniform" Width="16" Height="16">
 								<i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+									<i:EventTrigger EventName="MouseLeftButtonUp">
 										<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="ModifyIsPlayed" MethodParameter="{Binding Model}" />
 									</i:EventTrigger>
 								</i:Interaction.Triggers>

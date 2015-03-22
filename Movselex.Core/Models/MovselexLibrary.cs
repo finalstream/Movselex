@@ -177,11 +177,10 @@ namespace Movselex.Core.Models
             libraryItem.ModifyIsPlayed(newIsPlayed);
         }
 
-        public void ModifyIsFavorite(LibraryItem libraryItem)
+        public void ModifyRating(LibraryItem libraryItem, RatingType rating)
         {
-            var newRating = libraryItem.IsFavorite? RatingType.Normal : RatingType.Favorite; // 逆にする
-            _databaseAccessor.UpdateLibraryRating(libraryItem.Id, newRating);
-            libraryItem.ModifyRating(newRating);
+            _databaseAccessor.UpdateLibraryRating(libraryItem.Id, rating);
+            libraryItem.ModifyRating(rating);
 
         }
     }

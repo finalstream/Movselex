@@ -24,6 +24,7 @@ namespace Movselex.Core.Models.Actions
         {
 
             client.MovselexLibrary.Shuffle(LimitNum);
+            client.MovselexGroup.Load(client.MovselexLibrary.LibraryItems.Where(x=>x.Gid != 0).Select(x=>x.Gid).Distinct());
         }
     }
 }

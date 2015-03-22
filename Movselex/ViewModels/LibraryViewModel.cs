@@ -79,7 +79,7 @@ namespace Movselex.ViewModels
         }
 
         /// <summary>
-        ///     再生済みの状態を変更します。
+        ///     お気に入りの状態を変更します。
         /// </summary>
         /// <param name="item"></param>
         public void ModifyIsFavorite(LibraryItem item)

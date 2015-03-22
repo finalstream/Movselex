@@ -64,6 +64,23 @@ namespace Movselex.Core.Models
         }
         #endregion
 
+        #region IsSelected変更通知プロパティ
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (_isSelected == value) return;
+                _isSelected = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// コンプリートしているかどうか。
         /// </summary>
@@ -74,10 +91,9 @@ namespace Movselex.Core.Models
         /// <summary>
         /// お気に入りを変更します。
         /// </summary>
-        public void SwitchFavorite()
+        public void ModifyIsFavorite(bool isFavorite)
         {
-            IsFavorite = !IsFavorite;
+            IsFavorite = isFavorite;
         }
-
     }
 }

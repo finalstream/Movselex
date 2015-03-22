@@ -246,12 +246,12 @@ WHERE ID = :Id</value>
     <value>SELECT count(*) FROM PLAYINGLIST</value>
     <comment>再生中リストカウント</comment>
   </data>
-  <data name="SQL021" xml:space="preserve">
+  <data name="SelectIdFromGid" xml:space="preserve">
     <value>SELECT 
     PL.ID
 FROM MOVLIST PL 
-WHERE GID = :Gid</value>
-    <comment>グループ名に一致するIDを取得</comment>
+WHERE GID = @Gid</value>
+    <comment>グループIDに一致するIDを取得</comment>
   </data>
   <data name="SQL023" xml:space="preserve">
     <value>SELECT 

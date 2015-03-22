@@ -32,7 +32,7 @@ namespace Movselex.Core.Models
 
         public string TitleFormat { get; private set; }
 
-        public FilteringMode FilteringMode { get; private set; }
+        public FilteringMode FilteringMode { get; set; }
 
         public string MpcExePath { get; set; }
 

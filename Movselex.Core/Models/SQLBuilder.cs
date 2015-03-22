@@ -20,15 +20,29 @@ namespace Movselex.Core.Models
             sb.Append(" WHERE ");
             sb.Append(CreateRatingWhereString(libraryMode));
 
-            var condSql = libCondition.ConditionSQL.ToUpper();
+            var condSql = libCondition.ConditionSQL;
 
             switch (libCondition.FilteringMode)
             {
                 case FilteringMode.SQL:
+                    condSql = condSql.ToUpper();
                     if (string.IsNullOrEmpty(condSql)) break;
                     if (!(condSql.Substring(0, 3).Equals("AND")
                           || condSql.Substring(0, 2).Equals("OR"))) isFullSql = true;
                     sb.Append(condSql);
+                    break;
+
+                case FilteringMode.Group:
+                    sb.Append(" AND ");
+                    if (!string.IsNullOrEmpty(condSql))
+                    {
+                        sb.Append(" GPL.GROUPNAME = '" + EscapeSQL(condSql) + "'");
+                    }
+                    else
+                    {
+                        sb.Append(" GPL.GROUPNAME IS NULL ");
+                    }
+                    sb.Append(" ORDER BY round(PL.NO)");
                     break;
             }
             
@@ -104,6 +118,11 @@ namespace Movselex.Core.Models
                     return "RATING = 0 ";
             }
             return "";
+        }
+
+        private static string EscapeSQL(string sql)
+        {
+            return sql.Replace("'", "''");
         }
     }
 }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinalstreamCommons.Windows;
-using Movselex.Core.Models;
+﻿using FinalstreamCommons.Windows;
 
-namespace Movselex.Core
+namespace Movselex.Core.Models
 {
     class MpcPlayerInfoGetter : PlayerInfoGetter
     {

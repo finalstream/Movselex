@@ -2,6 +2,9 @@
 {
     public interface INowPlayingInfo
     {
+
+        long Id { get; }
+
         /// <summary>
         /// 再生中のタイトル。
         /// </summary>
@@ -30,5 +33,7 @@
         /// <param name="title"></param>
         /// <param name="playtime"></param>
         void Update(string title, string playtime);
+
+        void SetId(long id);
     }
 }

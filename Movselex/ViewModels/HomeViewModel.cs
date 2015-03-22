@@ -171,7 +171,25 @@ namespace Movselex.ViewModels
             {
                 if (_currentFiltering == value) return;
                 _currentFiltering = value;
-                _client.ChangeFiltering(value.Model);
+                if(value != null)_client.ChangeFiltering(value.Model);
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region CurrentGroup変更通知プロパティ
+
+        private GroupViewModel _currentGroup;
+
+        public GroupViewModel CurrentGroup
+        {
+            get { return _currentGroup; }
+            set
+            {
+                if (_currentGroup == value) return;
+                _currentGroup = value;
+                if(value != null) _client.ChangeGroup(value.Model);
                 RaisePropertyChanged();
             }
         }

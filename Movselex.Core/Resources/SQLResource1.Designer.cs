@@ -179,6 +179,18 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   SELECT 
+        ///    PL.ID
+        ///FROM MOVLIST PL 
+        ///WHERE GID = @Gid に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectIdFromGid {
+            get {
+                return ResourceManager.GetString("SelectIdFromGid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   SELECT ID, FILEPATH FROM MOVLIST WHERE LENGTH = @Length に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SelectInCompleteIdFilePaths {
@@ -328,18 +340,6 @@ namespace Movselex.Core.Resources {
         internal static string SQL020 {
             get {
                 return ResourceManager.GetString("SQL020", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   SELECT 
-        ///    PL.ID
-        ///FROM MOVLIST PL 
-        ///WHERE GID = :Gid に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL021 {
-            get {
-                return ResourceManager.GetString("SQL021", resourceCulture);
             }
         }
         

@@ -72,6 +72,12 @@ namespace Movselex.Core
         void ChangeFiltering(FilteringItem filteringItem);
 
         /// <summary>
+        /// グループを変更します。
+        /// </summary>
+        /// <param name="groupItem"></param>
+        void ChangeGroup(GroupItem groupItem);
+
+        /// <summary>
         /// ライブラリをシャッフルします。
         /// </summary>
         void ShuffleLibrary();
@@ -89,5 +95,6 @@ namespace Movselex.Core
         void Refresh();
         void ModifyIsPlayed(LibraryItem item);
         void ModifyIsFavorite(LibraryItem item);
+        void ModifyIsFavorite(GroupItem item);
     }
 }

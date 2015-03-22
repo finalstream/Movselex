@@ -12,6 +12,8 @@ namespace Movselex.Core.Models
             _playTime = "";
         }
 
+        public long Id { get; private set; }
+
         #region ViewTitle変更通知プロパティ
 
         private string _viewTitle;
@@ -119,5 +121,9 @@ namespace Movselex.Core.Models
             }
         }
 
+        public void SetId(long id)
+        {
+            Id = id;
+        }
     }
 }

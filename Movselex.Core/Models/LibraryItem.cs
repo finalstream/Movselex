@@ -22,7 +22,7 @@ namespace Movselex.Core.Models
         /// <summary>
         /// グループIDを取得します。
         /// </summary>
-        public long GroupId { get; private set; }
+        public long Gid { get; private set; }
 
         /// <summary>
         /// ファイルパスを取得します。
