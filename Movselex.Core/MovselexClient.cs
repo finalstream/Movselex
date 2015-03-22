@@ -73,6 +73,14 @@ namespace Movselex.Core
             }
         }
 
+        public string ApplicationNameWithVersion
+        {
+            get
+            {
+                var execAssembly = new AssemblyInfoData(ExecutingAssembly);
+                return string.Format("{0} ver.{1}", execAssembly.Product, execAssembly.FileVersion);
+            }
+        }
 
         public bool IsProgressing
         {
@@ -88,7 +96,8 @@ namespace Movselex.Core
         public MovselexGroup MovselexGroup { get; private set; }
         public LibraryUpdater LibraryUpdater { get; private set; }
         public LinkedListEx<string> PlayingList { get; private set; }
-        public IProgressInfo ProgressInfo { get; private set; } 
+        public IProgressInfo ProgressInfo { get; private set; }
+
 
         /// <summary>
         /// 新しいインスタンスを初期化します。

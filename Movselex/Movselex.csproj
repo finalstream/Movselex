@@ -94,6 +94,7 @@
     <Compile Include="ViewModels\FilteringViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\LibraryViewModel.cs" />
+    <Compile Include="ViewModels\Pages\Settings\AboutViewModel.cs" />
     <Compile Include="ViewModels\Pages\Settings\AppearanceViewModel.cs" />
     <Compile Include="ViewModels\Pages\Settings\GeneralViewModel.cs" />
     <Compile Include="Views\Converters\IsFavoriteConverter.cs" />
@@ -105,7 +106,7 @@
     <Compile Include="Views\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Pages\About.xaml.cs">
+    <Compile Include="Views\Pages\Settings\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Pages\Settings\Appearance.xaml.cs">
@@ -140,7 +141,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Pages\About.xaml">
+    <Page Include="Views\Pages\Settings\About.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

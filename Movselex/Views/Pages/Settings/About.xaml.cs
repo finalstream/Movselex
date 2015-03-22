@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Movselex.ViewModels.Pages.Settings;
 
 namespace Movselex.Views.Pages.Settings
 {
@@ -10,6 +11,7 @@ namespace Movselex.Views.Pages.Settings
         public About()
         {
             InitializeComponent();
+            this.DataContext = new AboutViewModel();
         }
     }
 }

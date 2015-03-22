@@ -45,6 +45,8 @@ namespace Movselex.Core
 
         IProgressInfo ProgressInfo { get; }
 
+        string ApplicationNameWithVersion { get; }
+
         /// <summary>
         /// 初期化を行います。
         /// </summary>

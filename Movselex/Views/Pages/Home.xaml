@@ -198,18 +198,29 @@
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<Image Source="{Binding Model.IsCompleted, Converter={StaticResource IsCompleteConverter}}" Stretch="Uniform" Width="16" Height="16">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                        <behaviors1:LivetCallMethodAction MethodTarget="{Binding}" MethodName="ModifyIsComplete" MethodParameter="{Binding Model}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Image>
+								<i:Interaction.Triggers>
+									<i:EventTrigger EventName="MouseLeftButtonUp">
+										<behaviors1:LivetCallMethodAction MethodTarget="{Binding}" MethodName="ModifyIsComplete" MethodParameter="{Binding Model}" />
+									</i:EventTrigger>
+								</i:Interaction.Triggers>
+							</Image>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>
 			</DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="グループでファイルを移動" IsEnabled="False">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="MoveFile" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
 
-			<DataGrid.RowStyle>
+            <DataGrid.RowStyle>
 				<Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
 					<Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 				</Style>
@@ -291,10 +302,10 @@
 					<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DoubleClickLibrary"/>
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
-            <i:Interaction.Behaviors>
-                <behaviors:FileDropBehavior Command="{Binding DropFileCommand}" />
-            </i:Interaction.Behaviors>
-        </DataGrid>
+			<i:Interaction.Behaviors>
+				<behaviors:FileDropBehavior Command="{Binding DropFileCommand}" />
+			</i:Interaction.Behaviors>
+		</DataGrid>
 
 		<!-- PlayingGrid -->
 		<DataGrid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="200"  
