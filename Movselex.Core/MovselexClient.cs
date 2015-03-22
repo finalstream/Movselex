@@ -173,6 +173,11 @@ namespace Movselex.Core
             _actionExecuter.Post(new ModifyIsFavoriteAction(group));
         }
 
+        public void ModifyIsComplete(GroupItem group)
+        {
+            _actionExecuter.Post(new ModifyIsCompleteAction(group));
+        }
+
         public void ExecEmpty()
         {
             _actionExecuter.Post(new EmptyAction());

@@ -373,10 +373,10 @@ WHERE ID = @Id</value>
     <value>SELECT GID FROM MOVLIST WHERE ID = :Id</value>
     <comment>GIDを取得</comment>
   </data>
-  <data name="SQL040" xml:space="preserve">
+  <data name="UpdateGroupIsCompleted" xml:space="preserve">
     <value>UPDATE MOVGROUPLIST
-SET COMPLETE = :COMPLETE
-WHERE GID = :GID</value>
+SET COMPLETE = @Complete
+WHERE GID = @Gid</value>
     <comment>コンプリートを更新</comment>
   </data>
   <data name="UpdateLibraryIsPlayed" xml:space="preserve">

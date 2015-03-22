@@ -140,5 +140,12 @@ namespace Movselex.Core.Models
 
             group.ModifyIsFavorite(rating == RatingType.Favorite);
         }
+
+        public void ModifyIsComplete(GroupItem group)
+        {
+            var newComplete = !group.IsCompleted; // ‹t‚É‚·‚é
+            _databaseAccessor.UpdateGroupIsCompleted(group.Gid, newComplete);
+            group.ModifyIsComplete(newComplete);
+        }
     }
 }

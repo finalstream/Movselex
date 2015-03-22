@@ -512,17 +512,6 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   UPDATE MOVGROUPLIST
-        ///SET COMPLETE = :COMPLETE
-        ///WHERE GID = :GID に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL040 {
-            get {
-                return ResourceManager.GetString("SQL040", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   SELECT MGL.GROUPNAME
         ///FROM MOVLIST ML inner join MOVGROUPLIST MGL ON ML.GID= MGL.GID 
         ///WHERE FILEPATH like :FilePath limit 1 に類似しているローカライズされた文字列を検索します。
@@ -634,6 +623,17 @@ namespace Movselex.Core.Resources {
         internal static string SQL053 {
             get {
                 return ResourceManager.GetString("SQL053", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UPDATE MOVGROUPLIST
+        ///SET COMPLETE = @Complete
+        ///WHERE GID = @Gid に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdateGroupIsCompleted {
+            get {
+                return ResourceManager.GetString("UpdateGroupIsCompleted", resourceCulture);
             }
         }
         

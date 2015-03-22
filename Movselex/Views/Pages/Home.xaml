@@ -197,7 +197,13 @@
 				<DataGridTemplateColumn Header="" Width="30" CanUserSort="False">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
-							<Image Source="{Binding Model.IsCompleted, Converter={StaticResource IsCompleteConverter}}" Stretch="Uniform" Width="16" Height="16"></Image>
+							<Image Source="{Binding Model.IsCompleted, Converter={StaticResource IsCompleteConverter}}" Stretch="Uniform" Width="16" Height="16">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                        <behaviors1:LivetCallMethodAction MethodTarget="{Binding}" MethodName="ModifyIsComplete" MethodParameter="{Binding Model}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
 						</DataTemplate>
 					</DataGridTemplateColumn.CellTemplate>
 				</DataGridTemplateColumn>

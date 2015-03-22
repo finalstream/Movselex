@@ -99,5 +99,16 @@ namespace Movselex.ViewModels
 
             App.Client.ModifyIsFavorite(item);
         }
+
+        /// <summary>
+        ///     完了の状態を変更します。
+        /// </summary>
+        /// <param name="item"></param>
+        public void ModifyIsComplete(GroupItem item)
+        {
+            item.DebugWriteJson();
+
+            App.Client.ModifyIsComplete(item);
+        }
     }
 }

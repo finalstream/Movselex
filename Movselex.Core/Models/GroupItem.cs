@@ -84,7 +84,22 @@ namespace Movselex.Core.Models
         /// <summary>
         /// コンプリートしているかどうか。
         /// </summary>
-        public bool IsCompleted { get; private set; }
+
+        #region IsCompleted変更通知プロパティ
+        private bool _isCompleted;
+
+        public bool IsCompleted
+        {
+            get { return _isCompleted; }
+            set
+            {
+                if (_isCompleted == value) return;
+                _isCompleted = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         public string FileSizeString { get { return FileUtils.ConvertFileSizeGigaByteString(Filesize); }}
 
@@ -94,6 +109,11 @@ namespace Movselex.Core.Models
         public void ModifyIsFavorite(bool isFavorite)
         {
             IsFavorite = isFavorite;
+        }
+
+        public void ModifyIsComplete(bool isComplete)
+        {
+            IsCompleted = isComplete;
         }
     }
 }

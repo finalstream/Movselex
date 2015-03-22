@@ -33,6 +33,7 @@ namespace Movselex.Core.Models
                     break;
 
                 case FilteringMode.Group:
+                    // TODO: Gidでもよいのでは？
                     sb.Append(" AND ");
                     if (!string.IsNullOrEmpty(condSql))
                     {

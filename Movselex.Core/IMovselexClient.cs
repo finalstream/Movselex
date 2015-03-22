@@ -96,5 +96,6 @@ namespace Movselex.Core
         void ModifyIsPlayed(LibraryItem item);
         void ModifyIsFavorite(LibraryItem item);
         void ModifyIsFavorite(GroupItem item);
+        void ModifyIsComplete(GroupItem item);
     }
 }

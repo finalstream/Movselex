@@ -24,5 +24,6 @@ namespace Movselex.Core.Models
         void UpdateLibraryIsPlayed(long id, bool newIsPlayed);
         void UpdateLibraryRating(long id, RatingType newRating);
         IEnumerable<long> SelectIdFromGid(long gid);
+        void UpdateGroupIsCompleted(long gid, bool newComplete);
     }
 }

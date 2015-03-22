@@ -194,5 +194,10 @@ namespace Movselex.Core.Models
         {
             return SqlExecuter.Query<long>(SQLResource.SelectIdFromGid, new {Gid = gid});
         }
+
+        public void UpdateGroupIsCompleted(long gid, bool newComplete)
+        {
+            SqlExecuter.Execute(SQLResource.UpdateGroupIsCompleted, new {Gid = gid, Complete = newComplete});
+        }
     }
 }
