@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using FinalstreamCommons.Utils;
 using Livet;
 
 namespace Movselex.Core.Models
@@ -27,7 +28,22 @@ namespace Movselex.Core.Models
         /// <summary>
         /// ファイルパスを取得します。
         /// </summary>
-        public string FilePath { get; private set; }
+        #region FilePath変更通知プロパティ
+        private string _filePath;
+
+        public string FilePath
+        {
+            get { return _filePath; }
+            set
+            {
+                if (_filePath == value) return;
+                _filePath = value;
+                Drive = FileUtils.GetDriveLetter(value);
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// グループ名を取得します。
@@ -176,7 +192,21 @@ namespace Movselex.Core.Models
         /// <summary>
         /// ファイルが格納されているドライブレターを取得します。
         /// </summary>
-        public string Drive { get { return FilePath.Substring(0, 1).ToUpper(); } }
+        #region Drive変更通知プロパティ
+        private string _drive;
+
+        public string Drive
+        {
+            get { return _drive; }
+            set
+            {
+                if (_drive == value) return;
+                _drive = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 再生回数を取得します。
@@ -228,6 +258,11 @@ namespace Movselex.Core.Models
         public void ModifyRating(RatingType newRating)
         {
             Rating = newRating;
+        }
+
+        public void ModifyFilePath(string filepath)
+        {
+            FilePath = filepath;
         }
     }
 }

@@ -456,20 +456,6 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   UPDATE MOVLIST 
-        ///SET
-        ///FILEPATH = :FilePath,
-        ///DRIVE = SUBSTR(:FilePath,1,1),
-        ///FILESIZE = GETFILESIZE(:FilePath)
-        ///WHERE ID = :Id に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL034 {
-            get {
-                return ResourceManager.GetString("SQL034", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   SELECT 
         ///  KEYWORD
         ///FROM MOVGROUPLIST 
@@ -646,6 +632,20 @@ namespace Movselex.Core.Resources {
         internal static string UpdateGroupLastUpdateDatetime {
             get {
                 return ResourceManager.GetString("UpdateGroupLastUpdateDatetime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UPDATE MOVLIST 
+        ///SET
+        ///FILEPATH = @FilePath,
+        ///DRIVE = SUBSTR(@FilePath,1,1),
+        ///FILESIZE = GETFILESIZE(@FilePath)
+        ///WHERE ID = @Id に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdateLibraryFilePath {
+            get {
+                return ResourceManager.GetString("UpdateLibraryFilePath", resourceCulture);
             }
         }
         

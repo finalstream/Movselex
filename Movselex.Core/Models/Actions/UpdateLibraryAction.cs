@@ -2,13 +2,11 @@
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class UpdateLibraryAction : MovselexActionBase
+    internal class UpdateLibraryAction : MovselexProgressAction
     {
-        public override void InvokeCore(MovselexClient client)
+        public override void InvokeProgress(MovselexClient client)
         {
-            client.IsProgressing = true;
             client.LibraryUpdater.Update();
-            client.IsProgressing = false;
         }
     }
 }

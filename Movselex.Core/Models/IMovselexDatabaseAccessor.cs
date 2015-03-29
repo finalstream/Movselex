@@ -25,5 +25,6 @@ namespace Movselex.Core.Models
         void UpdateLibraryRating(long id, RatingType newRating);
         IEnumerable<long> SelectIdFromGid(long gid);
         void UpdateGroupIsCompleted(long gid, bool newComplete);
+        void UpdateLibraryFilePath(KeyValuePair<long, string> kv);
     }
 }

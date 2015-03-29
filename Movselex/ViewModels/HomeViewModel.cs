@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
@@ -25,6 +28,8 @@ namespace Movselex.ViewModels
     {
         private readonly IMovselexClient _client;
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
+
+        private readonly ISubject<string> _searchTextChangedSubject = new Subject<string>(); 
 
         public IMovselexClient Client { get { return _client; }}
 
@@ -215,6 +220,23 @@ namespace Movselex.ViewModels
 
         #endregion
 
+        #region SearchText変更通知プロパティ
+
+        private string _searchText;
+
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                if (_searchText == value) return;
+                _searchText = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// 処理中かどうかを取得します。
         /// </summary>
@@ -268,6 +290,7 @@ namespace Movselex.ViewModels
             };
 
             _client.Initialize();
+
         }
 
 
@@ -294,6 +317,28 @@ namespace Movselex.ViewModels
         /// </summary>
         private void CreateListener()
         {
+            var h = _searchTextChangedSubject
+                .Throttle(TimeSpan.FromMilliseconds(3000))
+                .DistinctUntilChanged()
+                .Subscribe(x =>
+            {
+                // テキストフィルタリングする
+
+            });
+            var listner = new PropertyChangedEventListener(this)
+            {
+                (sender, args) =>
+                {
+                    if (args.PropertyName == "SearchText")
+                    {
+                        _searchTextChangedSubject.OnNext(SearchText);
+                    }
+                }
+            };
+            CompositeDisposable.Add(h);
+            CompositeDisposable.Add(listner);
+
+
             // データベース変更イベントリスナー
             var databaseListener = new CollectionChangedEventListener(_client.Databases)
             {
@@ -414,6 +459,12 @@ namespace Movselex.ViewModels
         {
             _client.UpdateLibrary();
             _client.Refresh();
+        }
+
+
+        public void MoveGroupDirectory()
+        {
+            _client.MoveGroupDirectory(CurrentGroup.Model);
         }
         
 

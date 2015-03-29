@@ -199,5 +199,10 @@ namespace Movselex.Core.Models
         {
             SqlExecuter.Execute(SQLResource.UpdateGroupIsCompleted, new {Gid = gid, Complete = newComplete});
         }
+
+        public void UpdateLibraryFilePath(KeyValuePair<long, string> kv)
+        {
+            SqlExecuter.Execute(SQLResource.UpdateLibraryFilePath, new {Id = kv.Key, FilePath = kv.Value});
+        }
     }
 }

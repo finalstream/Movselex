@@ -195,6 +195,11 @@ namespace Movselex.Core
             _actionExecuter.Post(action);
         }
 
+        public void MoveGroupDirectory(GroupItem group)
+        {
+            _actionExecuter.Post(new MoveGroupDirectoryAction(group, Libraries));
+        }
+
         public void ExecEmpty()
         {
             _actionExecuter.Post(new EmptyAction());

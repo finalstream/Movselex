@@ -335,13 +335,13 @@ FILESIZE = GETFILESIZE(:FilePath)
 WHERE ID = :Id</value>
     <comment>タイトル更新</comment>
   </data>
-  <data name="SQL034" xml:space="preserve">
+  <data name="UpdateLibraryFilePath" xml:space="preserve">
     <value>UPDATE MOVLIST 
 SET
-FILEPATH = :FilePath,
-DRIVE = SUBSTR(:FilePath,1,1),
-FILESIZE = GETFILESIZE(:FilePath)
-WHERE ID = :Id</value>
+FILEPATH = @FilePath,
+DRIVE = SUBSTR(@FilePath,1,1),
+FILESIZE = GETFILESIZE(@FilePath)
+WHERE ID = @Id</value>
     <comment>ファイルパス更新</comment>
   </data>
   <data name="SQL035" xml:space="preserve">

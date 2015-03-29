@@ -23,7 +23,21 @@ namespace Movselex.Core.Models
         /// <summary>
         /// ファイルが格納されているドライブ。
         /// </summary>
-        public string Drive { get; private set; }
+        #region Drive変更通知プロパティ
+        private string _drive;
+
+        public string Drive
+        {
+            get { return _drive; }
+            set
+            {
+                if (_drive == value) return;
+                _drive = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// ファイルサイズ(Byte)。
@@ -114,6 +128,11 @@ namespace Movselex.Core.Models
         public void ModifyIsComplete(bool isComplete)
         {
             IsCompleted = isComplete;
+        }
+
+        public void ModifyDriveLetter(string drive)
+        {
+            Drive = Drive;
         }
     }
 }

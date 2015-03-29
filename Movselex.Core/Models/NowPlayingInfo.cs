@@ -70,7 +70,7 @@ namespace Movselex.Core.Models
 
         #region PlayTime変更通知プロパティ
 
-        private string _playTime;
+        private string _playTime = ApplicationDefinitions.TimeEmptyString;
 
         public string PlayTime
         {
@@ -89,7 +89,6 @@ namespace Movselex.Core.Models
         {
             get
             {
-                
                 var time = PlayTime;
                 if (time.Length < 6)
                 {

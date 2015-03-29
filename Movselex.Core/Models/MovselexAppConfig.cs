@@ -22,7 +22,7 @@ namespace Movselex.Core.Models
 
         public int LimitNum { get; set; }
 
-        public string MoveBaseDirectory { get; private set; }
+        public string MoveBaseDirectory { get; set; }
 
         public string SelectDatabase { get; set; }
 

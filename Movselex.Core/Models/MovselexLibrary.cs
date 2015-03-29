@@ -183,5 +183,28 @@ namespace Movselex.Core.Models
             libraryItem.ModifyRating(rating);
 
         }
+
+        /// <summary>
+        /// ファイルパスを更新します。
+        /// </summary>
+        /// <param name="movedDic">key:id value:newFilePath</param>
+        public void UpdateFilePaths(Dictionary<long, string> movedDic)
+        {
+            using (var tran = _databaseAccessor.BeginTransaction())
+            {
+                foreach (var kv in movedDic)
+                {
+                    _databaseAccessor.UpdateLibraryFilePath(kv);
+                }
+                tran.Commit();
+            }
+
+            // ライブラリ内ファイルパス更新
+            foreach (var kv in movedDic) {
+                var library = LibraryItems.FirstOrDefault(x => x.Id == kv.Key);
+                if (library == null) continue;
+                library.ModifyFilePath(kv.Value);
+            }
+        }
     }
 }
