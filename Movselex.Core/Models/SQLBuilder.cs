@@ -20,6 +20,25 @@ namespace Movselex.Core.Models
             sb.Append(" WHERE ");
             sb.Append(CreateRatingWhereString(libraryMode));
 
+            if (!string.IsNullOrEmpty(libCondition.FilteringText))
+            {
+                // フィルタリング
+                var filterString = libCondition.FilteringText.ToLower();
+                sb.Append(" AND ");
+                var normalFilter = "lower(IFNULL(FILEPATH,'') || IFNULL(TITLE,'') || IFNULL(GPL.GROUPNAME,'')) LIKE '%" +
+                        EscapeSQL(filterString) + "%' ";
+                if (filterString.Length < 3)
+                {
+                    sb.Append(normalFilter);
+                }
+                else
+                {
+                    var migemoFilter = "ISMATCHMIGEMO('" + EscapeSQL(filterString) +
+                                       "',lower(IFNULL(FILEPATH,'') || IFNULL(TITLE,'') || IFNULL(GPL.GROUPNAME,''))) ";
+                    sb.Append(string.Format("(({0}) OR ({1}))", normalFilter, migemoFilter));
+                }
+            }
+
             var condSql = libCondition.ConditionSQL;
 
             switch (libCondition.FilteringMode)

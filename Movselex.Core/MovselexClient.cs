@@ -158,9 +158,11 @@ namespace Movselex.Core
             SaveConfig(_appConfigFilePath, AppConfig);
         }
 
+
         /// <summary>
         /// すべてのデータをリフレッシュします。
         /// </summary>
+        /// <param name="filteringText"></param>
         public void Refresh()
         {
             var action = new RefreshAction(AppConfig.FilteringMode);
@@ -191,13 +193,18 @@ namespace Movselex.Core
         public void RegistFiles(IEnumerable<string> files)
         {
             var action = new RegistFileAction(files);
-            action.AfterAction = Refresh;
+            action.AfterAction = () => Refresh();
             _actionExecuter.Post(action);
         }
 
         public void MoveGroupDirectory(GroupItem group)
         {
             _actionExecuter.Post(new MoveGroupDirectoryAction(group, Libraries));
+        }
+
+        public void FilteringLibrary(string filteringText)
+        {
+            _actionExecuter.Post(new FilteringLibraryAction(filteringText));
         }
 
         public void ExecEmpty()
@@ -232,6 +239,10 @@ namespace Movselex.Core
             Refresh();
         }
 
+        /// <summary>
+        /// フィルタを変更します。
+        /// </summary>
+        /// <param name="filteringItem"></param>
         public void ChangeFiltering(FilteringItem filteringItem)
         {
             if (Filterings.FirstOrDefault(x => x.IsSelected) != null) _log.Debug(Filterings.FirstOrDefault(x => x.IsSelected).DisplayValue);

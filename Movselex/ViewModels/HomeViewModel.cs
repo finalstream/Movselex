@@ -9,11 +9,15 @@ using System.Reactive.Subjects;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using FinalstreamCommons.Extentions;
 using FinalstreamCommons.Models;
+using FinalstreamUIComponents.Models;
+using FinalstreamUIComponents.Views;
 using FirstFloor.ModernUI;
 using FirstFloor.ModernUI.Presentation;
+using FirstFloor.ModernUI.Windows.Controls;
 using Livet;
 using Livet.Commands;
 using Livet.EventListeners;
@@ -318,12 +322,12 @@ namespace Movselex.ViewModels
         private void CreateListener()
         {
             var h = _searchTextChangedSubject
-                .Throttle(TimeSpan.FromMilliseconds(3000))
+                .Throttle(TimeSpan.FromMilliseconds(1000))
                 .DistinctUntilChanged()
                 .Subscribe(x =>
             {
                 // テキストフィルタリングする
-
+                _client.FilteringLibrary(x);
             });
             var listner = new PropertyChangedEventListener(this)
             {
@@ -459,6 +463,25 @@ namespace Movselex.ViewModels
         {
             _client.UpdateLibrary();
             _client.Refresh();
+
+#if DEBUG
+            Sandbox();
+#endif
+        }
+
+        private void Sandbox()
+        {
+            var paramDic = new Dictionary<string, InputParam>();
+            paramDic.Add("GroupTitle", new InputParam("GroupTitle", "Group1"));
+            var inputTextContent = new InputTextContent("グループを登録します。", paramDic);
+            var dlg = new ModernDialog
+            {
+                Title = "Regist Group",
+                Content = inputTextContent
+            };
+            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
+            var result = dlg.ShowDialog();
+            var input = inputTextContent.InputParamDictionary;
         }
 
 

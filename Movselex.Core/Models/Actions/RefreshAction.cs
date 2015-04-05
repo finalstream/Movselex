@@ -14,8 +14,7 @@ namespace Movselex.Core.Models.Actions
     internal class RefreshAction : MovselexActionBase
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
-        private FilteringMode _filteringMode;
-
+        private readonly FilteringMode _filteringMode;
 
         public RefreshAction()
         {

@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace FinalstreamUIComponents.Controls
+namespace FinalstreamUIComponents.Views
 {
     /// <summary>
     /// NumericUpDown.xaml の相互作用ロジック

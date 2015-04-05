@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="ApplicationDefinitions.cs" />
     <Compile Include="IMovselexClient.cs" />
+    <Compile Include="Models\Actions\FilteringLibraryAction.cs" />
     <Compile Include="Models\Actions\IncrementPlayCountAction.cs" />
     <Compile Include="Models\Actions\ModifyIsCompleteAction.cs" />
     <Compile Include="Models\Actions\ModifyIsFavoriteAction.cs" />

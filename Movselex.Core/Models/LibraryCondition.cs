@@ -12,10 +12,13 @@ namespace Movselex.Core.Models
 
         public string ConditionSQL { get; private set; }
 
-        public LibraryCondition(FilteringMode filteringMode, string conditionSql)
+        public string FilteringText { get; private set; }
+
+        public LibraryCondition(FilteringMode filteringMode, string conditionSql, string filteringText = null)
         {
             FilteringMode = filteringMode;
             ConditionSQL = conditionSql?? "";
+            FilteringText = filteringText;
         }
     }
 }

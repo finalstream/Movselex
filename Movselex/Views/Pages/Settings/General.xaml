@@ -6,7 +6,7 @@
              xmlns:settings="clr-namespace:Movselex.ViewModels.Pages.Settings"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="http://schemas.livet-mvvm.net/2011/wpf"
-             xmlns:controls="clr-namespace:FinalstreamUIComponents.Controls;assembly=FinalstreamUIComponents"
+             xmlns:views="clr-namespace:FinalstreamUIComponents.Views;assembly=FinalstreamUIComponents"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance settings:GeneralViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -40,7 +40,7 @@
                         </i:Interaction.Triggers>
                     </Button>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="LimitNum:" VerticalAlignment="Center" Margin="0,0,16,4" />
-                    <controls:NumericUpDown Grid.Row="2" Grid.Column="1" Margin="0,0,0,4" Value="{Binding LimitNum, Mode=TwoWay}" DeltaValue="10" MinValue="0"></controls:NumericUpDown>
+                    <views:NumericUpDown Grid.Row="2" Grid.Column="1" Margin="0,0,0,4" Value="{Binding LimitNum, Mode=TwoWay}" DeltaValue="10" MinValue="0"></views:NumericUpDown>
                 </Grid>
 
             </StackPanel>

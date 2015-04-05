@@ -134,7 +134,7 @@ namespace Movselex.Core.Models
 
         public RatingType GetGroupRating(long gid)
         {
-            var gidcnt = SqlExecuter.Query<int>(SQLResource.SelectGroupIdCount, new { Gid = gid}).Single();
+            var gidcnt = SqlExecuter.Query<int>(SQLResource.SelectGroupIdCount, new { Gid = gid}).SingleOrDefault();
 
             if (gidcnt > 0)
             {
