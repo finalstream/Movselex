@@ -380,6 +380,7 @@ namespace Movselex.ViewModels
             var configListener = new PropertyChangedEventListener(AppConfig)
             {
                 {"AccentColor", (sender, args) => AppearanceManager.Current.AccentColor = AppConfig.AccentColor},
+                 {"SelectedTheme", (sender, args) => AppearanceManager.Current.ThemeSource = AppConfig.SelectedTheme == "light"? AppearanceManager.LightThemeSource : AppearanceManager.DarkThemeSource},
             };
             CompositeDisposable.Add(configListener);
         }
@@ -473,6 +474,7 @@ namespace Movselex.ViewModels
 
         private void Sandbox()
         {
+
             //var paramDic = new Dictionary<string, InputParam>();
             //paramDic.Add("GroupTitle", new InputParam("GroupTitle", "Group1"));
             //var inputTextContent = new InputTextContent("グループを登録します。", paramDic);

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Media;
 using FinalstreamCommons.Models;
 using Livet;
@@ -73,6 +74,22 @@ namespace Movselex.Core.Models
 
         #endregion
 
+        #region SelectedTheme変更通知プロパティ
+
+        private string _selectedTheme;
+
+        public string SelectedTheme
+        {
+            get { return _selectedTheme; }
+            set
+            {
+                if (_selectedTheme == value) return;
+                _selectedTheme = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         public MovselexAppConfig()
         {
@@ -90,6 +107,7 @@ namespace Movselex.Core.Models
             TitleFormat = "%TITLE% - %NO%";
             LibraryMode = LibraryMode.Normal;
             AccentColor = Colors.Orange;
+            SelectedTheme = "light";
             FilteringMode = FilteringMode.SQL;
             MpcExePath = "";
         }
@@ -111,7 +129,6 @@ namespace Movselex.Core.Models
             FilteringMode = filteringMode;
             MpcExePath = mpcExePath;
         }
-
         
         public void Update(MovselexAppConfig newConfig)
         {
@@ -130,6 +147,7 @@ namespace Movselex.Core.Models
             TitleFormat = newConfig.TitleFormat;
             LibraryMode = newConfig.LibraryMode;
             AccentColor = newConfig.AccentColor;
+            SelectedTheme = newConfig.SelectedTheme;
             FilteringMode = newConfig.FilteringMode;
             MpcExePath = newConfig.MpcExePath;
 

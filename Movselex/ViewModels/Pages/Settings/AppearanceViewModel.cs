@@ -110,8 +110,9 @@ namespace Movselex.ViewModels.Pages.Settings
                     this.selectedTheme = value;
                     OnPropertyChanged("SelectedTheme");
 
+                    App.Config.SelectedTheme = value.DisplayName;
                     // and update the actual theme
-                    AppearanceManager.Current.ThemeSource = value.Source;
+                    //AppearanceManager.Current.ThemeSource = value.Source;
                 }
             }
         }

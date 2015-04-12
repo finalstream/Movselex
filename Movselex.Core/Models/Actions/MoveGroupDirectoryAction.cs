@@ -4,7 +4,10 @@ using System.Dynamic;
 using System.IO;
 using System.Windows.Forms;
 using FinalstreamCommons.Utils;
+using Microsoft.Build.Utilities;
 using NLog;
+using Logger = NLog.Logger;
+using Task = System.Threading.Tasks.Task;
 
 namespace Movselex.Core.Models.Actions
 {
@@ -35,9 +38,12 @@ namespace Movselex.Core.Models.Actions
 
             var movedDic = new Dictionary<long, string>();
 
+            var i = 1;
             foreach (var library in client.Libraries)
             {
                 var newfilepath = Path.Combine(moveDirectory, Path.GetFileName(library.FilePath));
+
+                client.UpdateProgressMessage(string.Format("Moving Group Files... {0} ({1} / {2})",_group.GroupName, i++ ,client.Libraries.Count));
 
                 FileUtils.Move(library.FilePath, newfilepath);
 

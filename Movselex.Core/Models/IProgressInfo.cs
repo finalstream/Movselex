@@ -4,6 +4,9 @@
     {
         bool IsProgressing { get; }
 
+        string ProgressMessage { get; }
+
         void UpdateProgress(bool isProgressing);
+        void SetProgressMessage(string message);
     }
 }

@@ -9,6 +9,7 @@
 			 xmlns:behaviors="clr-namespace:FinalstreamUIComponents.Behaviors;assembly=FinalstreamUIComponents"
 			 xmlns:behaviors1="http://schemas.livet-mvvm.net/2011/wpf"
 			 xmlns:conv="clr-namespace:Movselex.Views.Converters"
+			 xmlns:converters="clr-namespace:FinalstreamUIComponents.Converters;assembly=FinalstreamUIComponents"
 			 mc:Ignorable="d"
 			 d:DesignHeight="600" d:DesignWidth="1100"
 			 d:DataContext="{d:DesignInstance viewModels:HomeViewModel}"
@@ -77,6 +78,7 @@
 		<conv:IsFavoriteConverter x:Key="IsFavoriteConverter" />
 		<conv:IsCompleteConverter x:Key="IsCompleteConverter" />
 		<conv:IsPlayedConverter x:Key="IsPlayedConverter" />
+		<converters:StringIsNullOrEmptyToVisibilityConverter x:Key="StringIsNullOrEmptyToVisibilityConverter" />
 	</UserControl.Resources>
 
 	<Grid Style="{StaticResource ContentRootEx}">
@@ -210,14 +212,14 @@
 			</DataGrid.Columns>
 			<DataGrid.ContextMenu>
 				<ContextMenu>
-                    <MenuItem Header="グループ編集">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="EditGroup" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </MenuItem>
-                    <MenuItem Header="グループでファイルを移動">
+					<MenuItem Header="グループ編集">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="EditGroup" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</MenuItem>
+					<MenuItem Header="グループでファイルを移動">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
 								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="MoveGroupDirectory" />
@@ -382,8 +384,11 @@
 			</Button>
 		</Grid>
 
-		<Grid Grid.Row="5" Grid.ColumnSpan="5" Height="8" >
+		<Grid Grid.Row="5" Grid.ColumnSpan="5"  >
+            <StackPanel Orientation="Vertical">
+			<TextBlock Text="{Binding ProgressInfo.ProgressMessage}" Visibility="{Binding ProgressInfo.ProgressMessage, Converter={StaticResource StringIsNullOrEmptyToVisibilityConverter}}"  Margin="0,0,0,5" />
 			<ProgressBar Minimum="0" Maximum="1"  IsIndeterminate="True"  Visibility="{Binding ProgressInfo.IsProgressing, Converter={StaticResource BoolToVisibility}}" />
-		</Grid>
+            </StackPanel>
+        </Grid>
 	</Grid>
 </UserControl>
