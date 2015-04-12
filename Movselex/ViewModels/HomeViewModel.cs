@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
@@ -13,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using FinalstreamCommons.Extentions;
 using FinalstreamCommons.Models;
+using FinalstreamCommons.Utils;
 using FinalstreamUIComponents.Models;
 using FinalstreamUIComponents.Views;
 using FirstFloor.ModernUI;
@@ -471,25 +473,97 @@ namespace Movselex.ViewModels
 
         private void Sandbox()
         {
-            var paramDic = new Dictionary<string, InputParam>();
-            paramDic.Add("GroupTitle", new InputParam("GroupTitle", "Group1"));
-            var inputTextContent = new InputTextContent("グループを登録します。", paramDic);
-            var dlg = new ModernDialog
-            {
-                Title = "Regist Group",
-                Content = inputTextContent
-            };
-            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
-            var result = dlg.ShowDialog();
-            var input = inputTextContent.InputParamDictionary;
+            //var paramDic = new Dictionary<string, InputParam>();
+            //paramDic.Add("GroupTitle", new InputParam("GroupTitle", "Group1"));
+            //var inputTextContent = new InputTextContent("グループを登録します。", paramDic);
+            //var dlg = new ModernDialog
+            //{
+            //    Title = "Regist Group",
+            //    Content = inputTextContent
+            //};
+            //dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
+            //var result = dlg.ShowDialog();
+            //var input = inputTextContent.InputParamDictionary;
         }
 
 
         public void MoveGroupDirectory()
         {
-            _client.MoveGroupDirectory(CurrentGroup.Model);
+            var baseDirectory = DialogUtils.ShowFolderDialog(
+                "移動する場所を指定してください。指定した場所にグループ名でフォルダを作成して移動します。",
+                _client.AppConfig.MoveBaseDirectory);
+
+            if (string.IsNullOrEmpty(baseDirectory)) return;
+
+            var group = CurrentGroup.Model;
+            // 移動先フォルダ作成
+            var moveDirectory = baseDirectory + "\\" + group.GroupName;
+
+            var result = ModernDialog.ShowMessage(string.Format("{0}を{1}に移動します。よろしいですか？",
+                group.GroupName, moveDirectory), "Question?", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes) _client.MoveGroupDirectory(CurrentGroup.Model, baseDirectory);
         }
-        
+
+        public void EditGroup()
+        {
+            var group = CurrentGroup.Model;
+            var paramDic = new Dictionary<string, InputParam>();
+            paramDic.Add("GroupName", new InputParam("GroupName", group.GroupName));
+            paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", group.Keyword));
+            var inputTextContent = new InputTextContent("グループを登録します。", paramDic);
+            var dlg = new ModernDialog
+            {
+                Title = "Edit Group",
+                Content = inputTextContent
+            };
+            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
+            var result = dlg.ShowDialog();
+
+            if (result == false || !inputTextContent.IsModify) return;
+
+            var input = inputTextContent.InputParamDictionary;
+
+            _client.ModifyGroup(group, input["GroupName"].Value.ToString(), input["GroupKeyword"].Value.ToString());
+        }
+
+
+        public void Grouping()
+        {
+            var keywordList = new List<string>();
+
+            foreach (var title in Libraries.Where(x=>x.IsSelected).Select(x => x.Model.Title))
+            {
+                var words = MovselexUtils.CreateKeywords(title.Replace("-", "").Trim());
+                keywordList.AddRange(words);
+            }
+
+            // 対象のライブラリ中で一番多く出てくるキーワードを抽出
+            var keyword = MovselexUtils.GetMaxCountMaxLengthKeyword(keywordList);
+
+            var paramDic = new Dictionary<string, InputParam>();
+            paramDic.Add("GroupName", new InputParam("GroupName", keyword, _groups.Select(x=>x.Model.GroupName)));
+            paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", keyword));
+            var inputTextContent = new InputTextContent("グループを登録します。", paramDic);
+            var dlg = new ModernDialog
+            {
+                Title = "Grouping",
+                Content = inputTextContent
+            };
+            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
+            var result = dlg.ShowDialog();
+
+            
+
+            if (result == false || !inputTextContent.IsModify) return;
+
+            var input = inputTextContent.InputParamDictionary;
+
+            _client.RegistGroup(
+                input["GroupName"].Value.ToString(),
+                input["GroupKeyword"].Value.ToString(),
+                Libraries.Where(x=>x.IsSelected).Select(x=>x.Model));
+        }
 
         protected override void Dispose(bool disposing)
         {

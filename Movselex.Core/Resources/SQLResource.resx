@@ -253,30 +253,30 @@ FROM MOVLIST PL
 WHERE GID = @Gid</value>
     <comment>グループIDに一致するIDを取得</comment>
   </data>
-  <data name="SQL023" xml:space="preserve">
+  <data name="SelectGIdByGroupName" xml:space="preserve">
     <value>SELECT 
   GID
 FROM MOVGROUPLIST 
-WHERE lower(GROUPNAME) = :GroupName</value>
+WHERE lower(GROUPNAME) = @GroupName</value>
     <comment>既にDBに存在するか確認するSQL(groupname)</comment>
   </data>
-  <data name="SQL024" xml:space="preserve">
+  <data name="InsertGroup" xml:space="preserve">
     <value>INSERT INTO MOVGROUPLIST(
   GROUPNAME,
   KEYWORD,
   LASTUPDATE
 ) VALUES (
-  :GroupName,
-  :Keyword,
-  :LastUpdate
+  @GroupName,
+  @Keyword,
+  @LastUpdate
 )</value>
     <comment>グループプレイリストにレコードを挿入するSQL</comment>
   </data>
-  <data name="SQL025" xml:space="preserve">
+  <data name="UpdateGidById" xml:space="preserve">
     <value>UPDATE MOVLIST 
 SET
-GID = :Gid
-WHERE ID = :Id</value>
+GID = @Gid
+WHERE ID = @Id</value>
     <comment>GIDを更新</comment>
   </data>
   <data name="UpdateGroupLastUpdateDatetime" xml:space="preserve">
@@ -313,17 +313,18 @@ WHERE GID = :Gid</value>
 WHERE GID = :Gid</value>
     <comment>グループ削除</comment>
   </data>
-  <data name="SQL031" xml:space="preserve">
+  <data name="UpdateGroup" xml:space="preserve">
     <value>UPDATE MOVGROUPLIST 
 SET
-GROUPNAME = :GroupName
-WHERE GID = :Gid</value>
-    <comment>グループ名変更</comment>
+GROUPNAME = @GroupName,
+KEYWORD = @Keyword
+WHERE GID = @Gid</value>
+    <comment>グループ名とキーワード変更</comment>
   </data>
-  <data name="SQL032" xml:space="preserve">
+  <data name="UpdateLibraryReplaceGroupName" xml:space="preserve">
     <value>UPDATE MOVLIST
-SET TITLE = replace(TITLE, :OldGroupName, :NewGroupName)
-WHERE GID = :Gid</value>
+SET TITLE = replace(TITLE, @OldGroupName, @NewGroupName)
+WHERE GID = @Gid</value>
     <comment>グループ名変更によるタイトル更新</comment>
   </data>
   <data name="SQL033" xml:space="preserve">

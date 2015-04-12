@@ -9,18 +9,21 @@ namespace FinalstreamUIComponents.Models
 {
     public class InputParam : NotificationObject
     {
+        private bool _isModify;
+
+        public bool IsModify { get { return _isModify; }}
 
         #region Key変更通知プロパティ
 
-        private string _key;
+        private string _title;
 
-        public string Key
+        public string Title
         {
-            get { return _key; }
+            get { return _title; }
             set
             {
-                if (_key == value) return;
-                _key = value;
+                if (_title == value) return;
+                _title = value;
                 RaisePropertyChanged();
             }
         }
@@ -29,25 +32,69 @@ namespace FinalstreamUIComponents.Models
 
         #region Value変更通知プロパティ
 
-        private string _value;
+        private object _value;
 
-        public string Value
+        public object Value
         {
             get { return _value; }
             set
             {
                 if (_value == value) return;
                 _value = value;
+                _isModify = true;
                 RaisePropertyChanged();
             }
         }
 
         #endregion
 
-        public InputParam(string key, string value)
+        #region Values変更通知プロパティ
+
+        private IEnumerable<string> _values;
+
+        public IEnumerable<string> Values
         {
-            _key = key;
+            get { return _values; }
+            set
+            {
+                if (_values == value) return;
+                _values = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region IsVisibleCombobox変更通知プロパティ
+
+        private bool _isVisibleCombobox;
+
+        public bool IsVisibleCombobox
+        {
+            get { return _isVisibleCombobox; }
+            set
+            {
+                if (_isVisibleCombobox == value) return;
+                _isVisibleCombobox = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        public InputParam(string title, object value)
+        {
+            _title = title;
             _value = value;
+            IsVisibleCombobox = false;
+        }
+
+        public InputParam(string title, object value, IEnumerable<string> values)
+        {
+            _title = title;
+            _value = value;
+            _values = values;
+            IsVisibleCombobox = true;
         }
     }
 }

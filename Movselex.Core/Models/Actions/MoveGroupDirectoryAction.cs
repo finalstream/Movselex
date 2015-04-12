@@ -13,59 +13,48 @@ namespace Movselex.Core.Models.Actions
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
         private readonly GroupItem _group;
-        private readonly IEnumerable<LibraryItem> _libraries; 
+        private readonly string _baseDirectory;
 
-        public MoveGroupDirectoryAction(GroupItem group, IEnumerable<LibraryItem> libraries)
+        public MoveGroupDirectoryAction(GroupItem group, string baseDirectory)
         {
             _group = group;
-            _libraries = libraries;
+            _baseDirectory = baseDirectory;
         }
 
         public override void InvokeProgress(MovselexClient client)
         {
             //TODO: メッセージを国際化する。
             var appConfig = client.AppConfig;
-            var baseDirectory = DialogUtils.ShowFolderDialog(
-                "移動する場所を指定してください。指定した場所にグループ名でフォルダを作成して移動します。",
-                appConfig.MoveBaseDirectory);
+           
+            appConfig.MoveBaseDirectory = _baseDirectory;
 
-            if (!string.IsNullOrEmpty(baseDirectory))
+            // 移動先フォルダ作成
+            var moveDirectory = _baseDirectory + "\\" + _group.GroupName;
+
+            Directory.CreateDirectory(moveDirectory);
+
+            var movedDic = new Dictionary<long, string>();
+
+            foreach (var library in client.Libraries)
             {
-                appConfig.MoveBaseDirectory = baseDirectory;
+                var newfilepath = Path.Combine(moveDirectory, Path.GetFileName(library.FilePath));
 
-                // 移動先フォルダ作成
-                var moveDirectory = baseDirectory + "\\" + _group.GroupName;
+                FileUtils.Move(library.FilePath, newfilepath);
 
-                if (MessageUtils.ShowQuestionYesNo(
-                    string.Format("{0}を{1}に移動します。よろしいですか？",
-                    _group.GroupName, moveDirectory)) == DialogResult.Yes)
-                {
-                    Directory.CreateDirectory(moveDirectory);
+                _log.Debug("Moved File. {0} to {1}.", library.FilePath, newfilepath);
 
-                    var movedDic = new Dictionary<long, string>();
+                movedDic.Add(library.Id, newfilepath);
 
-                    foreach (var library in _libraries)
-                    {
-                        var newfilepath = Path.Combine(moveDirectory, Path.GetFileName(library.FilePath));
-
-                        FileUtils.Move(library.FilePath, newfilepath);
-
-                        _log.Debug("Moved File. {0} to {1}.", library.FilePath, newfilepath);
-
-                        movedDic.Add(library.Id, newfilepath);
-
-                        DirecotryUtils.DeleteEmptyDirecotry(Path.GetDirectoryName(library.FilePath));
-                    }
-
-                    // ファイルパス更新
-                    client.MovselexLibrary.UpdateFilePaths(movedDic);
-
-                    _group.ModifyDriveLetter(FileUtils.GetDriveLetter(moveDirectory));
-
-                    _log.Info("Moved Group Direcotry. Group:{0} NewPath:{1}", _group.GroupName, moveDirectory);
-                }
-
+                DirecotryUtils.DeleteEmptyDirecotry(Path.GetDirectoryName(library.FilePath));
             }
+
+            // ファイルパス更新
+            client.MovselexLibrary.UpdateFilePaths(movedDic);
+
+            _group.ModifyDriveLetter(FileUtils.GetDriveLetter(moveDirectory));
+
+            _log.Info("Moved Group Direcotry. Group:{0} NewPath:{1}", _group.GroupName, moveDirectory);
+
         }
     }
 }

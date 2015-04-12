@@ -1,6 +1,7 @@
 ﻿<Application x:Class="Movselex.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:FinalstreamUIComponents.Converters;assembly=FinalstreamUIComponents">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -9,6 +10,7 @@
                 <ResourceDictionary Source="Themes/ModernWindow.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+            <converters:BoolToVisibilityConverter x:Key="InverseBoolToVisibility" True="Collapsed" False="Visible" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

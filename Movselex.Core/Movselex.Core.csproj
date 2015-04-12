@@ -78,6 +78,7 @@
     <Compile Include="IMovselexClient.cs" />
     <Compile Include="Models\Actions\FilteringLibraryAction.cs" />
     <Compile Include="Models\Actions\IncrementPlayCountAction.cs" />
+    <Compile Include="Models\Actions\ModifyGroupAction.cs" />
     <Compile Include="Models\Actions\ModifyIsCompleteAction.cs" />
     <Compile Include="Models\Actions\ModifyIsFavoriteAction.cs" />
     <Compile Include="Models\Actions\ModifyIsPlayedAction.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Models\Actions\PlayMonitoringAction.cs" />
     <Compile Include="Models\Actions\MovselexProgressAction.cs" />
     <Compile Include="Models\Actions\RegistFileAction.cs" />
+    <Compile Include="Models\Actions\JoinGroupAction.cs" />
     <Compile Include="Models\Actions\UpdateNowPlayInfoAction.cs" />
     <Compile Include="Models\IMediaFile.cs" />
     <Compile Include="Models\IProgressInfo.cs" />

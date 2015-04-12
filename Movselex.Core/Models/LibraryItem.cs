@@ -228,6 +228,23 @@ namespace Movselex.Core.Models
 
         #endregion
 
+        #region IsSelected変更通知プロパティ
+
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (_isSelected == value) return;
+                _isSelected = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// 追加された日時を取得します。
         /// </summary>

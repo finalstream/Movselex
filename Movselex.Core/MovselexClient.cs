@@ -197,15 +197,17 @@ namespace Movselex.Core
             _actionExecuter.Post(action);
         }
 
-        public void MoveGroupDirectory(GroupItem group)
+        public void MoveGroupDirectory(GroupItem group, string baseDirectory)
         {
-            _actionExecuter.Post(new MoveGroupDirectoryAction(group, Libraries));
+            _actionExecuter.Post(new MoveGroupDirectoryAction(group, baseDirectory));
         }
 
         public void FilteringLibrary(string filteringText)
         {
             _actionExecuter.Post(new FilteringLibraryAction(filteringText));
         }
+
+        
 
         public void ExecEmpty()
         {
@@ -289,6 +291,16 @@ namespace Movselex.Core
             _actionExecuter.Post(new UpdateLibraryAction());
         }
 
+
+        public void RegistGroup(string title, string keyword, IEnumerable<LibraryItem> libraries)
+        {
+            _actionExecuter.Post(new JoinGroupAction(title, keyword, libraries));
+        }
+
+        public void ModifyGroup(GroupItem group, string groupName, string keyword)
+        {
+            _actionExecuter.Post(new ModifyGroupAction(group, groupName, keyword));
+        }
 
         #region Dispose
 

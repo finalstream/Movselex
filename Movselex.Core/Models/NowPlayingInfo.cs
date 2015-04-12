@@ -108,6 +108,8 @@ namespace Movselex.Core.Models
         {
             Title = title;
             ViewPlayTime = playtime;
+            if (playtime == null) return;   // プレイヤーが起動していない場合は抜ける
+
             var works = playtime.Split('/');
             if (works.Length == 2)
             {

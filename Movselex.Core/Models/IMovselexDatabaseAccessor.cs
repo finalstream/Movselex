@@ -26,5 +26,12 @@ namespace Movselex.Core.Models
         IEnumerable<long> SelectIdFromGid(long gid);
         void UpdateGroupIsCompleted(long gid, bool newComplete);
         void UpdateLibraryFilePath(KeyValuePair<long, string> kv);
+        long SelectGIdByGroupName(string groupName);
+        void InsertGroup(string groupName, string keyword);
+        long SelectLastInsertRowId();
+        void UpdateGidById(long gid, long id);
+        void UpdateGroup(GroupItem group);
+        void UpdateLibraryReplaceGroupName(long gid, string oldGroupName, string newGroupName);
+        IEnumerable<LibraryItem> SelectUnGroupingLibrary(IEnumerable<string> keywords);
     }
 }

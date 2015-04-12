@@ -18,7 +18,21 @@ namespace Movselex.Core.Models
         /// <summary>
         /// グループ名。
         /// </summary>
-        public string GroupName { get; private set; }
+        #region GroupName変更通知プロパティ
+        private string _groupName;
+
+        public string GroupName
+        {
+            get { return _groupName; }
+            set
+            {
+                if (_groupName == value) return;
+                _groupName = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// ファイルが格納されているドライブ。
@@ -57,7 +71,22 @@ namespace Movselex.Core.Models
         /// <summary>
         /// グループのキーワード。
         /// </summary>
-        public string Keyword { get; private set; }
+
+        #region Keyword変更通知プロパティ
+        private string _keyword;
+
+        public string Keyword
+        {
+            get { return _keyword; }
+            set
+            {
+                if (_keyword == value) return;
+                _keyword = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
 
         /// <summary>
@@ -133,6 +162,12 @@ namespace Movselex.Core.Models
         public void ModifyDriveLetter(string drive)
         {
             Drive = Drive;
+        }
+
+        public void ModifyNameAndKeyword(string groupName, string keyword)
+        {
+            GroupName = groupName;
+            Keyword = keyword;
         }
     }
 }

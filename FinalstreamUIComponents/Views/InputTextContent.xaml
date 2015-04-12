@@ -10,6 +10,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <converters:StringIsNullOrEmptyToVisibilityConverter x:Key="StringIsNullOrEmptyToVisibilityConverter" />
+        
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -22,8 +23,9 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <TextBlock Text="{Binding Key, Mode=OneWay}" Margin="0,0,10,0">:</TextBlock>
-                            <TextBox Text="{Binding Value.Value}" MinWidth="200"></TextBox>
+                            <TextBlock Text="{Binding Value.Title, Mode=OneWay}" MinWidth="100" Margin="0,0,10,0">:</TextBlock>
+                            <TextBox Text="{Binding Value.Value}" MinWidth="250" Visibility="{Binding Value.IsVisibleCombobox, Converter={StaticResource InverseBoolToVisibility}}"></TextBox>
+                            <ComboBox MinWidth="250" IsEditable="True" ItemsSource="{Binding Value.Values}" Text="{Binding Value.Value}" Visibility="{Binding Value.IsVisibleCombobox, Converter={StaticResource BoolToVisibility}}"></ComboBox>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

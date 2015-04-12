@@ -130,7 +130,7 @@
 			</Button>
 			<!--<Path Grid.Column="0" Stretch="Uniform" Fill="Black" Data="F1 M 477.366,32.4489C 470.432,35.802 462.011,33.0596 458.558,26.3193C 455.103,19.5833 457.927,11.3994 464.867,8.04321C 471.8,4.69006 480.222,7.4342 483.675,14.1729C 487.123,20.9102 484.303,29.0901 477.366,32.4489 Z M 489.398,50.2073L 481.138,34.0914C 488.075,29.3633 490.6,20.2981 486.712,12.7021C 482.423,4.33691 471.967,0.928711 463.351,5.09277C 454.739,9.26074 451.234,19.4209 455.52,27.7913C 459.414,35.3821 468.384,38.8887 476.447,36.3619L 484.703,52.4756C 485.051,53.1487 485.924,53.4045 486.66,53.0488L 488.688,52.0686C 489.427,51.7129 489.742,50.8782 489.398,50.2073 Z " UseLayoutRounding="False" Width="15" Margin="5,2"/> -->
 			<ContentControl Grid.Column="2" Style="{StaticResource icon}" Content="{StaticResource icon-magnify}" Width="48" Height="48"  />
-            <TextBox Grid.Column="3" Height="25" Width="Auto" Margin="-10,0,5,0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+			<TextBox Grid.Column="3" Height="25" Width="Auto" Margin="-10,0,5,0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
 				<i:Interaction.Behaviors>
 					<behaviors:TextBoxPlaceholderBehavior Placeholder="Search Library" />
 				</i:Interaction.Behaviors>
@@ -210,10 +210,17 @@
 			</DataGrid.Columns>
 			<DataGrid.ContextMenu>
 				<ContextMenu>
-					<MenuItem Header="グループでファイルを移動">
+                    <MenuItem Header="グループ編集">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="EditGroup" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </MenuItem>
+                    <MenuItem Header="グループでファイルを移動">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
-                                <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="MoveGroupDirectory" />
+								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="MoveGroupDirectory" />
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
@@ -297,6 +304,24 @@
 									Binding="{Binding Model.PlayCount}" ElementStyle="{StaticResource TextItemRight}">
 				</DataGridTextColumn>
 			</DataGrid.Columns>
+			<DataGrid.RowStyle>
+				<Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
+					<Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+				</Style>
+			</DataGrid.RowStyle>
+			
+			<DataGrid.ContextMenu>
+				<ContextMenu>
+					<MenuItem Header="Grouping...">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="Grouping" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</MenuItem>
+				</ContextMenu>
+			</DataGrid.ContextMenu>
+			
 			<i:Interaction.Triggers>
 				<i:EventTrigger EventName="MouseDoubleClick">
 					<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DoubleClickLibrary"/>

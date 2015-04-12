@@ -63,6 +63,21 @@ namespace Movselex.ViewModels
             get { return _model; }
         }
 
+        #region IsSelected変更通知プロパティ
+
+        public bool IsSelected
+        {
+            get { return _model.IsSelected; }
+            set
+            {
+                if (_model.IsSelected == value) return;
+                _model.IsSelected = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         public void Initialize()
         {
         }

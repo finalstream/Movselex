@@ -92,7 +92,9 @@ namespace Movselex.Core
         void ModifyIsFavorite(GroupItem item);
         void ModifyIsComplete(GroupItem item);
         void RegistFiles(IEnumerable<string> enumerable);
-        void MoveGroupDirectory(GroupItem currentGroup);
+        void MoveGroupDirectory(GroupItem currentGroup, string moveDirectory);
         void FilteringLibrary(string filteringText);
+        void RegistGroup(string title, string keyword, IEnumerable<LibraryItem> libraries);
+        void ModifyGroup(GroupItem group, string groupName, string keyword);
     }
 }

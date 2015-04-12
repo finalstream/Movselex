@@ -204,5 +204,62 @@ namespace Movselex.Core.Models
         {
             SqlExecuter.Execute(SQLResource.UpdateLibraryFilePath, new {Id = kv.Key, FilePath = kv.Value});
         }
+
+        public long SelectGIdByGroupName(string groupName)
+        {
+            var gid = SqlExecuter.Query<long>(SQLResource.SelectGIdByGroupName, new {GroupName = groupName.ToLower()}).FirstOrDefault();
+            return gid == 0L ? -1 : gid;
+        }
+
+        public void InsertGroup(string groupName, string keyword)
+        {
+            SqlExecuter.Execute(SQLResource.InsertGroup,
+                new
+                {
+                    GroupName = groupName,
+                    Keyword = keyword.ToLower(),
+                    LastUpdate = DateTime.Now.ToString(ApplicationDefinitions.SqliteDateTimeFormat)
+                });
+        }
+
+        public long SelectLastInsertRowId()
+        {
+            return SqlExecuter.Query<long>(SQLResource.SelectLastInsertRowid).FirstOrDefault();
+        }
+
+        public void UpdateGidById(long gid, long id)
+        {
+            SqlExecuter.Execute(SQLResource.UpdateGidById, new {Gid = gid, Id = id});
+        }
+
+        public void UpdateGroup(GroupItem @group)
+        {
+            SqlExecuter.Execute(SQLResource.UpdateGroup,
+                new {Gid = group.Gid, GroupName = group.GroupName, Keyword = group.Keyword});
+        }
+
+        public void UpdateLibraryReplaceGroupName(long gid, string oldGroupName, string newGroupName)
+        {
+            SqlExecuter.Execute(SQLResource.UpdateLibraryReplaceGroupName,
+                new
+                {
+                    Gid = gid,
+                    OldGroupName = oldGroupName,
+                    NewGroupName = newGroupName
+                });
+        }
+
+        public IEnumerable<LibraryItem> SelectUnGroupingLibrary(IEnumerable<string> keywords)
+        {
+            // TODO: SQLBuilderを使うようにする。
+            var keywordCond = new StringBuilder();
+            foreach (var keyword in keywords)
+            {
+                if (keywordCond.Length > 0) keywordCond.Append(" OR ");
+                keywordCond.Append(string.Format(" lower(TITLE) LIKE '%{0}%'", keyword.ToLower()));
+            }
+            var sql = string.Format("SELECT ID, TITLE  FROM MOVLIST WHERE GID IS NULL AND ({0})", keywordCond.ToString());
+            return SqlExecuter.Query<LibraryItem>(sql);
+        }
     }
 }

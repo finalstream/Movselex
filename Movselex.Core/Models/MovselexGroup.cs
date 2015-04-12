@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Linq;
+using System.Text.RegularExpressions;
 using FinalstreamCommons.Extentions;
 using FinalstreamCommons.Utils;
 using Livet;
@@ -57,11 +58,11 @@ namespace Movselex.Core.Models
         /// <param name="mediaFile"></param>
         public void SetMovGroup(MediaFile mediaFile)
         {
-            var keywords = CreateKeyworkds(mediaFile.MovieTitle);
+            var keywords = MovselexUtils.CreateKeywords(mediaFile.MovieTitle).Reverse().ToArray();
             
             _log.Debug("Title:{0} Keywords:{1}", mediaFile.MovieTitle, keywords.ToJson());
 
-            foreach (string keyword in keywords)
+            foreach (var keyword in keywords)
             {
                 // 小文字で検索
                 var group = _databaseAccessor.SelectMatchGroupKeyword(keyword.ToLower());
@@ -83,45 +84,38 @@ namespace Movselex.Core.Models
                 }
             }
 
-            
+            // グループが見つからなかったら自動グループ登録
+            var ungroupLibraries = _databaseAccessor.SelectUnGroupingLibrary(keywords);
+
+            var unGroups = ungroupLibraries
+                .GroupBy(x => Regex.Replace(MovselexUtils.ReplaceTitle(x.Title).Replace(" - ", ""), @"\d+", "").Trim())
+                .Select(x=> new {Key = x.Key, Count = x.Count(), Libraries= x.ToList()}).ToArray();
+            unGroups.DebugWriteJson("UnGroup Keywords");
+
+            var maxUnGroup = unGroups.FirstOrDefault(x => x.Count == unGroups.Select(xx => xx.Count).Max());
+
+            maxUnGroup.DebugWriteJson("MaxUnGroup");
+
+            if (maxUnGroup != null)
+            {
+                // グループを登録する
+                var gid = RegistGroup(maxUnGroup.Key, maxUnGroup.Key);
+                JoinGroup(maxUnGroup.Key, maxUnGroup.Key, maxUnGroup.Libraries);
+
+                // グループのレーティングを取得
+                var groupRating = GetGroupRating(gid);
+
+                mediaFile.UpdateGroup(gid, maxUnGroup.Key, maxUnGroup.Key, groupRating);
+
+                // グループ最終更新日時更新
+                _databaseAccessor.UpdateGroupLastUpdateDatetime(gid);
+            }
 
         }
 
         private RatingType GetGroupRating(long gid)
         {
             return _databaseAccessor.GetGroupRating(gid);
-        }
-
-        /// <summary>
-        /// タイトルからキーワード候補を生成します。
-        /// </summary>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        private string[] CreateKeyworkds(string title)
-        {
-            string[] titlewords = title.Split(' ');
-
-            var wordList = new List<string>();
-
-            string workword = "";
-            foreach (string word in titlewords)
-            {
-                if (!string.IsNullOrEmpty(word))
-                {
-                    workword += word + " ";
-                    if (!word.Equals(workword))
-                    {
-                        wordList.Add(workword.TrimEnd());
-                    }
-                    else
-                    {
-                        wordList.Add(word);
-                    }
-                }
-
-            }
-
-            return wordList.ToArray();
         }
 
 
@@ -146,6 +140,57 @@ namespace Movselex.Core.Models
             var newComplete = !group.IsCompleted; // 逆にする
             _databaseAccessor.UpdateGroupIsCompleted(group.Gid, newComplete);
             group.ModifyIsComplete(newComplete);
+        }
+
+        /// <summary>
+        /// グループにライブラリを登録します。
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <param name="keyword"></param>
+        /// <param name="libraries"></param>
+        public void JoinGroup(string groupName, string keyword, IEnumerable<LibraryItem> libraries)
+        {
+            using (var tran = _databaseAccessor.BeginTransaction())
+            {
+                var gid = _databaseAccessor.SelectGIdByGroupName(groupName);
+
+                if (gid == -1)
+                {
+                    // グループが存在しない場合登録
+                    gid = RegistGroup(groupName, keyword);
+                }
+
+                foreach (var library in libraries)
+                {
+                    _databaseAccessor.UpdateGidById(gid, library.Id);
+
+                    _databaseAccessor.UpdateGroupLastUpdateDatetime(gid);
+                }
+
+                tran.Commit();
+            }
+        }
+
+        /// <summary>
+        /// グループを登録します。
+        /// </summary>
+        /// <param name="groupName"></param>
+        /// <param name="keyword"></param>
+        private long RegistGroup(string groupName, string keyword)
+        {
+            _databaseAccessor.InsertGroup(groupName, keyword);
+            var gid = _databaseAccessor.SelectLastInsertRowId();
+            _log.Info("Registed Group. Gid:{0} GroupName:{1} Keyword:{2}", gid, groupName, keyword);
+            return gid;
+        }
+
+        public void ModifyGroup(GroupItem group, string groupName, string keyword)
+        {
+            var oldGroupName = group.GroupName;
+            group.ModifyNameAndKeyword(groupName, keyword);
+            _databaseAccessor.UpdateGroup(group);
+            _databaseAccessor.UpdateLibraryReplaceGroupName(group.Gid, oldGroupName, group.GroupName);
+
         }
     }
 }

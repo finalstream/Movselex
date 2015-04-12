@@ -61,6 +61,9 @@
   <ItemGroup>
     <Compile Include="Behaviors\FileDropBehavior.cs" />
     <Compile Include="Behaviors\PlaceHolderBehavior.cs" />
+    <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\NullVisibilityConverter.cs" />
     <Compile Include="Converters\StringIsNullOrEmptyToVisibilityConverter.cs" />
     <Compile Include="Models\InputParam.cs" />
     <Compile Include="ViewModels\InputTextContentViewModel.cs" />
