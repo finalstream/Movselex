@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
-
+using FinalstreamCommons.Models;
 using Livet;
 using Livet.Commands;
 using Livet.Messaging;
@@ -64,6 +64,78 @@ namespace Movselex.ViewModels.Pages.Settings
         public void Initialize()
         {
             
+        }
+
+        public List<DynamicLinkLibraryInfo> DynamicLinkLibraries { get; private set; } 
+
+        public AboutViewModel()
+        {
+            DynamicLinkLibraries = new List<DynamicLinkLibraryInfo>();
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "FinalstreamCommons.dll",
+                "Finalstream Commons",
+                "Framework",
+                "OSS Coming Soon...",
+                "Copyright © 2015 FINALSTREAM",
+                "http://www.finalstream.net/"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "Livet.dll",
+                "Livet",
+                "WPF MVVM Infrastructure",
+                "The zlib/libpng License",
+                "Copyright (c) 2010-2011 Livet Project",
+                "https://github.com/ugaya40/Livet"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "FirstFloor.ModernUI.dll",
+                "Modern UI for WPF",
+                "UI Framework",
+                "Microsoft Public License",
+                null,
+                "https://github.com/firstfloorsoftware/mui"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "System.Data.SQLite.dll",
+                "System.Data.SQLite",
+                "Database Engine",
+                "Public Domain License",
+                null,
+                "http://system.data.sqlite.org/"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "Dapper.dll",
+                "Dapper",
+                "Micro ORM",
+                "Apache License Version 2.0",
+                null,
+                "https://github.com/StackExchange/dapper-dot-net"));
+
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "taglib-sharp.dll",
+                "TagLib Sharp",
+                "TagAnalyzer",
+                "LGPL-2.1",
+                null,
+                "https://github.com/mono/taglib-sharp"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "NLog.dll",
+                "NLog",
+                "Logging",
+                "BSD license",
+                "Copyright (c) 2004-2011 Jaroslaw Kowalski",
+                "http://nlog-project.org/"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "Newtonsoft.Json.dll",
+                "Json.NET",
+                "Json Parser",
+                "The MIT License",
+                "Copyright (c) 2007 James Newton-King",
+                "http://www.newtonsoft.com/json"));
         }
     }
 }

@@ -28,12 +28,12 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Player:" VerticalAlignment="Center" Margin="0,0,16,4" />
-                    <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Players}" SelectedValue="mpc" SelectedValuePath="Value"  VerticalAlignment="Center" Margin="0,0,0,4" />
+                    <TextBlock Text="Player:" VerticalAlignment="Center" Margin="0,0,16,10" />
+                    <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Players}" SelectedValue="mpc" SelectedValuePath="Value"  VerticalAlignment="Center" Margin="0,0,0,10" />
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Exe Path:" VerticalAlignment="Center" Margin="0,0,16,0" />
-                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding ExePath}" Margin="0,0,0,4"></TextBox>
-                    <Button Grid.Row="1" Grid.Column="2" Content="..." Width="50" HorizontalAlignment="Left" Margin="5,0,0,4">
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Exe Path:" VerticalAlignment="Center" Margin="0,0,16,10" />
+                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding ExePath}" Margin="0,0,0,10"></TextBox>
+                    <Button Grid.Row="1" Grid.Column="2" Content="..." Width="50" HorizontalAlignment="Left" Margin="5,0,0,10">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <behaviors:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="OpenDialogExePath"/>
@@ -41,12 +41,12 @@
                         </i:Interaction.Triggers>
                     </Button>
                     
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="LimitNum:" VerticalAlignment="Center" Margin="0,0,16,4" />
-                    <views:NumericUpDown Grid.Row="2" Grid.Column="1" Margin="0,0,0,4" Value="{Binding LimitNum, Mode=TwoWay}" DeltaValue="10" MinValue="0"></views:NumericUpDown>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="LimitNum:" VerticalAlignment="Center" Margin="0,0,16,10" />
+                    <views:NumericUpDown Grid.Row="2" Grid.Column="1" Margin="0,0,0,10" Value="{Binding LimitNum, Mode=TwoWay}" DeltaValue="10" MinValue="0"></views:NumericUpDown>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Screen:" VerticalAlignment="Center" Margin="0,0,16,4" />
-                    <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Screens}" SelectedValue="{Binding CurrentScreen}" SelectedValuePath="Value"  VerticalAlignment="Center" Margin="0,0,0,4" />
-                    <CheckBox Grid.Row="3" Grid.Column="2" Content="FullScreen" IsChecked="{Binding IsFullScreen}" Margin="5,0,0,4"></CheckBox>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Screen:" VerticalAlignment="Center" Margin="0,0,16,10" />
+                    <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Screens}" SelectedValue="{Binding CurrentScreen}" SelectedValuePath="Value"  VerticalAlignment="Center" Margin="0,0,0,10" />
+                    <CheckBox Grid.Row="3" Grid.Column="2" Content="FullScreen" IsChecked="{Binding IsFullScreen}" Margin="5,0,0,10"></CheckBox>
                 </Grid>
 
             </StackPanel>

@@ -503,7 +503,7 @@ namespace Movselex.ViewModels
             // 移動先フォルダ作成
             var moveDirectory = baseDirectory + "\\" + group.GroupName;
 
-            var result = ModernDialog.ShowMessage(string.Format("{0}を{1}に移動します。よろしいですか？",
+            var result = ModernDialog.ShowMessage(string.Format("{0} を {1} に移動します。よろしいですか？",
                 group.GroupName, moveDirectory), "Question?", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes) _client.MoveGroupDirectory(CurrentGroup.Model, baseDirectory);
