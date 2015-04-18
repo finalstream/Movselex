@@ -10,7 +10,7 @@ using System.Reactive.Subjects;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using FinalstreamCommons.Extentions;
 using FinalstreamCommons.Models;
@@ -26,6 +26,7 @@ using Livet.EventListeners;
 using Movselex.Core;
 using Movselex.Core.Models;
 using NLog;
+using Button = System.Windows.Controls.Button;
 using Resources = Movselex.Properties.Resources;
 
 namespace Movselex.ViewModels
@@ -38,6 +39,7 @@ namespace Movselex.ViewModels
         private readonly ISubject<string> _searchTextChangedSubject = new Subject<string>(); 
 
         public IMovselexClient Client { get { return _client; }}
+
 
         /// <summary>
         ///     データベース情報。
@@ -513,7 +515,7 @@ namespace Movselex.ViewModels
             var paramDic = new Dictionary<string, InputParam>();
             paramDic.Add("GroupName", new InputParam("GroupName", group.GroupName));
             paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", group.Keyword));
-            var inputTextContent = new InputTextContent("グループを登録します。", paramDic);
+            var inputTextContent = new InputTextContent("グループを編集します。", paramDic);
             var dlg = new ModernDialog
             {
                 Title = "Edit Group",
@@ -532,20 +534,35 @@ namespace Movselex.ViewModels
 
         public void Grouping()
         {
-            var keywordList = new List<string>();
+            var paramDic = new Dictionary<string, InputParam>();
 
-            foreach (var title in Libraries.Where(x=>x.IsSelected).Select(x => x.Model.Title))
+            var library = Libraries[LibrarySelectIndex].Model;
+            var gid = library.Gid;
+            if (gid != 0)
             {
-                var words = MovselexUtils.CreateKeywords(title.Replace("-", "").Trim());
-                keywordList.AddRange(words);
+                // グループ登録済み
+                paramDic.Add("GroupName", new InputParam("GroupName", library.GroupName, _groups.Select(x => x.Model.GroupName)));
+                paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", _groups.Where(x=>x.Model.Gid== gid).Select(x=>x.Model.Keyword).FirstOrDefault()));
+            }
+            else
+            {
+                // グループ未登録
+                var keywordList = new List<string>();
+
+                foreach (var title in Libraries.Where(x => x.IsSelected).Select(x => x.Model.Title))
+                {
+                    var words = MovselexUtils.CreateKeywords(title.Replace("-", "").Trim());
+                    keywordList.AddRange(words);
+                }
+
+                // 対象のライブラリ中で一番多く出てくるキーワードを抽出
+                var keyword = MovselexUtils.GetMaxCountMaxLengthKeyword(keywordList);
+
+
+                paramDic.Add("GroupName", new InputParam("GroupName", keyword, _groups.Select(x => x.Model.GroupName)));
+                paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", keyword));
             }
 
-            // 対象のライブラリ中で一番多く出てくるキーワードを抽出
-            var keyword = MovselexUtils.GetMaxCountMaxLengthKeyword(keywordList);
-
-            var paramDic = new Dictionary<string, InputParam>();
-            paramDic.Add("GroupName", new InputParam("GroupName", keyword, _groups.Select(x=>x.Model.GroupName)));
-            paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", keyword));
             var inputTextContent = new InputTextContent("グループを登録します。", paramDic);
             var dlg = new ModernDialog
             {
@@ -561,10 +578,23 @@ namespace Movselex.ViewModels
 
             var input = inputTextContent.InputParamDictionary;
 
-            _client.RegistGroup(
+            _client.Grouping(
                 input["GroupName"].Value.ToString(),
                 input["GroupKeyword"].Value.ToString(),
                 Libraries.Where(x=>x.IsSelected).Select(x=>x.Model));
+        }
+
+        public void UnGroup()
+        {
+
+            var SelectLibraries = Libraries.Where(x => x.IsSelected).Select(x=>x.Model).ToArray();
+            if (!SelectLibraries.Any()) return;
+
+            var result = ModernDialog.ShowMessage(string.Format("{0}のグループを解除します。よろしいですか？",
+                SelectLibraries.Count() == 1 ? SelectLibraries.Single().Title : "選択したアイテム"), "Question?", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes) _client.UnGroupLibrary(SelectLibraries);
+
         }
 
         protected override void Dispose(bool disposing)

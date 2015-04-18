@@ -261,5 +261,10 @@ namespace Movselex.Core.Models
             var sql = string.Format("SELECT ID, TITLE  FROM MOVLIST WHERE GID IS NULL AND ({0})", keywordCond.ToString());
             return SqlExecuter.Query<LibraryItem>(sql);
         }
+
+        public void UpdateLibraryUnGroup(long id)
+        {
+            SqlExecuter.Execute(SQLResource.UpdateGidById, new { Gid = (long?)null, Id = id });
+        }
     }
 }

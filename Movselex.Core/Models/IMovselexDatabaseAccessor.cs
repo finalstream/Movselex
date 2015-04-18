@@ -33,5 +33,6 @@ namespace Movselex.Core.Models
         void UpdateGroup(GroupItem group);
         void UpdateLibraryReplaceGroupName(long gid, string oldGroupName, string newGroupName);
         IEnumerable<LibraryItem> SelectUnGroupingLibrary(IEnumerable<string> keywords);
+        void UpdateLibraryUnGroup(long id);
     }
 }

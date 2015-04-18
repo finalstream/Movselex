@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Windows.Forms;
 using FinalstreamCommons.Models;
 using FinalstreamCommons.Utils;
 using Livet;
@@ -70,6 +71,13 @@ namespace Movselex.ViewModels.Pages.Settings
         {
             _players = new DispatcherCollection<DisplayableStringItem>(DispatcherHelper.UIDispatcher);
             _players.Add(new DisplayableStringItem("mpc", "Media General Classic"));
+            _screens = new DispatcherCollection<DisplayableItem<int>>(DispatcherHelper.UIDispatcher);
+            var i = 1;
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                _screens.Add(new DisplayableItem<int>(i++, ScreenUtils.GetDisplayDevice(screen.DeviceName).DeviceString));
+            }
+            CurrentScreen = App.Config.ScreenNo;
         }
 
         #region Players変更通知プロパティ
@@ -83,6 +91,23 @@ namespace Movselex.ViewModels.Pages.Settings
             {
                 if (_players == value) return;
                 _players = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Players変更通知プロパティ
+
+        private DispatcherCollection<DisplayableItem<int>> _screens;
+
+        public DispatcherCollection<DisplayableItem<int>> Screens
+        {
+            get { return _screens; }
+            set
+            {
+                if (_screens == value) return;
+                _screens = value;
                 RaisePropertyChanged();
             }
         }
@@ -125,6 +150,41 @@ namespace Movselex.ViewModels.Pages.Settings
 
         #endregion
 
+        #region IsFullScreen変更通知プロパティ
+
+        private bool _isFullScreen;
+
+        public bool IsFullScreen
+        {
+            get { return App.Config.IsFullScreen; }
+            set
+            {
+                if (_isFullScreen == value) return;
+                _isFullScreen = value;
+                App.Config.IsFullScreen = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region CurrentScreen変更通知プロパティ
+
+        private int _currentScreen;
+
+        public int CurrentScreen
+        {
+            get { return _currentScreen; }
+            set
+            {
+                if (_currentScreen == value) return;
+                _currentScreen = value;
+                App.Config.ScreenNo = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         public void OpenDialogExePath()
         {

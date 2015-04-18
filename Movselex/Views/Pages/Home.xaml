@@ -244,8 +244,13 @@
 				  SelectedIndex="{Binding LibrarySelectIndex}">
 			
 			<DataGrid.Columns>
-				<DataGridTextColumn Header="" Width="10"
-									 />
+				<DataGridTextColumn Header="" Width="10">
+					<DataGridTextColumn.CellStyle>
+						<Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+							<Setter Property="ToolTip" Value="{Binding Model.FilePath}" />
+						</Style>
+				</DataGridTextColumn.CellStyle>
+				</DataGridTextColumn>
 				<DataGridTextColumn Header="Group" Width="100" 
 									Binding="{Binding Model.GroupName}" ElementStyle="{StaticResource TextItem}"  />
 				<DataGridTextColumn Header="Title" Width="*"
@@ -321,6 +326,14 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
+					<Separator></Separator>
+					<MenuItem Header="UnGroup...">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="UnGroup" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</MenuItem>
 				</ContextMenu>
 			</DataGrid.ContextMenu>
 			
@@ -385,10 +398,10 @@
 		</Grid>
 
 		<Grid Grid.Row="5" Grid.ColumnSpan="5"  >
-            <StackPanel Orientation="Vertical">
+			<StackPanel Orientation="Vertical">
 			<TextBlock Text="{Binding ProgressInfo.ProgressMessage}" Visibility="{Binding ProgressInfo.ProgressMessage, Converter={StaticResource StringIsNullOrEmptyToVisibilityConverter}}"  Margin="0,0,0,5" />
 			<ProgressBar Minimum="0" Maximum="1"  IsIndeterminate="True"  Visibility="{Binding ProgressInfo.IsProgressing, Converter={StaticResource BoolToVisibility}}" />
-            </StackPanel>
-        </Grid>
+			</StackPanel>
+		</Grid>
 	</Grid>
 </UserControl>

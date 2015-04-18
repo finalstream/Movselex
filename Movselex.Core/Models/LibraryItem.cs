@@ -48,12 +48,42 @@ namespace Movselex.Core.Models
         /// <summary>
         /// グループ名を取得します。
         /// </summary>
-        public string GroupName { get; private set; }
+
+        #region GroupName変更通知プロパティ
+        private string _groupName;
+
+        public string GroupName
+        {
+            get { return _groupName; }
+            set
+            {
+                if (_groupName == value) return;
+                _groupName = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// タイトルを取得します。
         /// </summary>
-        public string Title { get; private set; }
+
+        #region Title変更通知プロパティ
+        private string _title;
+
+        public string Title
+        {
+            get { return _title; }
+            set
+            {
+                if (_title == value) return;
+                _title = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Noを取得します。
@@ -280,6 +310,12 @@ namespace Movselex.Core.Models
         public void ModifyFilePath(string filepath)
         {
             FilePath = filepath;
+        }
+
+        public void UnGroup()
+        {
+            Gid = 0;
+            GroupName = null;
         }
     }
 }

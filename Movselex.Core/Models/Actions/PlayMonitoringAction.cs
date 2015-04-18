@@ -72,6 +72,7 @@ namespace Movselex.Core.Models.Actions
                     && (_playCountStopwatch.ElapsedMilliseconds / 1000.0) >
                 _keepPlayTime * 0.5D)
                 {
+                    // 半分再生したらカウントアップ
                     if (_nowPlayingInfo.Title != _keepPlayTitle) return;
                     OnCountUpTimePlayed(_nowPlayingInfo.Id);
                     _playCountStopwatch.Reset();

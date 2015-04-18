@@ -9,15 +9,15 @@ namespace Movselex.Core.Models
     public class MovselexAppConfig : NotificationObject, IAppConfig, IMovselexAppConfig
     {
 
-        public string AppVersion { get; private set; }
+        public string AppVersion { get; set; }
         
-        public Rect WindowBounds { get; private set; }
+        public Rect WindowBounds { get; set; }
 
         public string PlayerExePath { get; private set; }
 
-        public int ScreenNo { get; private set; }
+        public int ScreenNo { get; set; }
 
-        public bool IsFullScreen { get; private set; }
+        public bool IsFullScreen { get; set; }
 
         public string[] SupportExtentions { get; private set; }
 
@@ -26,8 +26,6 @@ namespace Movselex.Core.Models
         public string MoveBaseDirectory { get; set; }
 
         public string SelectDatabase { get; set; }
-
-        public int PlayCountUpMinutes { get; private set; }
 
         public string SelectFiltering { get; set; }
 
@@ -94,7 +92,7 @@ namespace Movselex.Core.Models
         public MovselexAppConfig()
         {
             AppVersion = "";
-            WindowBounds = default(Rect);
+            WindowBounds = new Rect(100d, 100d, 1100d, 600d);
             PlayerExePath = "";
             ScreenNo = 1;
             IsFullScreen = false;
@@ -102,7 +100,6 @@ namespace Movselex.Core.Models
             LimitNum = 50;
             MoveBaseDirectory = "";
             SelectDatabase = "library";
-            PlayCountUpMinutes = 10;
             SelectFiltering = "ALL MOVIE";
             TitleFormat = "%TITLE% - %NO%";
             LibraryMode = LibraryMode.Normal;
@@ -112,7 +109,7 @@ namespace Movselex.Core.Models
             MpcExePath = "";
         }
 
-        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, int playCountUpMinutes, string selectFiltering, string titleFormat, FilteringMode filteringMode, string mpcExePath)
+        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase,　string selectFiltering, string titleFormat, FilteringMode filteringMode, string mpcExePath)
         {
             AppVersion = appVersion;
             WindowBounds = windowBounds;
@@ -123,7 +120,6 @@ namespace Movselex.Core.Models
             LimitNum = limitNum;
             MoveBaseDirectory = moveBaseDirectory;
             SelectDatabase = selectDatabase;
-            PlayCountUpMinutes = playCountUpMinutes;
             SelectFiltering = selectFiltering;
             TitleFormat = titleFormat;
             FilteringMode = filteringMode;
@@ -142,7 +138,6 @@ namespace Movselex.Core.Models
             LimitNum = newConfig.LimitNum;
             MoveBaseDirectory = newConfig.MoveBaseDirectory;
             SelectDatabase = newConfig.SelectDatabase;
-            PlayCountUpMinutes = newConfig.PlayCountUpMinutes;
             SelectFiltering = newConfig.SelectFiltering;
             TitleFormat = newConfig.TitleFormat;
             LibraryMode = newConfig.LibraryMode;

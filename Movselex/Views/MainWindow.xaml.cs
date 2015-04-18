@@ -1,4 +1,7 @@
-﻿using FirstFloor.ModernUI.Windows.Controls;
+﻿using System;
+using System.Windows;
+using FirstFloor.ModernUI.Windows.Controls;
+using Movselex.ViewModels;
 
 namespace Movselex.Views
 {
@@ -15,9 +18,22 @@ namespace Movselex.Views
     /// </summary>
     public partial class MainWindow : ModernWindow
     {
+
         public MainWindow()
         {
             InitializeComponent();
+            var windowBounds = App.Config.WindowBounds;
+            this.Left = windowBounds.Left;
+            this.Top = windowBounds.Top;
+            this.Width = windowBounds.Width;
+            this.Height = windowBounds.Height;
+
+            Closed += (sender, args) =>
+            {
+                App.Config.WindowBounds = new Rect(this.Left, this.Top, this.Width, this.Height);
+                App.Client.SaveConfig();
+            };
         }
+
     }
 }

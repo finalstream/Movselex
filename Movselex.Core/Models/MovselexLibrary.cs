@@ -206,5 +206,18 @@ namespace Movselex.Core.Models
                 library.ModifyFilePath(kv.Value);
             }
         }
+
+        public void UnGroup(LibraryItem[] libraries)
+        {
+            using (var tran = _databaseAccessor.BeginTransaction())
+            {
+                foreach (var library in libraries)
+                {
+                    _databaseAccessor.UpdateLibraryUnGroup(library.Id);
+                    library.UnGroup();
+                }
+                tran.Commit();
+            }
+        }
     }
 }

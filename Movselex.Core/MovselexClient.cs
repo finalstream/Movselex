@@ -77,8 +77,7 @@ namespace Movselex.Core
         {
             get
             {
-                var execAssembly = new AssemblyInfoData(ExecutingAssembly);
-                return string.Format("{0} ver.{1}", execAssembly.Product, execAssembly.FileVersion);
+                return string.Format("{0} ver.{1}", ExecutingAssemblyInfo.Product, ExecutingAssemblyInfo.FileVersion);
             }
         }
 
@@ -107,6 +106,7 @@ namespace Movselex.Core
         /// <summary>
         /// 新しいインスタンスを初期化します。
         /// </summary>
+        /// <param name="executingAssembly"></param>
         /// <param name="appConfigFilePath"></param>
         public MovselexClient(Assembly executingAssembly, string appConfigFilePath)
             : base(executingAssembly)
@@ -133,6 +133,7 @@ namespace Movselex.Core
         {
             
             AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
+            AppConfig.AppVersion = ExecutingAssemblyInfo.FileVersion;
 
             var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
             var playMonitoringAction = new PlayMonitoringAction(this.NowPlayingInfo);
@@ -297,14 +298,24 @@ namespace Movselex.Core
         }
 
 
-        public void RegistGroup(string title, string keyword, IEnumerable<LibraryItem> libraries)
+        public void Grouping(string title, string keyword, IEnumerable<LibraryItem> libraries)
         {
-            _actionExecuter.Post(new JoinGroupAction(title, keyword, libraries));
+            _actionExecuter.Post(new GroupingAction(title, keyword, libraries));
         }
 
         public void ModifyGroup(GroupItem group, string groupName, string keyword)
         {
             _actionExecuter.Post(new ModifyGroupAction(group, groupName, keyword));
+        }
+
+        public void UnGroupLibrary(LibraryItem[] selectLibraries)
+        {
+            _actionExecuter.Post(new UnGroupAction(selectLibraries));
+        }
+
+        public void SaveConfig()
+        {
+            SaveConfig(_appConfigFilePath, AppConfig);
         }
 
         #region Dispose

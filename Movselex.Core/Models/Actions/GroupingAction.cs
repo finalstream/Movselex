@@ -10,14 +10,14 @@ namespace Movselex.Core.Models.Actions
     /// <summary>
     /// ライブラリをグループに登録します。
     /// </summary>
-    internal class JoinGroupAction : MovselexActionBase
+    internal class GroupingAction : MovselexActionBase
     {
         private readonly string _title;
         private readonly string _keyword;
         private readonly IEnumerable<LibraryItem> _libraries;
 
 
-        public JoinGroupAction(string title, string keyword, IEnumerable<LibraryItem> libraries)
+        public GroupingAction(string title, string keyword, IEnumerable<LibraryItem> libraries)
         {
             _title = title;
             _keyword = keyword;

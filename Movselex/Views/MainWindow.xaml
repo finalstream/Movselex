@@ -10,10 +10,10 @@
 		xmlns:prop="clr-namespace:Movselex.Properties"
 		xmlns:mui="http://firstfloorsoftware.com/ModernUI"
 		xmlns:behaviors="clr-namespace:FinalstreamUIComponents.Behaviors;assembly=FinalstreamUIComponents"
-		Title="Movselex" Height="600" Width="1100"
-		WindowStartupLocation="CenterScreen"
+		Title="Movselex"
+		WindowStartupLocation="Manual"
 		ContentSource="/Views/Pages/Home.xaml"
-		Style="{StaticResource ModernWindowEx}" Icon="/Movselex;component/movselex.ico"  
+		Style="{StaticResource ModernWindowEx}" Icon="/Movselex;component/movselex.ico"
 		>
 
 	<!--

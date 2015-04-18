@@ -94,7 +94,9 @@ namespace Movselex.Core
         void RegistFiles(IEnumerable<string> enumerable);
         void MoveGroupDirectory(GroupItem currentGroup, string moveDirectory);
         void FilteringLibrary(string filteringText);
-        void RegistGroup(string title, string keyword, IEnumerable<LibraryItem> libraries);
+        void Grouping(string title, string keyword, IEnumerable<LibraryItem> libraries);
         void ModifyGroup(GroupItem group, string groupName, string keyword);
+        void UnGroupLibrary(LibraryItem[] selectLibraries);
+        void SaveConfig();
     }
 }

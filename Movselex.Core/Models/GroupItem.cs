@@ -13,6 +13,7 @@ namespace Movselex.Core.Models
         /// <summary>
         /// グループID。
         /// </summary>
+        /// <remarks>未登録は0</remarks>
         public long Gid { get; private set; }
 
         /// <summary>
