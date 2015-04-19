@@ -165,6 +165,8 @@ namespace Movselex.Core.Models
                     _databaseAccessor.UpdateGidById(gid, library.Id);
 
                     _databaseAccessor.UpdateGroupLastUpdateDatetime(gid);
+
+                    library.GroupName = groupName;
                 }
 
                 tran.Commit();

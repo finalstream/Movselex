@@ -6,7 +6,7 @@ namespace Movselex.Core.Models.Actions
     {
         public override void InvokeProgress(MovselexClient client)
         {
-            client.LibraryUpdater.Update();
+            client.LibraryUpdater.Update(client.ProgressInfo);
         }
     }
 }

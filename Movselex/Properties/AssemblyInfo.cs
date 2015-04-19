@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("Movselex")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Finalstream")]
 [assembly: AssemblyProduct("Movselex")]
-[assembly: AssemblyCopyright("Copyright c  2011")]
+[assembly: AssemblyCopyright("Copyright ©  2015 Finalstream")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

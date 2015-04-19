@@ -92,7 +92,7 @@ namespace Movselex.Core.Models
         public MovselexAppConfig()
         {
             AppVersion = "";
-            WindowBounds = new Rect(100d, 100d, 1100d, 600d);
+            WindowBounds = new Rect(100d, 100d, 1100d, 700d);
             PlayerExePath = "";
             ScreenNo = 1;
             IsFullScreen = false;
@@ -103,7 +103,7 @@ namespace Movselex.Core.Models
             SelectFiltering = "ALL MOVIE";
             TitleFormat = "%TITLE% - %NO%";
             LibraryMode = LibraryMode.Normal;
-            AccentColor = Colors.Orange;
+            AccentColor = Color.FromRgb(0x1b, 0xa1, 0xe2);
             SelectedTheme = "light";
             FilteringMode = FilteringMode.SQL;
             MpcExePath = "";

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -74,16 +75,22 @@ namespace Movselex.Core.Models
         /// ライブラリにファイルを登録します。
         /// </summary>
         /// <param name="registFiles"></param>
-        public void Regist(IEnumerable<string> registFiles)
+        /// <param name="progressInfo"></param>
+        public void Regist(IEnumerable<string> registFiles, IProgressInfo progressInfo)
         {
+            
             using (var tran = _databaseAccessor.BeginTransaction())
             {
                 var existsFiles = _databaseAccessor.SelectAllLibraryFilePaths().ToList();
 
-                foreach (var registFile in registFiles)
+                var i = 1;
+                var regfiles = registFiles.ToArray();
+                foreach (var registFile in regfiles)
                 {
+                    progressInfo.UpdateProgressMessage("Regist Files", Path.GetFileName(registFile), i++, regfiles.Length);
                     if (!existsFiles.Contains(registFile))
                     {
+
                         // 未登録の場合のみ登録する
                         var mediaFile = new MediaFile(registFile);
                         _movselexGroup.SetMovGroup(mediaFile);

@@ -256,7 +256,7 @@ namespace Movselex.Core.Models
             foreach (var keyword in keywords)
             {
                 if (keywordCond.Length > 0) keywordCond.Append(" OR ");
-                keywordCond.Append(string.Format(" lower(TITLE) LIKE '%{0}%'", keyword.ToLower()));
+                keywordCond.Append(string.Format(" lower(TITLE) LIKE '%{0}%'", SQLBuilder.EscapeSQL(keyword.ToLower())));
             }
             var sql = string.Format("SELECT ID, TITLE  FROM MOVLIST WHERE GID IS NULL AND ({0})", keywordCond.ToString());
             return SqlExecuter.Query<LibraryItem>(sql);

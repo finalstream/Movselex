@@ -87,11 +87,8 @@ namespace Movselex.Core
             get { return ProgressInfo.IsProgressing; }
         }
 
-        public void UpdateProgressMessage(string message)
-        {
-            ProgressInfo.SetProgressMessage(message);
-        }
 
+        
         public INowPlayingInfo NowPlayingInfo { get; private set; }
         public MovselexAppConfig AppConfig { get; private set; }
         public ObservableCollection<string> Databases { get; private set; }
@@ -199,7 +196,7 @@ namespace Movselex.Core
         public void RegistFiles(IEnumerable<string> files)
         {
             var action = new RegistFileAction(files);
-            action.AfterAction = () => Refresh();
+            action.AfterAction = Refresh;
             _actionExecuter.Post(action);
         }
 

@@ -49,5 +49,11 @@ namespace Movselex.Core.Models
         {
             ProgressMessage = message;
         }
+
+        public void UpdateProgressMessage(string message, string detail, int now, int last)
+        {
+            SetProgressMessage(string.Format("{0}... {1} ({2} / {3})", message, detail ?? "", now, last));
+        }
+
     }
 }

@@ -73,18 +73,34 @@ namespace Movselex.ViewModels.Pages.Settings
             DynamicLinkLibraries = new List<DynamicLinkLibraryInfo>();
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "Movselex.Core.dll",
+                "Movselex Core",
+                "Core Feature",
+                null,
+                "Copyright (c) 2015 FINALSTREAM",
+                "http://www.finalstream.net/"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
                 "FinalstreamCommons.dll",
                 "Finalstream Commons",
                 "Framework",
                 "OSS Coming Soon...",
-                "Copyright © 2015 FINALSTREAM",
+                "Copyright (c) 2015 FINALSTREAM",
+                "http://www.finalstream.net/"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "FinalstreamUIComponents.dll",
+                "Finalstream UI Components",
+                "UI Component",
+                "OSS Coming Soon...",
+                "Copyright (c) 2015 FINALSTREAM",
                 "http://www.finalstream.net/"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
                 "Livet.dll",
                 "Livet",
                 "WPF MVVM Infrastructure",
-                "The zlib/libpng License",
+                "zlib/libpng License",
                 "Copyright (c) 2010-2011 Livet Project",
                 "https://github.com/ugaya40/Livet"));
 
@@ -95,6 +111,15 @@ namespace Movselex.ViewModels.Pages.Settings
                 "Microsoft Public License",
                 null,
                 "https://github.com/firstfloorsoftware/mui"));
+
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "System.Reactive.Core.dll",
+                "Reactive Extensions",
+                "LINQ Library",
+                "Apache License 2.0",
+                "Copyright (c) Microsoft Corporation",
+                "http://rx.codeplex.com/"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
                 "System.Data.SQLite.dll",
@@ -108,7 +133,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 "Dapper.dll",
                 "Dapper",
                 "Micro ORM",
-                "Apache License Version 2.0",
+                "Apache License 2.0",
                 null,
                 "https://github.com/StackExchange/dapper-dot-net"));
 
@@ -117,15 +142,23 @@ namespace Movselex.ViewModels.Pages.Settings
                 "taglib-sharp.dll",
                 "TagLib Sharp",
                 "TagAnalyzer",
-                "LGPL-2.1",
+                "GNU Lesser General Public License 2.1",
                 null,
                 "https://github.com/mono/taglib-sharp"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "migemo.dll",
+                "C/Migemo",
+                "Incremental Search Engine",
+                "MIT License",
+                "Copyright (c) 2003-2007 MURAOKA Taro (KoRoN)",
+                "https://github.com/koron/cmigemo"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
                 "NLog.dll",
                 "NLog",
                 "Logging",
-                "BSD license",
+                "BSD License",
                 "Copyright (c) 2004-2011 Jaroslaw Kowalski",
                 "http://nlog-project.org/"));
 
@@ -133,7 +166,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 "Newtonsoft.Json.dll",
                 "Json.NET",
                 "Json Parser",
-                "The MIT License",
+                "MIT License",
                 "Copyright (c) 2007 James Newton-King",
                 "http://www.newtonsoft.com/json"));
         }

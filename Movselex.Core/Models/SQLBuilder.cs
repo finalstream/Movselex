@@ -140,7 +140,7 @@ namespace Movselex.Core.Models
             return "";
         }
 
-        private static string EscapeSQL(string sql)
+        public static string EscapeSQL(string sql)
         {
             return sql.Replace("'", "''");
         }

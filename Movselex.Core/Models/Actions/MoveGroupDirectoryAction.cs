@@ -43,7 +43,7 @@ namespace Movselex.Core.Models.Actions
             {
                 var newfilepath = Path.Combine(moveDirectory, Path.GetFileName(library.FilePath));
 
-                client.UpdateProgressMessage(string.Format("Moving Group Files... {0} ({1} / {2})",_group.GroupName, i++ ,client.Libraries.Count));
+                client.ProgressInfo.UpdateProgressMessage("Moving Group Files", _group.GroupName, i++ ,client.Libraries.Count);
 
                 FileUtils.Move(library.FilePath, newfilepath);
 

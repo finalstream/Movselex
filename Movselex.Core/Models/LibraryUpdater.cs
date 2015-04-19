@@ -22,12 +22,13 @@ namespace Movselex.Core.Models
             _supportExts = supportExts.Select(x=> x.ToLower()).ToArray();
         }
 
-        public IReadOnlyCollection<string> SearchDirectoryPaths {get { return _searchDirectoryPaths; }} 
+        public IReadOnlyCollection<string> SearchDirectoryPaths {get { return _searchDirectoryPaths; }}
 
         /// <summary>
         /// ライブラリを更新します。
         /// </summary>
-        public void Update()
+        /// <param name="progressInfo"></param>
+        public void Update(IProgressInfo progressInfo)
         {
             if (SearchDirectoryPaths.Count == 0)
             {
@@ -41,17 +42,17 @@ namespace Movselex.Core.Models
                 // 検索対象ディレクトリからサポートしている拡張子のファイルだけ抜く。
                 var registFiles = GetSupportFiles(searchDirectoryPath);
 
-                _movselexLibrary.Regist(registFiles);
+                _movselexLibrary.Regist(registFiles, progressInfo);
             }
 
             // 不完全なものを再スキャン
             _movselexLibrary.ReScan(_movselexLibrary.GetInCompleteIds());
         }
 
-        public void RegistFiles(string[] files)
+        public void RegistFiles(string[] files, IProgressInfo progressInfo)
         {
             var registFiles = files.SelectMany(x => Directory.Exists(x) ? GetSupportFiles(x) : new[] {x});
-            _movselexLibrary.Regist(registFiles);
+            _movselexLibrary.Regist(registFiles, progressInfo);
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace Movselex.Core.Models
         /// <returns></returns>
         private IEnumerable<string> GetSupportFiles(string directoryPath)
         {
-            return Directory.GetFiles(directoryPath, "*", SearchOption.TopDirectoryOnly)
+            return Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories)
                     .Where(x => _supportExts.Contains(Path.GetExtension(x).ToLower()));
         }
     }
