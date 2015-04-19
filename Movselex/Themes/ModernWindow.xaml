@@ -10,10 +10,12 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Thickness x:Key="ContentMarginEx">8,0,8,-10</Thickness>
-
+    
     <Style x:Key="ContentRootEx" TargetType="FrameworkElement">
         <Setter Property="Margin" Value="{StaticResource ContentMarginEx}" />
     </Style>
+
+    <SolidColorBrush x:Key="DataGridCellBackgroundSelected" />
 
     <Style x:Key="ModernWindowEx" TargetType="mui:ModernWindow" BasedOn="{StaticResource {x:Type mui:ModernWindow}}" >
         <Setter Property="Padding" Value="8" />
@@ -198,6 +200,37 @@
                 <WindowChrome CornerRadius="0" GlassFrameThickness="1" UseAeroCaptionButtons="False" NonClientFrameEdges="None" />
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type DataGridCell}" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Background" Value="{DynamicResource DataGridCellBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource DataGridCellForeground}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="5,1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}"  
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource DataGridCellBackgroundHover}" />
+                <Setter Property="Foreground" Value="{DynamicResource DataGridCellForegroundHover}" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource DataGridCellBackgroundSelected}" />
+                <Setter Property="Foreground" Value="{DynamicResource DataGridCellForegroundSelected}" />
+                <Setter Property="Opacity" Value="0.9"></Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

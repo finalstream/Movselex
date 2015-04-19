@@ -28,10 +28,12 @@
 		</Style>
 		<Style TargetType="TextBlock" x:Key="TextItem">
 			<Setter Property="FontSize" Value="15" />
+			<Setter Property="VerticalAlignment" Value="Center"/>
 		</Style>
 		<Style TargetType="TextBlock" x:Key="TextItemRight">
 			<Setter Property="FontSize" Value="15" />
 			<Setter Property="TextAlignment" Value="Right" ></Setter>
+			<Setter Property="VerticalAlignment" Value="Center"/>
 		</Style>
 
 		<!--
@@ -141,10 +143,10 @@
 		</Grid>
 
 		<!-- FilteringList -->
-		<DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="210" Height="200" 
+		<DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="210" Height="240" 
 				  GridLinesVisibility="None" AutoGenerateColumns="False" HeadersVisibility="None" 
 				  ItemsSource="{Binding Filterings}" SelectedItem="{Binding CurrentFiltering}"
-				  HorizontalAlignment="Left" BorderThickness="0" Margin="5,10,5,0" IsReadOnly="True">
+				  HorizontalAlignment="Left" BorderThickness="0" Margin="5,10,5,0" IsReadOnly="True" RowHeight="26.5">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="" Width="*"
 									Binding="{Binding Model.DisplayValue}" ElementStyle="{StaticResource TextItem}" />
@@ -169,9 +171,9 @@
 
 		<!-- GroupGrid -->
 		<DataGrid Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Groups}" RowHeaderWidth="0" 
-				  IsReadOnly="True" AutoGenerateColumns="False" Height="200" Margin="5,10,0,0" 
+				  IsReadOnly="True" AutoGenerateColumns="False" Height="240" Margin="5,10,0,0" 
 				  BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}"
-				  SelectedItem="{Binding CurrentGroup}">
+				  SelectedItem="{Binding CurrentGroup}" RowHeight="30">
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Group" Width="*"
 					Binding="{Binding Model.GroupName}" ElementStyle="{StaticResource TextItem}" />
@@ -241,15 +243,15 @@
 		<DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" RowHeaderWidth="0" 
 				  IsReadOnly="True"  ItemsSource="{Binding Libraries}" AutoGenerateColumns="False" 
 				  Margin="5,10,0,10" BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}"
-				  SelectedIndex="{Binding LibrarySelectIndex}">
-			
+				  SelectedIndex="{Binding LibrarySelectIndex}" RowHeight="30">
+
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="" Width="10">
 					<DataGridTextColumn.CellStyle>
 						<Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
 							<Setter Property="ToolTip" Value="{Binding Model.FilePath}" />
 						</Style>
-				</DataGridTextColumn.CellStyle>
+					</DataGridTextColumn.CellStyle>
 				</DataGridTextColumn>
 				<DataGridTextColumn Header="Group" Width="100" 
 									Binding="{Binding Model.GroupName}" ElementStyle="{StaticResource TextItem}"  />
