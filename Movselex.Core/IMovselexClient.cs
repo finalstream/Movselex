@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using FinalstreamCommons.Collections;
 using Movselex.Core.Models;
 
 namespace Movselex.Core
@@ -21,6 +22,8 @@ namespace Movselex.Core
         ///     グループ情報。
         /// </summary>
         ObservableCollection<GroupItem> Groups { get; }
+
+        ObservableCollection<PlayingItem> Playings { get; }
 
         /// <summary>
         ///     再生中情報。

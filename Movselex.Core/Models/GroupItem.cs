@@ -162,7 +162,7 @@ namespace Movselex.Core.Models
 
         public void ModifyDriveLetter(string drive)
         {
-            Drive = Drive;
+            Drive = drive;
         }
 
         public void ModifyNameAndKeyword(string groupName, string keyword)

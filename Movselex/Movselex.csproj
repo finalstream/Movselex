@@ -115,6 +115,7 @@
     <Compile Include="ViewModels\Pages\Settings\AppearanceViewModel.cs" />
     <Compile Include="ViewModels\Pages\Settings\GeneralViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PlayingViewModel.cs" />
     <Compile Include="Views\Converters\IsFavoriteConverter.cs" />
     <Compile Include="Views\Converters\IsCompleteConverter.cs" />
     <Compile Include="Views\Converters\IsPlayedConverter.cs" />

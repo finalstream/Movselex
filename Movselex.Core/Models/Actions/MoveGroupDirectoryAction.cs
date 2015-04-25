@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using FinalstreamCommons.Utils;
 using Microsoft.Build.Utilities;
@@ -11,7 +12,7 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class MoveGroupDirectoryAction : MovselexProgressAction
+    internal class MoveGroupDirectoryAction : MovselexActionBase
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -24,8 +25,10 @@ namespace Movselex.Core.Models.Actions
             _baseDirectory = baseDirectory;
         }
 
-        public override void InvokeProgress(MovselexClient client)
+        public async override void InvokeCore(MovselexClient client)
         {
+            client.IsProgressing = true;
+
             //TODO: メッセージを国際化する。
             var appConfig = client.AppConfig;
            
@@ -38,28 +41,44 @@ namespace Movselex.Core.Models.Actions
 
             var movedDic = new Dictionary<long, string>();
 
-            var i = 1;
-            foreach (var library in client.Libraries)
+
+            var moveLibraries = client.Libraries.ToArray();
+
+            await Task.Run(() =>
             {
-                var newfilepath = Path.Combine(moveDirectory, Path.GetFileName(library.FilePath));
+                // ファイル移動は時間がかかるので別スレッドで。
 
-                client.ProgressInfo.UpdateProgressMessage("Moving Group Files", _group.GroupName, i++ ,client.Libraries.Count);
+                var i = 1;
+                foreach (var library in moveLibraries)
+                {
+                    var newfilepath = Path.Combine(moveDirectory, Path.GetFileName(library.FilePath));
 
-                FileUtils.Move(library.FilePath, newfilepath);
+                    client.ProgressInfo.UpdateProgressMessage("Moving Group Files", _group.GroupName, i++,
+                        moveLibraries.Length);
 
-                _log.Debug("Moved File. {0} to {1}.", library.FilePath, newfilepath);
+                    FileUtils.Move(library.FilePath, newfilepath);
 
-                movedDic.Add(library.Id, newfilepath);
+                    _log.Debug("Moved File. {0} to {1}.", library.FilePath, newfilepath);
 
-                DirecotryUtils.DeleteEmptyDirecotry(Path.GetDirectoryName(library.FilePath));
-            }
+                    movedDic.Add(library.Id, newfilepath);
 
-            // ファイルパス更新
-            client.MovselexLibrary.UpdateFilePaths(movedDic);
+                    DirecotryUtils.DeleteEmptyDirecotry(Path.GetDirectoryName(library.FilePath));
+                }
 
-            _group.ModifyDriveLetter(FileUtils.GetDriveLetter(moveDirectory));
+            });
 
-            _log.Info("Moved Group Direcotry. Group:{0} NewPath:{1}", _group.GroupName, moveDirectory);
+            client.PostCallback(new CallbackAction(() =>
+            {
+                client.MovselexLibrary.UpdateFilePaths(movedDic);
+
+                if (_group != null) _group.ModifyDriveLetter(FileUtils.GetDriveLetter(moveDirectory));
+
+                _log.Info("Moved Group Direcotry. Group:{0} NewPath:{1}", _group.GroupName, moveDirectory);
+
+                client.IsProgressing = false;
+            }));
+            
+            
 
         }
     }

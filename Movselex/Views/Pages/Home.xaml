@@ -350,6 +350,28 @@
 		</DataGrid>
 
 		<!-- PlayingGrid -->
+		<Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="200">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="25"></RowDefinition>
+				<RowDefinition></RowDefinition>
+			</Grid.RowDefinitions>
+		<TextBlock Grid.Row="0" Text="NowPlaying" TextAlignment="Center" Style="{StaticResource Heading2}"></TextBlock>
+		<ScrollViewer Grid.Row="1">
+			<ItemsControl ItemsSource="{Binding Playings}">
+					<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource ItemBorder}" Height="60" Padding="5">
+							<StackPanel Orientation="Vertical">
+								<TextBlock Text="{Binding Model.StartTime, StringFormat=HH:mm}" FontWeight="Bold"></TextBlock>
+								<TextBlock Text="{Binding Model.Item.Title}" TextWrapping="WrapWithOverflow"></TextBlock>
+							</StackPanel>
+						</Border>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
+		</Grid>
+		<!--
 		<DataGrid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Width="200"  
 				  ItemsSource="{Binding Playings}" AutoGenerateColumns="False" Margin="5,10,0,0" BorderThickness="0"
 				  IsReadOnly="True" ColumnHeaderStyle="{StaticResource columnHeader}">
@@ -360,7 +382,8 @@
 									Binding="{Binding Title}" />
 			</DataGrid.Columns>
 		</DataGrid>
-
+		-->
+		
 		<!-- Button -->
 		<Grid Grid.Row="4" Grid.ColumnSpan="5" Margin="0,0,0,2">
 			<Grid.ColumnDefinitions>

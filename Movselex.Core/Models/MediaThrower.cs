@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using FinalstreamCommons.Builders;
 using FinalstreamCommons.Models;
@@ -33,7 +34,7 @@ namespace Movselex.Core.Models
         ///  メディアファイルをプレイヤーに投げます。
         /// </summary>
         /// <param name="filepaths"></param>
-        public void Throw(string[] filepaths)
+        public void Throw(IEnumerable<string> filepaths)
         {
             // TODO: exeパスが設定されていないときはボタンを押せないようにする。
             int i = 0;

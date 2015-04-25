@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using FinalstreamCommons.Collections;
 using FinalstreamCommons.Models;
 using Livet;
 using Movselex.Core.Models;
@@ -73,6 +74,14 @@ namespace Movselex.Core
             }
         }
 
+        public ObservableCollection<PlayingItem> Playings
+        {
+            get
+            {
+                return MovselexPlaying.PlayingItems;
+            }
+        }
+
         public string ApplicationNameWithVersion
         {
             get
@@ -96,7 +105,8 @@ namespace Movselex.Core
         public MovselexLibrary MovselexLibrary { get; private set; }
         public MovselexGroup MovselexGroup { get; private set; }
         public LibraryUpdater LibraryUpdater { get; private set; }
-        public LinkedListEx<string> PlayingList { get; private set; }
+        public MovselexPlaying MovselexPlaying { get; private set; }
+        
         public IProgressInfo ProgressInfo { get; private set; }
 
 
@@ -114,12 +124,12 @@ namespace Movselex.Core
             _actionExecuter = new ActionExecuter<MovselexClient>(this);
             _databaseAccessor = new MovselexDatabaseAccessor(AppConfig);
             MovselexFiltering = new MovselexFiltering();
+            MovselexPlaying = new MovselexPlaying();
             MovselexGroup = new MovselexGroup(_databaseAccessor);
             MovselexLibrary = new MovselexLibrary(_databaseAccessor, MovselexGroup);
             Databases = new ObservableCollection<string>();
             NowPlayingInfo = new NowPlayingInfo();
             LibraryUpdater = new LibraryUpdater(MovselexLibrary, AppConfig.SupportExtentions);
-            PlayingList = new LinkedListEx<string>();
             ProgressInfo = new ProgressInfo();
         }
 
@@ -217,6 +227,15 @@ namespace Movselex.Core
             _actionExecuter.Post(new EmptyAction());
         }
 
+        /// <summary>
+        /// コールバック処理をPOSTします。
+        /// </summary>
+        /// <param name="action"></param>
+        /// <remarks>Action内で非同期実行後にコールバックしたいときに使用します。</remarks>
+        public void PostCallback(CallbackAction action)
+        {
+            _actionExecuter.Post(action);
+        }
 
         public void Initialize(string databaseName)
         {
@@ -280,13 +299,13 @@ namespace Movselex.Core
 
         public void Throw(int librarySelectIndex)
         {
-            var filePaths = MovselexLibrary.LibraryItems.Skip(librarySelectIndex).Take(AppConfig.LimitNum).Select(x=>x.FilePath);
-            _actionExecuter.Post(new ThrowAction(filePaths.ToArray()));
+            var libraries = MovselexLibrary.LibraryItems.Skip(librarySelectIndex).Take(AppConfig.LimitNum);
+            _actionExecuter.Post(new ThrowAction(libraries));
         }
 
         public void InterruptThrow(int librarySelectIndex)
         {
-            _actionExecuter.Post(new ThrowAction(MovselexLibrary.LibraryItems[librarySelectIndex].FilePath));
+            _actionExecuter.Post(new ThrowAction(MovselexLibrary.LibraryItems[librarySelectIndex]));
         }
 
         public void UpdateLibrary()

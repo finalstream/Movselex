@@ -110,6 +110,22 @@ namespace Movselex.Core.Models
 
         #endregion
 
+
+        public TimeSpan Duration
+        {
+            get
+            {
+                var time = Length;
+                if (string.IsNullOrEmpty(time)) time = ApplicationDefinitions.TimeEmptyString;
+                if (time.Length < 6)
+                {
+                    time = "0:" + time;
+                }
+                return TimeSpan.Parse(time);
+            }
+        }
+
+
         /// <summary>
         /// コーデックを取得します。
         /// </summary>

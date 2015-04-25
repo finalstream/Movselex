@@ -17,28 +17,41 @@ namespace Movselex.Core.Models.Actions
 
         private readonly Mode _mode;
 
-        public string[] FilePaths { get; private set; }
+        private PlayingItem[] _playingItems; 
 
-        public ThrowAction(string filePath)
+        public ThrowAction(LibraryItem library)
         {
             _mode = Mode.Interrupt;
-            FilePaths = new []{filePath};
+            _playingItems = new[] { new PlayingItem(library) };
         }
 
-        public ThrowAction(string[] filePaths)
+        public ThrowAction(IEnumerable<LibraryItem> libraries)
         {
             _mode = Mode.Throw;
-            FilePaths = filePaths;
+
+            _playingItems = CreatePlayingItems(libraries);
         }
 
         public override void InvokeCore(MovselexClient client)
         {
+            var playing = client.MovselexPlaying;
             var thrower = new MediaPlayerClassicThrower(client.AppConfig);
 
-            if (_mode == Mode.Interrupt) FilePaths = FilePaths.Concat(client.PlayingList).ToArray();
+            if (_mode == Mode.Interrupt) _playingItems = CreatePlayingItems(_playingItems.Select(x=>x.Item).Concat(playing.PlayingItems.Select(x=>x.Item)));
 
-            thrower.Throw(FilePaths);
-            client.PlayingList.Reset(FilePaths);
+            thrower.Throw(_playingItems.Select(x => x.Item.FilePath));
+            playing.Reset(_playingItems);
+        }
+
+        private PlayingItem[] CreatePlayingItems(IEnumerable<LibraryItem> libraries)
+        {
+            PlayingItem beforeItem = null;
+            return libraries.Select(x =>
+            {
+                var item = new PlayingItem(x, beforeItem);
+                beforeItem = item;
+                return item;
+            }).ToArray();
         }
     }
 }

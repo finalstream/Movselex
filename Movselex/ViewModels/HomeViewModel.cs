@@ -57,6 +57,11 @@ namespace Movselex.ViewModels
         private ReadOnlyDispatcherCollection<GroupViewModel> _groups;
 
         /// <summary>
+        /// 再生中情報。
+        /// </summary>
+        private ReadOnlyDispatcherCollection<PlayingViewModel> _playings; 
+
+        /// <summary>
         ///     ライブラリ情報。
         /// </summary>
         private ReadOnlyDispatcherCollection<LibraryViewModel> _libraries;
@@ -97,9 +102,9 @@ namespace Movselex.ViewModels
         /// <summary>
         ///     再生中リスト情報。
         /// </summary>
-        public IEnumerable<PlayingItem> Playings
+        public ReadOnlyDispatcherCollection<PlayingViewModel> Playings
         {
-            get { return null; }
+            get { return _playings; }
         }
 
         #region IsThrowable変更通知プロパティ
@@ -318,6 +323,9 @@ namespace Movselex.ViewModels
 
             _libraries = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Libraries,
                 m => new LibraryViewModel(m), DispatcherHelper.UIDispatcher);
+
+            _playings = ViewModelHelper.CreateReadOnlyDispatcherCollection(_client.Playings,
+                m => new PlayingViewModel(m), DispatcherHelper.UIDispatcher);
         }
 
         /// <summary>
@@ -493,6 +501,8 @@ namespace Movselex.ViewModels
 
         public void MoveGroupDirectory()
         {
+            if(CurrentGroup == null) return;
+
             var baseDirectory = DialogUtils.ShowFolderDialog(
                 "移動する場所を指定してください。指定した場所にグループ名でフォルダを作成して移動します。",
                 _client.AppConfig.MoveBaseDirectory);
@@ -500,6 +510,7 @@ namespace Movselex.ViewModels
             if (string.IsNullOrEmpty(baseDirectory)) return;
 
             var group = CurrentGroup.Model;
+
             // 移動先フォルダ作成
             var moveDirectory = baseDirectory + "\\" + group.GroupName;
 
