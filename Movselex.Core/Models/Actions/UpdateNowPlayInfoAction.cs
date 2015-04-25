@@ -13,8 +13,9 @@ namespace Movselex.Core.Models.Actions
 
         public override void InvokeCore(MovselexClient client)
         {
-            var id = client.MovselexLibrary.FindId(_fileName);
+            var id = client.MovselexLibrary.FindIdByFileName(_fileName);
             client.NowPlayingInfo.SetId(id);
+            client.MovselexPlaying.Refresh(id);
         }
     }
 }

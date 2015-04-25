@@ -139,7 +139,7 @@ namespace Movselex.Core.Models
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public long FindId(string filename)
+        public long FindIdByFileName(string filename)
         {
             return _databaseAccessor.GetIdFromFileName(filename);
         }
