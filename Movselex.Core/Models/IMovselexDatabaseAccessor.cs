@@ -7,7 +7,7 @@ namespace Movselex.Core.Models
 {
     internal interface IMovselexDatabaseAccessor : IDatabaseAccessor
     {
-        IEnumerable<LibraryItem> SelectLibrary(LibraryCondition libCondition);
+        IEnumerable<LibraryItem> SelectLibraryList(LibraryCondition libCondition);
         void ChangeDatabase(string databaseName);
         IEnumerable<GroupItem> SelectGroup();
         IEnumerable<LibraryItem> ShuffleLibrary(int limitNum);
@@ -34,5 +34,9 @@ namespace Movselex.Core.Models
         void UpdateLibraryReplaceGroupName(long gid, string oldGroupName, string newGroupName);
         IEnumerable<LibraryItem> SelectUnGroupingLibrary(IEnumerable<string> keywords);
         void UpdateLibraryUnGroup(long id);
+        void InsertPlayingList(long id, int sort);
+        void DeletePlayingList();
+        IEnumerable<LibraryItem> SelectPlayingList();
+        LibraryItem SelectLibrary(long id);
     }
 }

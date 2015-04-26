@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
-
+using FirstFloor.ModernUI.Windows.Controls;
 using Livet;
 using Movselex.Core;
 using Movselex.Core.Models;
@@ -46,11 +46,8 @@ namespace Movselex
         {
             _log.Error("Catch UnhandledException.", e.ExceptionObject as Exception);
 
-            MessageBox.Show(
-                "不明なエラーが発生しました。アプリケーションを終了します。エラーログを開発元に送付してください。",
-                "Critical Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
+            ModernDialog.ShowMessage("不明なエラーが発生しました。アプリケーションを終了します。エラーログを開発元に送付してください。", "Critical Error",
+                MessageBoxButton.OK);
 
             Environment.Exit(1);
         }

@@ -124,7 +124,7 @@ namespace Movselex.Core
             _actionExecuter = new ActionExecuter<MovselexClient>(this);
             _databaseAccessor = new MovselexDatabaseAccessor(AppConfig);
             MovselexFiltering = new MovselexFiltering();
-            MovselexPlaying = new MovselexPlaying();
+            MovselexPlaying = new MovselexPlaying(_databaseAccessor);
             MovselexGroup = new MovselexGroup(_databaseAccessor);
             MovselexLibrary = new MovselexLibrary(_databaseAccessor, MovselexGroup);
             Databases = new ObservableCollection<string>();

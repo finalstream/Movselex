@@ -15,6 +15,8 @@ namespace Movselex.Core.Models
     public class LibraryItem : NotificationObject
     {
 
+        public static LibraryItem Empty = new LibraryItem(){Id = -1};
+
         /// <summary>
         /// Idを取得します。
         /// </summary>

@@ -61,6 +61,15 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   DELETE FROM PLAYINGLIST に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DeletePlayingList {
+            get {
+                return ResourceManager.GetString("DeletePlayingList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   INSERT INTO MOVGROUPLIST(
         ///  GROUPNAME,
         ///  KEYWORD,
@@ -121,6 +130,15 @@ namespace Movselex.Core.Resources {
         internal static string InsertLibrary {
             get {
                 return ResourceManager.GetString("InsertLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   INSERT INTO PLAYINGLIST(ID, SORT) VALUES (@Id, @Sort) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string InsertPlayingList {
+            get {
+                return ResourceManager.GetString("InsertPlayingList", resourceCulture);
             }
         }
         
@@ -342,24 +360,6 @@ namespace Movselex.Core.Resources {
         internal static string SQL017 {
             get {
                 return ResourceManager.GetString("SQL017", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   INSERT INTO PLAYINGLIST(ID, SORT) VALUES (:Id, :Sort) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL018 {
-            get {
-                return ResourceManager.GetString("SQL018", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   DELETE FROM PLAYINGLIST に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL019 {
-            get {
-                return ResourceManager.GetString("SQL019", resourceCulture);
             }
         }
         

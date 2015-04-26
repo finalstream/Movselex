@@ -144,5 +144,19 @@ namespace Movselex.Core.Models
         {
             return sql.Replace("'", "''");
         }
+
+        public string CreateSelectNowPlaying()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(SQLResource.SelectLibraryList);
+
+            sb.Append(" INNER JOIN ");
+            sb.Append(" PLAYINGLIST ");
+            sb.Append("PIL ON PL.ID = PIL.ID ");
+            sb.Append("ORDER BY PIL.SORT");
+
+            return sb.ToString();
+        }
     }
 }

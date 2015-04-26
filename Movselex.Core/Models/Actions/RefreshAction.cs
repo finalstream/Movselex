@@ -53,6 +53,8 @@ namespace Movselex.Core.Models.Actions
             client.MovselexLibrary.Load(libCondition);
 
             if(_filteringMode == FilteringMode.SQL) client.MovselexGroup.Load();
+
+            client.MovselexPlaying.Load();
         }
 
         /// <summary>

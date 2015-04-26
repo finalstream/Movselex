@@ -97,7 +97,7 @@ namespace Movselex.Core.Models
             ScreenNo = 1;
             IsFullScreen = false;
             SupportExtentions = new[] { ".avi",".mpg",".mp4",".mkv",".flv",".wmv" };
-            LimitNum = 50;
+            LimitNum = 30;
             MoveBaseDirectory = "";
             SelectDatabase = "library";
             SelectFiltering = "ALL MOVIE";

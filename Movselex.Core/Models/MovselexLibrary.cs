@@ -37,7 +37,14 @@ namespace Movselex.Core.Models
 
         public LibraryItem GetLibraryItem(long id)
         {
-            return LibraryItems.SingleOrDefault(x => x.Id == id);
+            var library = LibraryItems.SingleOrDefault(x => x.Id == id);
+            
+            if (library == null)
+            {
+                // メモリに見つからなかったらDBから取得
+                library = _databaseAccessor.SelectLibrary(id);
+            }
+            return library;
         }
 
         /// <summary>
@@ -46,7 +53,7 @@ namespace Movselex.Core.Models
         /// <param name="libCondition"></param>
         public void Load(LibraryCondition libCondition)
         {
-            var libraries = _databaseAccessor.SelectLibrary(libCondition);
+            var libraries = _databaseAccessor.SelectLibraryList(libCondition);
 
             LibraryItems.Clear();
             foreach (var libraryItem in libraries)

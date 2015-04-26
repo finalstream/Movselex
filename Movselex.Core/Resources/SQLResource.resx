@@ -234,11 +234,11 @@ FROM PLAYLIST
 WHERE ID = :Id</value>
     <comment>再生回数取得</comment>
   </data>
-  <data name="SQL018" xml:space="preserve">
-    <value>INSERT INTO PLAYINGLIST(ID, SORT) VALUES (:Id, :Sort)</value>
+  <data name="InsertPlayingList" xml:space="preserve">
+    <value>INSERT INTO PLAYINGLIST(ID, SORT) VALUES (@Id, @Sort)</value>
     <comment>再生中リスト追加</comment>
   </data>
-  <data name="SQL019" xml:space="preserve">
+  <data name="DeletePlayingList" xml:space="preserve">
     <value>DELETE FROM PLAYINGLIST</value>
     <comment>再生中リスト削除</comment>
   </data>

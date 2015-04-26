@@ -14,6 +14,8 @@ namespace Movselex.Core.Models
 
         public long Id { get; private set; }
 
+        public LibraryItem Library { get; private set; }
+
         #region ViewTitle変更通知プロパティ
 
         private string _viewTitle;
@@ -89,6 +91,7 @@ namespace Movselex.Core.Models
         {
             get
             {
+                if (string.IsNullOrEmpty(PlayTime)) return 0;
                 var time = PlayTime;
                 if (time.Length < 6)
                 {
@@ -125,6 +128,11 @@ namespace Movselex.Core.Models
         public void SetId(long id)
         {
             Id = id;
+        }
+
+        public void SetLibrary(LibraryItem library)
+        {
+            Library = library;
         }
     }
 }

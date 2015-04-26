@@ -41,6 +41,7 @@ namespace Movselex.Core.Models.Actions
             var libraryItems = _libraryItems as LibraryItem[] ?? _libraryItems.ToArray();
             thrower.Throw(libraryItems.Select(x => x.FilePath));
             playing.Reset(libraryItems);
+
         }
 
         

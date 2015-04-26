@@ -44,6 +44,23 @@ namespace Movselex.Core.Models
 
         #endregion
 
+        #region Height変更通知プロパティ
+
+        private int _height;
+
+        public int Height
+        {
+            get { return _height; }
+            set
+            {
+                if (_height == value) return;
+                _height = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         public LibraryItem Item { get; private set; }
 
         public PlayingItem(LibraryItem library)
@@ -51,6 +68,7 @@ namespace Movselex.Core.Models
             Item = library;
             StartTime = DateTime.Now;
             EndTime = StartTime.Add(library.Duration);
+            Height = CreateHeight(library.Duration);
         }
 
         public PlayingItem(LibraryItem library, PlayingItem before)
@@ -58,6 +76,12 @@ namespace Movselex.Core.Models
             Item = library;
             StartTime = before != null? before.EndTime : DateTime.Now;
             EndTime = StartTime.Add(library.Duration);
+            Height = CreateHeight(library.Duration);
+        }
+
+        public int CreateHeight(TimeSpan duration)
+        {
+            return (int) (Math.Ceiling(duration.TotalMinutes/30d) * 65);
         }
     }
 }

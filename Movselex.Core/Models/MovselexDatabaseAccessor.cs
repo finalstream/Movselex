@@ -38,7 +38,7 @@ namespace Movselex.Core.Models
         /// </summary>
         /// <param name="libCondition"></param>
         /// <returns></returns>
-        public IEnumerable<LibraryItem> SelectLibrary(LibraryCondition libCondition)
+        public IEnumerable<LibraryItem> SelectLibraryList(LibraryCondition libCondition)
         {
             _lastLibrarySelectSQL = _sqlBuilder.CreateSelectLibrary(_appConfig.LibraryMode, libCondition);
             return SqlExecuter.Query<LibraryItem>(_lastLibrarySelectSQL);
@@ -265,6 +265,27 @@ namespace Movselex.Core.Models
         public void UpdateLibraryUnGroup(long id)
         {
             SqlExecuter.Execute(SQLResource.UpdateGidById, new { Gid = (long?)null, Id = id });
+        }
+
+        public void InsertPlayingList(long id, int sort)
+        {
+            SqlExecuter.Execute(SQLResource.InsertPlayingList, new {Id = id, Sort = sort});
+        }
+
+        public void DeletePlayingList()
+        {
+            SqlExecuter.Execute(SQLResource.DeletePlayingList);
+        }
+
+        public IEnumerable<LibraryItem> SelectPlayingList()
+        {
+            var sql = _sqlBuilder.CreateSelectNowPlaying();
+            return SqlExecuter.Query<LibraryItem>(sql);
+        }
+
+        public LibraryItem SelectLibrary(long id)
+        {
+            return SqlExecuter.Query<LibraryItem>(SQLResource.SelectLibraryList).FirstOrDefault();
         }
     }
 }

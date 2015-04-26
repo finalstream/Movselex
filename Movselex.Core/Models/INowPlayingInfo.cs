@@ -27,6 +27,8 @@
 
         double PlayTimeSeconds { get; }
 
+        LibraryItem Library { get; }
+
         /// <summary>
         /// 更新します。
         /// </summary>
@@ -35,5 +37,6 @@
         void Update(string title, string playtime);
 
         void SetId(long id);
+        void SetLibrary(LibraryItem library);
     }
 }

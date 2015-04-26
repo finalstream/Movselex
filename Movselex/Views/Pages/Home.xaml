@@ -355,15 +355,18 @@
 				<RowDefinition Height="25"></RowDefinition>
 				<RowDefinition></RowDefinition>
 			</Grid.RowDefinitions>
-		<TextBlock Grid.Row="0" Text="NowPlaying" TextAlignment="Center" Style="{StaticResource Heading2}"></TextBlock>
+		<TextBlock Grid.Row="0" Text="TimeLine" TextAlignment="Center" Style="{StaticResource Heading2}"></TextBlock>
 		<ScrollViewer Grid.Row="1">
 			<ItemsControl ItemsSource="{Binding Playings}">
 					<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource ItemBorder}" Height="60" Padding="5">
+						<Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource ItemBorder}" Height="{Binding Model.Height}" Padding="5">
 							<StackPanel Orientation="Vertical">
-								<TextBlock Text="{Binding Model.StartTime, StringFormat=HH:mm}" FontWeight="Bold"></TextBlock>
-								<TextBlock Text="{Binding Model.Item.Title}" TextWrapping="WrapWithOverflow"></TextBlock>
+								<!--<Border BorderBrush="{DynamicResource Accent}" Background="{DynamicResource Accent}" BorderThickness="1" Padding="1" Width="40" HorizontalAlignment="Left">
+									<TextBlock Text="{Binding Model.StartTime, StringFormat=HH:mm}" TextAlignment="Center" Foreground="{DynamicResource DataGridCellForegroundSelected}"></TextBlock>
+								</Border>-->
+									<TextBlock Text="{Binding Model.StartTime, StringFormat=HH:mm}" FontWeight="Bold" Foreground="{DynamicResource Accent}" Padding="0,0,0,1"></TextBlock>
+									<TextBlock Text="{Binding Model.Item.Title}" TextWrapping="WrapWithOverflow"></TextBlock>
 							</StackPanel>
 						</Border>
 					</DataTemplate>

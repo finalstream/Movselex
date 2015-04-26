@@ -15,7 +15,13 @@ namespace Movselex.Core.Models.Actions
         {
             var id = client.MovselexLibrary.FindIdByFileName(_fileName);
             client.NowPlayingInfo.SetId(id);
-            client.MovselexPlaying.Refresh(id);
+            LibraryItem library = LibraryItem.Empty;
+            if (id != -1)
+            {
+                library = client.MovselexLibrary.GetLibraryItem(id);
+            }
+            client.NowPlayingInfo.SetLibrary(library);
+            client.MovselexPlaying.Refresh(library);
         }
     }
 }
