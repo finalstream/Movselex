@@ -22,7 +22,7 @@ namespace Movselex.Core.Models
 
         public string ViewTitle
         {
-            get { return string.IsNullOrEmpty(_viewTitle) ? "" : string.Format("{0} {1}", Properties.Resources.NowPlayingLabel, MovselexUtils.ReplaceTitle(_viewTitle)); }
+            get { return string.IsNullOrEmpty(_viewTitle) ? "" :MovselexUtils.ReplaceTitle(_viewTitle); }
             set
             {
                 if (_viewTitle == value) return;
