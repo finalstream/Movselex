@@ -254,7 +254,7 @@
     <Resource Include="movselex.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FinalstreamCommons\FinalstreamCommons.csproj">
+    <ProjectReference Include="..\..\FinalstreamCommons2\FinalstreamCommons.csproj">
       <Project>{bdf2ba67-4b60-40b5-a039-1bf67bbe25c4}</Project>
       <Name>FinalstreamCommons</Name>
     </ProjectReference>
