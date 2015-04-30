@@ -1,6 +1,4 @@
-﻿using FinalstreamCommons.Models;
-
-namespace Movselex.Core.Models.Actions
+﻿namespace Movselex.Core.Models.Actions
 {
     internal class UpdateLibraryAction : MovselexProgressAction
     {

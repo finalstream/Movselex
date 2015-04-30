@@ -5,7 +5,7 @@ namespace Movselex.Core.Models
 {
 
 // ReSharper disable once InconsistentNaming
-    internal class SQLBuilder
+    internal class MovselexSQLBuilder
     {
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using FinalstreamCommons.Models;
+using FinalstreamCommons.Database;
 
 namespace Movselex.Core.Models
 {

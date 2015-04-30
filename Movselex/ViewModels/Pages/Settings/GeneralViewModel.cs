@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Windows.Forms;
-using FinalstreamCommons.Models;
+using FinalstreamCommons.Frameworks;
 using FinalstreamCommons.Utils;
 using Livet;
 using Livet.Commands;
@@ -69,8 +69,8 @@ namespace Movselex.ViewModels.Pages.Settings
 
         public GeneralViewModel()
         {
-            _players = new DispatcherCollection<DisplayableStringItem>(DispatcherHelper.UIDispatcher);
-            _players.Add(new DisplayableStringItem("mpc", "Media General Classic"));
+            _players = new DispatcherCollection<DisplayableItem<string>>(DispatcherHelper.UIDispatcher);
+            _players.Add(new DisplayableItem<string>("mpc", "Media General Classic"));
             _screens = new DispatcherCollection<DisplayableItem<int>>(DispatcherHelper.UIDispatcher);
             var i = 1;
             foreach (Screen screen in Screen.AllScreens)
@@ -82,9 +82,9 @@ namespace Movselex.ViewModels.Pages.Settings
 
         #region Players変更通知プロパティ
 
-        private DispatcherCollection<DisplayableStringItem> _players;
+        private DispatcherCollection<DisplayableItem<string>> _players;
 
-        public DispatcherCollection<DisplayableStringItem> Players
+        public DispatcherCollection<DisplayableItem<string>> Players
         {
             get { return _players; }
             set

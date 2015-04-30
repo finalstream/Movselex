@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Annotations;
-using FinalstreamCommons.Models;
+using FinalstreamCommons.Database;
+using FinalstreamCommons.Database.SQLiteFunctions;
+using Movselex.Core.Models.SQLiteFunctions;
 using Movselex.Core.Resources;
 
 namespace Movselex.Core.Models
@@ -15,7 +18,7 @@ namespace Movselex.Core.Models
     internal class MovselexDatabaseAccessor : DatabaseAccessor, IMovselexDatabaseAccessor
     {
 
-        private SQLBuilder _sqlBuilder;
+        private MovselexSQLBuilder _sqlBuilder;
 
         private string _lastLibrarySelectSQL;
 
@@ -30,7 +33,7 @@ namespace Movselex.Core.Models
         {
             _appConfig = appConfig;
             ChangeDatabase(_appConfig.SelectDatabase);
-            _sqlBuilder = new SQLBuilder();
+            _sqlBuilder = new MovselexSQLBuilder();
         }
 
         /// <summary>
@@ -53,7 +56,21 @@ namespace Movselex.Core.Models
         public void ChangeDatabase(string databaseName)
         {
             DatabaseName = databaseName;
-            SqlExecuter = MovselexSQLExecuterFactory.Create(databaseName);
+
+            var databaseDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                ApplicationDefinitions.DatabaseDirectory);
+
+            var databaseFilePath = Path.Combine(databaseDirectory, string.Format("{0}.db", databaseName));
+
+            SqlExecuter = SQLExecuterFactory.Create(databaseFilePath,
+                Path.Combine(databaseDirectory, "blank.movselexdatabase"),
+                new[]
+                {
+                    typeof (SumStringSQLiteFunction),
+                    typeof (GetFileSizeSQLiteFunction),
+                    typeof (IsMatchMigemoSQLiteFunction),
+                    typeof (GetDirectoryPathSQLiteFunction)
+                });
             //_lastLibrarySelectSQL = SQLResource.SelectLibraryList;
         }
 
@@ -256,7 +273,7 @@ namespace Movselex.Core.Models
             foreach (var keyword in keywords)
             {
                 if (keywordCond.Length > 0) keywordCond.Append(" OR ");
-                keywordCond.Append(string.Format(" lower(TITLE) LIKE '%{0}%'", SQLBuilder.EscapeSQL(keyword.ToLower())));
+                keywordCond.Append(string.Format(" lower(TITLE) LIKE '%{0}%'", MovselexSQLBuilder.EscapeSQL(keyword.ToLower())));
             }
             var sql = string.Format("SELECT ID, TITLE  FROM MOVLIST WHERE GID IS NULL AND ({0})", keywordCond.ToString());
             return SqlExecuter.Query<LibraryItem>(sql);

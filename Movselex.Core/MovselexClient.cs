@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using FinalstreamCommons.Collections;
-using FinalstreamCommons.Models;
+using FinalstreamCommons.Frameworks;
 using Livet;
 using Movselex.Core.Models;
 using Movselex.Core.Models.Actions;

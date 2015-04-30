@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using FinalstreamCommons.Models;
+using FinalstreamCommons.Frameworks;
 
 namespace Movselex.Core.Models.Actions
 {

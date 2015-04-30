@@ -13,7 +13,6 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using FinalstreamCommons.Extentions;
-using FinalstreamCommons.Models;
 using FinalstreamCommons.Utils;
 using FinalstreamUIComponents.Models;
 using FinalstreamUIComponents.Views;

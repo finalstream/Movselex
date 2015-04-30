@@ -1,5 +1,5 @@
 ﻿using System;
-using FinalstreamCommons.Models;
+using FinalstreamCommons.Frameworks;
 using NLog;
 
 namespace Movselex.Core.Models.Actions

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.IO;
-using FinalstreamCommons.Models.Libraries;
+using FinalstreamCommons.Libraries;
 
 namespace Movselex.Core.Models.SQLiteFunctions
 {

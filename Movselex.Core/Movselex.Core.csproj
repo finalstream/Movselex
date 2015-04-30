@@ -124,7 +124,6 @@
     <Compile Include="Models\PlayerInfoGetter.cs" />
     <Compile Include="Models\PlayerMediaCrawler.cs" />
     <Compile Include="Models\MovselexGroup.cs" />
-    <Compile Include="Models\MovselexSQLExecuterFactory.cs" />
     <Compile Include="Models\MovselexAppConfig.cs" />
     <Compile Include="Models\MovselexFiltering.cs" />
     <Compile Include="Models\MovselexLibrary.cs" />
@@ -133,7 +132,7 @@
     <Compile Include="Models\PlayingItem.cs" />
     <Compile Include="Models\ProgressInfo.cs" />
     <Compile Include="Models\RatingType.cs" />
-    <Compile Include="Models\SQLBuilder.cs" />
+    <Compile Include="Models\MovselexSQLBuilder.cs" />
     <Compile Include="Models\SQLiteFunctions\IsMatchMigemoSQLiteFunction.cs" />
     <Compile Include="MovselexClient.cs" />
     <Compile Include="MovselexClientFactory.cs" />
