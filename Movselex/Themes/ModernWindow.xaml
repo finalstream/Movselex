@@ -14,7 +14,7 @@
     <Style x:Key="ContentRootEx" TargetType="FrameworkElement">
         <Setter Property="Margin" Value="{StaticResource ContentMarginEx}" />
     </Style>
-
+    
     <Style x:Key="ModernWindowEx" TargetType="mui:ModernWindow" BasedOn="{StaticResource {x:Type mui:ModernWindow}}" >
         <Setter Property="Padding" Value="8" />
         <Setter Property="IsTitleVisible" Value="True" />

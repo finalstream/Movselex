@@ -585,7 +585,7 @@ namespace Movselex.ViewModels
 
             
 
-            if (result == false || !inputTextContent.IsModify) return;
+            if (result == false) return;
 
             var input = inputTextContent.InputParamDictionary;
 

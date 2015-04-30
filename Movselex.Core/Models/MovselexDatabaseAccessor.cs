@@ -285,7 +285,7 @@ namespace Movselex.Core.Models
 
         public LibraryItem SelectLibrary(long id)
         {
-            return SqlExecuter.Query<LibraryItem>(SQLResource.SelectLibraryList).FirstOrDefault();
+            return SqlExecuter.Query<LibraryItem>(SQLResource.SelectLibraryList + " WHERE PL.ID = @Id", new {Id = id}).FirstOrDefault();
         }
     }
 }
