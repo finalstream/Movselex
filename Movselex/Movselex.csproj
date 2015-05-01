@@ -260,7 +260,7 @@
       <Project>{bdf2ba67-4b60-40b5-a039-1bf67bbe25c4}</Project>
       <Name>FinalstreamCommons</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FinalstreamUIComponents\FinalstreamUIComponents.csproj">
+    <ProjectReference Include="..\..\FinalstreamUIComponents\FinalstreamUIComponents.csproj">
       <Project>{3df18075-0985-4164-8fdd-6ab1736e9b0f}</Project>
       <Name>FinalstreamUIComponents</Name>
     </ProjectReference>

@@ -336,14 +336,14 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
-                    <MenuItem Header="Delete...">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DeleteLibrary" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </MenuItem>
-                </ContextMenu>
+					<MenuItem Header="Delete...">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DeleteLibrary" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</MenuItem>
+				</ContextMenu>
 			</DataGrid.ContextMenu>
 			
 			<i:Interaction.Triggers>
