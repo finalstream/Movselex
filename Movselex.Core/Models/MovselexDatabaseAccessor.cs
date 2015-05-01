@@ -304,5 +304,10 @@ namespace Movselex.Core.Models
         {
             return SqlExecuter.Query<LibraryItem>(SQLResource.SelectLibraryList + " WHERE PL.ID = @Id", new {Id = id}).FirstOrDefault();
         }
+
+        public void DeleteLibrary(long id)
+        {
+            SqlExecuter.Execute(SQLResource.DeleteLibrary, new {Id = id});
+        }
     }
 }

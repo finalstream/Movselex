@@ -36,7 +36,10 @@ namespace Movselex.Core.Models.Actions
             var playing = client.MovselexPlaying;
             var thrower = new MediaPlayerClassicThrower(client.AppConfig);
 
-            if (_mode == Mode.Interrupt) _libraryItems = _libraryItems.Concat(playing.PlayingItems.Select(x=>x.Item));
+            if (_mode == Mode.Interrupt)
+            {
+                _libraryItems = _libraryItems.Concat(playing.GetResumePlayingItems());
+            }
 
             var libraryItems = _libraryItems as LibraryItem[] ?? _libraryItems.ToArray();
             thrower.Throw(libraryItems.Select(x => x.FilePath));

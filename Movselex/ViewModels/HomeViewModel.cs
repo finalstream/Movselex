@@ -10,6 +10,7 @@ using System.Reactive.Subjects;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using FinalstreamCommons.Extentions;
@@ -597,14 +598,30 @@ namespace Movselex.ViewModels
         public void UnGroup()
         {
 
-            var SelectLibraries = Libraries.Where(x => x.IsSelected).Select(x=>x.Model).ToArray();
-            if (!SelectLibraries.Any()) return;
+            var selectLibraries = Libraries.Where(x => x.IsSelected).Select(x=>x.Model).ToArray();
+            if (!selectLibraries.Any()) return;
 
             var result = ModernDialog.ShowMessage(string.Format("{0}のグループを解除します。よろしいですか？",
-                SelectLibraries.Count() == 1 ? SelectLibraries.Single().Title : "選択したアイテム"), "Question?", MessageBoxButton.YesNo);
+                selectLibraries.IsSingle() ? selectLibraries.Single().Title :  string.Format("選択した{0}つのアイテム", selectLibraries.Count())), DialogUtils.MessageTitleQuestion, MessageBoxButton.YesNo);
 
-            if (result == MessageBoxResult.Yes) _client.UnGroupLibrary(SelectLibraries);
+            if (result == MessageBoxResult.Yes) _client.UnGroupLibrary(selectLibraries);
 
+        }
+
+        public void DeleteLibrary()
+        {
+            var selectLibraries = Libraries.Where(x => x.IsSelected).Select(x=>x.Model).ToArray();
+            var dlg = new ModernDialog() { Content = string.Format("{0}を削除します。よろしいですか？?",
+                selectLibraries.IsSingle() ? selectLibraries.Single().Title : string.Format("選択した{0}つのアイテム", selectLibraries.Count())), Title = DialogUtils.MessageTitleQuestion, MinHeight = 0};
+            var yes = dlg.YesButton;
+            yes.Content = "yes(with file)";
+            var ok = dlg.OkButton;
+            ok.Content = "yes(only libaray)";
+            dlg.Buttons = new Button[] { yes, ok, dlg.NoButton };
+            var result = dlg.ShowDialog();
+            if (result == false) return;
+
+            _client.DeleteLibrary(selectLibraries, dlg.MessageBoxResult == MessageBoxResult.Yes);
         }
 
         protected override void Dispose(bool disposing)

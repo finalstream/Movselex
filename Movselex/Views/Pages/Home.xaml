@@ -336,7 +336,14 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
-				</ContextMenu>
+                    <MenuItem Header="Delete...">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DeleteLibrary" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </MenuItem>
+                </ContextMenu>
 			</DataGrid.ContextMenu>
 			
 			<i:Interaction.Triggers>
@@ -408,10 +415,10 @@
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 			</Button>
-            <Button Grid.Column="2" Margin="5,5,0,5">
+			<Button Grid.Column="2" Margin="5,5,0,5">
 				<!-- Your vector graphics here -->
-                <ContentControl Style="{StaticResource icon}" Content="{StaticResource icon-refresh}" Width="32" Height="32" Margin="-10,-10,-10,-12" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                <i:Interaction.Triggers>
+				<ContentControl Style="{StaticResource icon}" Content="{StaticResource icon-refresh}" Width="32" Height="32" Margin="-10,-10,-10,-12" VerticalAlignment="Center" HorizontalAlignment="Center" />
+				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="Click">
 						<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="UpdateLibrary"/>
 					</i:EventTrigger>

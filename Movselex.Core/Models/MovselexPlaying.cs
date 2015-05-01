@@ -20,6 +20,12 @@ namespace Movselex.Core.Models
             PlayingItems = new ObservableCollectionEx<PlayingItem>();
         }
 
+        public IEnumerable<LibraryItem> GetResumePlayingItems()
+        {
+            var playings = PlayingItems.Select(x => x.Item).ToArray();
+            return playings.Concat(_playingList.Select(x=>x.Item).Except(playings));
+        }
+
         public void Reset(IEnumerable<LibraryItem> libraryItems)
         {
             PlayingItems.Reset(ConvertPlayingItems(libraryItems));

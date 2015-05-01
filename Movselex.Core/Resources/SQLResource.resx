@@ -504,4 +504,9 @@ SET RATING = @Rating
 WHERE ID = @Id</value>
     <comment>レーティング更新</comment>
   </data>
+  <data name="DeleteLibrary" xml:space="preserve">
+    <value>DELETE FROM MOVLIST 
+WHERE ID = @Id</value>
+    <comment>ライブラリ削除</comment>
+  </data>
 </root>

@@ -61,6 +61,16 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   DELETE FROM MOVLIST 
+        ///WHERE ID = @Id に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DeleteLibrary {
+            get {
+                return ResourceManager.GetString("DeleteLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   DELETE FROM PLAYINGLIST に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DeletePlayingList {

@@ -334,6 +334,11 @@ namespace Movselex.Core
             SaveConfig(_appConfigFilePath, AppConfig);
         }
 
+        public void DeleteLibrary(LibraryItem[] selectLibraries, bool isDeleteFile)
+        {
+            _actionExecuter.Post(new DeleteLibraryAction(selectLibraries, isDeleteFile));
+        }
+
         #region Dispose
 
         // Flag: Has Dispose already been called?

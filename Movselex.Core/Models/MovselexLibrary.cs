@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FinalstreamCommons.Extentions;
+using FinalstreamCommons.Utils;
 using Livet;
 using NLog;
 
@@ -231,6 +232,18 @@ namespace Movselex.Core.Models
                     library.UnGroup();
                 }
                 tran.Commit();
+            }
+        }
+
+        public void Delete(LibraryItem libraryItem, bool isDeleteFile)
+        {
+            _databaseAccessor.DeleteLibrary(libraryItem.Id);
+            LibraryItems.Remove(libraryItem);
+            _log.Info("Deleted Library. Id:{0} Title:{1} FilePath:{2}", libraryItem.Id, libraryItem.Title, libraryItem.FilePath);
+            if (isDeleteFile)
+            {
+                FileUtils.MoveRecycleBin(libraryItem.FilePath);
+                _log.Info("Deleted File. FilePath:{0}", libraryItem.FilePath);
             }
         }
     }

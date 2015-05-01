@@ -101,5 +101,6 @@ namespace Movselex.Core
         void ModifyGroup(GroupItem group, string groupName, string keyword);
         void UnGroupLibrary(LibraryItem[] selectLibraries);
         void SaveConfig();
+        void DeleteLibrary(LibraryItem[] selectLibraries, bool isDeleteFile);
     }
 }
