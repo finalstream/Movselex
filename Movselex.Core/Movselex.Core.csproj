@@ -88,6 +88,8 @@
     <Compile Include="Models\Actions\ModifyIsFavoriteAction.cs" />
     <Compile Include="Models\Actions\ModifyIsPlayedAction.cs" />
     <Compile Include="Models\Actions\MoveGroupDirectoryAction.cs" />
+    <Compile Include="Models\Actions\MovselexSchemaUpgradeAction.cs" />
+    <Compile Include="Models\Actions\MovselexSchemaUpgradeV1Action.cs" />
     <Compile Include="Models\Actions\PlayMonitoringAction.cs" />
     <Compile Include="Models\Actions\MovselexProgressAction.cs" />
     <Compile Include="Models\Actions\RegistFileAction.cs" />
@@ -99,7 +101,7 @@
     <Compile Include="Models\IProgressInfo.cs" />
     <Compile Include="Models\Actions\EmptyAction.cs" />
     <Compile Include="Models\Actions\InitializeAction.cs" />
-    <Compile Include="Models\Actions\MovselexActionBase.cs" />
+    <Compile Include="Models\Actions\MovselexAction.cs" />
     <Compile Include="Models\Actions\PlayerMediaCrawlerAction.cs" />
     <Compile Include="Models\Actions\RefreshAction.cs" />
     <Compile Include="Models\Actions\ShuffleLibraryAction.cs" />

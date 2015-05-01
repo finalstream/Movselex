@@ -1,6 +1,8 @@
-﻿namespace Movselex.Core.Models
+﻿using FinalstreamCommons.Frameworks;
+
+namespace Movselex.Core.Models
 {
-    public interface IMovselexAppConfig
+    public interface IMovselexAppConfig : IAppConfig
     {
         string MpcExePath { get; }
         int ScreenNo { get; }

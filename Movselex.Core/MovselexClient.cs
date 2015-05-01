@@ -12,7 +12,7 @@ using NLog;
 
 namespace Movselex.Core
 {
-    internal class MovselexClient : CoreClient, IMovselexClient
+    internal class MovselexClient : AppClient, IMovselexClient
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -99,7 +99,8 @@ namespace Movselex.Core
 
         
         public INowPlayingInfo NowPlayingInfo { get; private set; }
-        public MovselexAppConfig AppConfig { get; private set; }
+        
+        
         public ObservableCollection<string> Databases { get; private set; }
         public MovselexFiltering MovselexFiltering { get; private set; }
         public MovselexLibrary MovselexLibrary { get; private set; }
@@ -109,6 +110,19 @@ namespace Movselex.Core
         
         public IProgressInfo ProgressInfo { get; private set; }
 
+        private MovselexAppConfig _appConfig;
+        public new MovselexAppConfig AppConfig
+        {
+            get
+            {
+                return _appConfig;
+            }
+            private set
+            {
+                _appConfig = value;
+                base.AppConfig = value;
+            }
+        }
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
@@ -133,6 +147,8 @@ namespace Movselex.Core
             ProgressInfo = new ProgressInfo();
         }
 
+        
+
         /// <summary>
         /// 初期化します。
         /// </summary>
@@ -156,12 +172,21 @@ namespace Movselex.Core
             });
             _backgroundWorker.Start();
 
+            UpgradeSchema();
             
             Initialize(AppConfig.SelectDatabase);
             
         }
 
-        
+        /// <summary>
+        /// スキーマをアップグレードします。
+        /// </summary>
+        /// <remarks>アップグレードの必要がない場合は行いません。</remarks>
+        private void UpgradeSchema()
+        {
+            
+        }
+
 
         /// <summary>
         /// 終了します。
@@ -346,7 +371,7 @@ namespace Movselex.Core
         
 
         // Public implementation of Dispose pattern callable by consumers.
-        public void Dispose()
+        public override void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);

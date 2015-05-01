@@ -1,6 +1,6 @@
 namespace Movselex.Core.Models.Actions
 {
-    internal class ModifyIsCompleteAction : MovselexActionBase
+    internal class ModifyIsCompleteAction : MovselexAction
     {
         private readonly GroupItem _group;
         public ModifyIsCompleteAction(GroupItem group)

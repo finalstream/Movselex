@@ -2,7 +2,7 @@
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class ModifyIsFavoriteAction : MovselexActionBase
+    internal class ModifyIsFavoriteAction : MovselexAction
     {
         private readonly LibraryItem _libraryItem;
         private readonly GroupItem _groupItem;

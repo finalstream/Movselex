@@ -2,7 +2,7 @@ using System;
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class ModifyGroupAction : MovselexActionBase
+    internal class ModifyGroupAction : MovselexAction
     {
         private readonly GroupItem _group;
         private readonly string _groupName;

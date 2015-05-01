@@ -2,7 +2,7 @@
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class DeleteLibraryAction : MovselexActionBase
+    internal class DeleteLibraryAction : MovselexAction
     {
 
         private LibraryItem[] _selectLibraryItems;

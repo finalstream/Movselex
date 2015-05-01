@@ -11,7 +11,7 @@ using NLog;
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class RefreshAction : MovselexActionBase
+    internal class RefreshAction : MovselexAction
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
         private readonly FilteringMode _filteringMode;

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FinalstreamCommons.Collections;
+using FinalstreamCommons.Frameworks;
 using Movselex.Core.Models;
 
 namespace Movselex.Core
 {
-    public interface IMovselexClient : IDisposable
+    public interface IMovselexClient : IAppClient
     {
         /// <summary>
         ///     フィルタリング情報。
@@ -33,7 +34,7 @@ namespace Movselex.Core
         /// <summary>
         ///     アプリ設定。
         /// </summary>
-        MovselexAppConfig AppConfig { get; }
+        new MovselexAppConfig AppConfig { get; }
 
         ObservableCollection<string> Databases { get; }
 

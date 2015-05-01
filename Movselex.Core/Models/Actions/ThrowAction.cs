@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Movselex.Core.Models.Actions
 {
-    class ThrowAction : MovselexActionBase
+    class ThrowAction : MovselexAction
     {
         enum Mode
         {

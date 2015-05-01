@@ -2,7 +2,7 @@ using System;
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class UnGroupAction : MovselexActionBase
+    internal class UnGroupAction : MovselexAction
     {
 
         private readonly LibraryItem[] _libraries;

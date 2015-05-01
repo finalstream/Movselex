@@ -1,6 +1,6 @@
 ﻿namespace Movselex.Core.Models.Actions
 {
-    internal class ModifyIsPlayedAction : MovselexActionBase
+    internal class ModifyIsPlayedAction : MovselexAction
     {
         private readonly LibraryItem _libraryItem;
 

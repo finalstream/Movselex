@@ -1,6 +1,6 @@
 namespace Movselex.Core.Models.Actions
 {
-    internal class FilteringLibraryAction : MovselexActionBase
+    internal class FilteringLibraryAction : MovselexAction
     {
 
         private readonly string _filteringText;

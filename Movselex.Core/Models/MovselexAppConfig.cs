@@ -6,12 +6,19 @@ using Livet;
 
 namespace Movselex.Core.Models
 {
-    public class MovselexAppConfig : NotificationObject, IAppConfig, IMovselexAppConfig
+    public class MovselexAppConfig : NotificationObject, IMovselexAppConfig
     {
 
         public string AppVersion { get; set; }
-        
+
+        public int SchemaVersion { get; set; }
+
         public Rect WindowBounds { get; set; }
+
+        public void UpdateSchemaVersion(int version)
+        {
+            SchemaVersion = version;
+        }
 
         public string PlayerExePath { get; private set; }
 
@@ -92,6 +99,7 @@ namespace Movselex.Core.Models
         public MovselexAppConfig()
         {
             AppVersion = "";
+            SchemaVersion = ApplicationDefinitions.CurrentSchemaVersion;
             WindowBounds = new Rect(100d, 100d, 1100d, 700d);
             PlayerExePath = "";
             ScreenNo = 1;
@@ -109,9 +117,10 @@ namespace Movselex.Core.Models
             MpcExePath = "";
         }
 
-        public MovselexAppConfig(string appVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase,　string selectFiltering, string titleFormat, FilteringMode filteringMode, string mpcExePath)
+        public MovselexAppConfig(string appVersion, int schemaVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, string selectFiltering, string titleFormat, FilteringMode filteringMode, string mpcExePath)
         {
             AppVersion = appVersion;
+            SchemaVersion = schemaVersion;
             WindowBounds = windowBounds;
             PlayerExePath = playerExePath;
             ScreenNo = screenNo;
@@ -130,6 +139,7 @@ namespace Movselex.Core.Models
         {
             // MEMO: PropertyChangedEventをひろうためにめんどーだけどひとつずつ設定する。
             AppVersion = newConfig.AppVersion;
+            SchemaVersion = newConfig.SchemaVersion;
             WindowBounds = newConfig.WindowBounds;
             PlayerExePath = newConfig.PlayerExePath;
             ScreenNo = newConfig.ScreenNo;

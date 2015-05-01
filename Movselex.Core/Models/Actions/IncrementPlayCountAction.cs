@@ -2,7 +2,7 @@ using System;
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class IncrementPlayCountAction : MovselexActionBase
+    internal class IncrementPlayCountAction : MovselexAction
     {
 
         private long _id;

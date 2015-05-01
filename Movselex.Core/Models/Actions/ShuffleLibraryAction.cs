@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Movselex.Core.Models.Actions
 {
-    class ShuffleLibraryAction : MovselexActionBase
+    class ShuffleLibraryAction : MovselexAction
     {
 
         public int LimitNum { get; private set; }

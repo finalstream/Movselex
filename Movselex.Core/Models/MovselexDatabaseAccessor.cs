@@ -64,13 +64,7 @@ namespace Movselex.Core.Models
 
             SqlExecuter = SQLExecuterFactory.Create(databaseFilePath,
                 Path.Combine(databaseDirectory, "blank.movselexdatabase"),
-                new[]
-                {
-                    typeof (SumStringSQLiteFunction),
-                    typeof (GetFileSizeSQLiteFunction),
-                    typeof (IsMatchMigemoSQLiteFunction),
-                    typeof (GetDirectoryPathSQLiteFunction)
-                });
+                ApplicationDefinitions.SupportSQLiteFunctions);
             //_lastLibrarySelectSQL = SQLResource.SelectLibraryList;
         }
 

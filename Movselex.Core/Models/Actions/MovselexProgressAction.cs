@@ -9,7 +9,7 @@ namespace Movselex.Core.Models.Actions
     /// <summary>
     /// 進捗状況をサポートするアクションを表します。
     /// </summary>
-    abstract class MovselexProgressAction : MovselexActionBase
+    abstract class MovselexProgressAction : MovselexAction
     {
         public abstract void InvokeProgress(MovselexClient client);
 

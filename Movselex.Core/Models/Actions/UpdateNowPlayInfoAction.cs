@@ -1,6 +1,6 @@
 namespace Movselex.Core.Models.Actions
 {
-    internal class UpdateNowPlayInfoAction : MovselexActionBase
+    internal class UpdateNowPlayInfoAction : MovselexAction
     {
 
         private readonly string _fileName;

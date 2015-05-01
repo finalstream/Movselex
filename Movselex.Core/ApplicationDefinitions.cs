@@ -1,4 +1,8 @@
-﻿namespace Movselex.Core
+﻿using System;
+using FinalstreamCommons.Database.SQLiteFunctions;
+using Movselex.Core.Models.SQLiteFunctions;
+
+namespace Movselex.Core
 {
     public static class ApplicationDefinitions
     {
@@ -36,5 +40,15 @@
         public const string TimeEmptyString = "00:00";
 
         public const string VideoSizeFormat = "{0}x{1}";
+
+        public const int CurrentSchemaVersion = 1;
+
+        public static readonly Type[] SupportSQLiteFunctions = new[]
+        {
+            typeof (SumStringSQLiteFunction),
+            typeof (GetFileSizeSQLiteFunction),
+            typeof (IsMatchMigemoSQLiteFunction),
+            typeof (GetDirectoryPathSQLiteFunction)
+        };
     }
 }

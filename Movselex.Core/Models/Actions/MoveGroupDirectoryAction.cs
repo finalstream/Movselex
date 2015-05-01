@@ -12,7 +12,7 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class MoveGroupDirectoryAction : MovselexActionBase
+    internal class MoveGroupDirectoryAction : MovselexAction
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 

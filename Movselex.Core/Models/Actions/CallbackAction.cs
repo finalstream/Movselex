@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Movselex.Core.Models.Actions
 {
-    class CallbackAction : MovselexActionBase
+    class CallbackAction : MovselexAction
     {
         private readonly Action _action;
 

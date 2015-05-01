@@ -10,7 +10,7 @@ namespace Movselex.Core.Models.Actions
     /// <summary>
     /// ライブラリをグループに登録します。
     /// </summary>
-    internal class GroupingAction : MovselexActionBase
+    internal class GroupingAction : MovselexAction
     {
         private readonly string _title;
         private readonly string _keyword;
