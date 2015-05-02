@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDefinitions.cs" />
+    <Compile Include="Models\Actions\GetCandidateGroupNameAction.cs" />
     <Compile Include="IMovselexClient.cs" />
     <Compile Include="Models\Actions\CallbackAction.cs" />
     <Compile Include="Models\Actions\DeleteLibraryAction.cs" />

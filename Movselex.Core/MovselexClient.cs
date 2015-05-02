@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using FinalstreamCommons.Collections;
 using FinalstreamCommons.Frameworks;
+using FinalstreamCommons.Frameworks.Actions;
 using Livet;
 using Movselex.Core.Models;
 using Movselex.Core.Models.Actions;
@@ -365,6 +366,13 @@ namespace Movselex.Core
         public void DeleteLibrary(LibraryItem[] selectLibraries, bool isDeleteFile)
         {
             _actionExecuter.Post(new DeleteLibraryAction(selectLibraries, isDeleteFile));
+        }
+
+        public void GetCandidateGroupName(string groupName, Action<IEnumerable<string>> afterAction)
+        {
+            var action = new GetCandidateGroupNameAction(groupName);
+            action.AfterAction = () => { afterAction.Invoke(action.CandidateGroupNames); };
+            _actionExecuter.Post(action);
         }
 
         #region Dispose

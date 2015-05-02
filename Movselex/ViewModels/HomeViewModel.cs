@@ -26,6 +26,7 @@ using Livet.EventListeners;
 using Movselex.Core;
 using Movselex.Core.Models;
 using NLog;
+using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
 using Resources = Movselex.Properties.Resources;
 
@@ -191,7 +192,11 @@ namespace Movselex.ViewModels
             {
                 if (_currentFiltering == value) return;
                 _currentFiltering = value;
-                if(value != null)_client.ChangeFiltering(value.Model);
+                if (value != null)
+                {
+                    SetSearchKeyword("");
+                    _client.ChangeFiltering(value.Model);
+                }
                 RaisePropertyChanged();
             }
         }
@@ -209,7 +214,11 @@ namespace Movselex.ViewModels
             {
                 if (_currentGroup == value) return;
                 _currentGroup = value;
-                if(value != null) _client.ChangeGroup(value.Model);
+                if (value != null)
+                {
+                    SetSearchKeyword("");
+                    _client.ChangeGroup(value.Model);
+                }
                 RaisePropertyChanged();
             }
         }
@@ -522,24 +531,32 @@ namespace Movselex.ViewModels
 
         public void EditGroup()
         {
-            var group = CurrentGroup.Model;
-            var paramDic = new Dictionary<string, InputParam>();
-            paramDic.Add("GroupName", new InputParam("GroupName", group.GroupName));
-            paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", group.Keyword));
-            var inputTextContent = new InputTextContent("グループを編集します。", paramDic);
-            var dlg = new ModernDialog
+            _client.GetCandidateGroupName(CurrentGroup.Model.GroupName, (candidateGroupNames) =>
             {
-                Title = "Edit Group",
-                Content = inputTextContent
-            };
-            dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
-            var result = dlg.ShowDialog();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var group = CurrentGroup.Model;
+                    var paramDic = new Dictionary<string, InputParam>();
+                    paramDic.Add("GroupName", new InputParam("GroupName", group.GroupName, candidateGroupNames));
+                    paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", group.Keyword));
+                    var inputTextContent = new InputTextContent("グループを編集します。", paramDic);
+                    var dlg = new ModernDialog
+                    {
+                        Title = "Edit Group",
+                        Content = inputTextContent
+                    };
+                    dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
+                    var result = dlg.ShowDialog();
 
-            if (result == false || !inputTextContent.IsModify) return;
+                    if (result == false || !inputTextContent.IsModify) return;
 
-            var input = inputTextContent.InputParamDictionary;
+                    var input = inputTextContent.InputParamDictionary;
 
-            _client.ModifyGroup(group, input["GroupName"].Value.ToString(), input["GroupKeyword"].Value.ToString());
+                    _client.ModifyGroup(group, input["GroupName"].Value.ToString(), input["GroupKeyword"].Value.ToString());
+                });
+                
+            });
+            
         }
 
 
@@ -562,7 +579,7 @@ namespace Movselex.ViewModels
 
                 foreach (var title in Libraries.Where(x => x.IsSelected).Select(x => x.Model.Title))
                 {
-                    var words = MovselexUtils.CreateKeywords(title.Replace("-", "").Trim());
+                    var words = MovselexUtils.CreateKeywords(title.Trim());
                     keywordList.AddRange(words);
                 }
 

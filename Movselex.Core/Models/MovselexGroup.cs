@@ -90,7 +90,7 @@ namespace Movselex.Core.Models
             var unGroups = ungroupLibraries
                 .GroupBy(x => Regex.Replace(MovselexUtils.ReplaceTitle(x.Title).Replace(" - ", ""), @"\d+", "").Trim())
                 .Select(x=> new {Key = x.Key, Count = x.Count(), Libraries= x.ToList()}).ToArray();
-            unGroups.DebugWriteJson("UnGroup Keywords");
+            if (unGroups.Any()) unGroups.DebugWriteJson("UnGroup Keywords");
 
             var maxUnGroup = unGroups.FirstOrDefault(x => x.Count == unGroups.Select(xx => xx.Count).Max());
 
