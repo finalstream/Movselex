@@ -624,6 +624,11 @@ namespace Movselex.ViewModels
             _client.DeleteLibrary(selectLibraries, dlg.MessageBoxResult == MessageBoxResult.Yes);
         }
 
+        public void SetSearchKeyword(string keyword)
+        {
+            this.SearchText = keyword;
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

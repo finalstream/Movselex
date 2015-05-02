@@ -101,7 +101,16 @@
 		</Grid.ColumnDefinitions>
 
 		<!-- Header -->
-		<StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" >
+		<StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+			<Border BorderBrush="{DynamicResource Accent}" BorderThickness="1" Padding="3" VerticalAlignment="Center" CornerRadius="2" Margin="5,7,5,5" Visibility="{Binding NowPlayingInfo.Season, Converter={StaticResource StringIsNullOrEmptyToVisibilityConverter}}">
+				<TextBlock Text="{Binding NowPlayingInfo.Season}" >
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="MouseLeftButtonUp">
+							<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="SetSearchKeyword" MethodParameter="{Binding NowPlayingInfo.Season}" />
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</TextBlock>
+			</Border>
 			<TextBlock Text="{Binding NowPlayingInfo.ViewTitle}" Style="{StaticResource Header}" Margin="5,5,5,5"></TextBlock>
 		</StackPanel>
 		<TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding NowPlayingInfo.ViewPlayTime}" Style="{StaticResource Header}" Margin="10,5,0,5" HorizontalAlignment="Right"></TextBlock>
@@ -136,7 +145,7 @@
 			<ContentControl Grid.Column="2" Style="{StaticResource icon}" Content="{StaticResource icon-magnify}" Width="48" Height="48"  />
 			<TextBox Grid.Column="3" Height="25" Width="Auto" Margin="-10,0,5,0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
 				<i:Interaction.Behaviors>
-					<behaviors:TextBoxPlaceholderBehavior Placeholder="Search Library" />
+					<behaviors:TextBoxPlaceholderBehavior Placeholder="Search Library" Foreground="{DynamicResource InputText}" />
 				</i:Interaction.Behaviors>
 			</TextBox>
 			<Label Width="70" Grid.Column="4" Content="{Binding LibraryCount}" ContentStringFormat="{}{0} items" Margin="10,0,0,0" VerticalAlignment="Center"></Label>

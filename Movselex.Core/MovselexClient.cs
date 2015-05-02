@@ -133,8 +133,9 @@ namespace Movselex.Core
             : base(executingAssembly)
         {
             _appConfigFilePath = appConfigFilePath;
-            
-            AppConfig = new MovselexAppConfig();
+
+            AppConfig = MovselexAppConfig.Empty;
+
             _actionExecuter = new ActionExecuter<MovselexClient>(this);
             _databaseAccessor = new MovselexDatabaseAccessor(AppConfig);
             MovselexFiltering = new MovselexFiltering();
@@ -154,23 +155,9 @@ namespace Movselex.Core
         /// </summary>
         protected override void InitializeCore()
         {
-            
+
             AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
             AppConfig.AppVersion = ExecutingAssemblyInfo.FileVersion;
-
-            var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
-            var playMonitoringAction = new PlayMonitoringAction(this.NowPlayingInfo);
-
-            playerMediaCrawlerAction.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
-            playMonitoringAction.CountUpTimePlayed += (sender, l) => _actionExecuter.Post(new IncrementPlayCountAction(l));
-            playMonitoringAction.SwitchTitle += (sender, s) => _actionExecuter.Post(new UpdateNowPlayInfoAction(s));
-
-            _backgroundWorker = new BackgroundWorker(new BackgroundAction[]
-            {
-                playerMediaCrawlerAction, 
-                playMonitoringAction
-            });
-            _backgroundWorker.Start();
 
             UpgradeSchema();
             
@@ -184,7 +171,7 @@ namespace Movselex.Core
         /// <remarks>アップグレードの必要がない場合は行いません。</remarks>
         private void UpgradeSchema()
         {
-            
+            _actionExecuter.Post(new MovselexSchemaUpgradeV1Action());
         }
 
 
@@ -266,10 +253,26 @@ namespace Movselex.Core
         {
             _databaseAccessor.ChangeDatabase(databaseName);
             var action = new InitializeAction();
-            action.AfterAction = () => OnInitialized(EventArgs.Empty);
+            action.AfterAction = () =>
+            {
+                // 初期化完了後
+                var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
+                var playMonitoringAction = new PlayMonitoringAction(this.NowPlayingInfo);
+
+                playerMediaCrawlerAction.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
+                playMonitoringAction.CountUpTimePlayed += (sender, l) => _actionExecuter.Post(new IncrementPlayCountAction(l));
+                playMonitoringAction.SwitchTitle += (sender, s) => _actionExecuter.Post(new UpdateNowPlayInfoAction(s));
+
+                _backgroundWorker = new BackgroundWorker(new BackgroundAction[]
+                {
+                    playerMediaCrawlerAction, 
+                    playMonitoringAction
+                });
+                _backgroundWorker.Start();
+                OnInitialized(EventArgs.Empty);
+            };
             _actionExecuter.Post(action);
         }
-
 
         public void ChangeDatabase(string databaseName)
         {

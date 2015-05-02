@@ -3,11 +3,33 @@ using System.Windows;
 using System.Windows.Media;
 using FinalstreamCommons.Frameworks;
 using Livet;
+using Newtonsoft.Json;
 
 namespace Movselex.Core.Models
 {
     public class MovselexAppConfig : NotificationObject, IMovselexAppConfig
     {
+
+        public static MovselexAppConfig Empty = new MovselexAppConfig()
+        {
+            AppVersion = "",
+            SchemaVersion = ApplicationDefinitions.CurrentSchemaVersion,
+            WindowBounds = new Rect(100d, 100d, 1100d, 700d),
+            PlayerExePath = "",
+            ScreenNo = 1,
+            IsFullScreen = false,
+            SupportExtentions = new[] { ".avi",".mpg",".mp4",".mkv",".flv",".wmv" },
+            LimitNum = 30,
+            MoveBaseDirectory = "",
+            SelectDatabase = "library",
+            SelectFiltering = "ALL MOVIE",
+            TitleFormat = "%TITLE% - %NO%",
+            LibraryMode = LibraryMode.Normal,
+            AccentColor = Color.FromRgb(0x1b, 0xa1, 0xe2),
+            SelectedTheme = "light",
+            FilteringMode = FilteringMode.SQL,
+            MpcExePath = ""
+        };
 
         public string AppVersion { get; set; }
 
@@ -26,7 +48,7 @@ namespace Movselex.Core.Models
 
         public bool IsFullScreen { get; set; }
 
-        public string[] SupportExtentions { get; private set; }
+        public string[] SupportExtentions { get; set; }
 
         public int LimitNum { get; set; }
 
@@ -96,6 +118,7 @@ namespace Movselex.Core.Models
 
         #endregion
 
+        /*
         public MovselexAppConfig()
         {
             AppVersion = "";
@@ -115,7 +138,7 @@ namespace Movselex.Core.Models
             SelectedTheme = "light";
             FilteringMode = FilteringMode.SQL;
             MpcExePath = "";
-        }
+        }*/
 
         public MovselexAppConfig(string appVersion, int schemaVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, string selectFiltering, string titleFormat, FilteringMode filteringMode, string mpcExePath)
         {
@@ -134,7 +157,11 @@ namespace Movselex.Core.Models
             FilteringMode = filteringMode;
             MpcExePath = mpcExePath;
         }
-        
+
+        public MovselexAppConfig()
+        {
+        }
+
         public void Update(MovselexAppConfig newConfig)
         {
             // MEMO: PropertyChangedEventをひろうためにめんどーだけどひとつずつ設定する。
@@ -155,6 +182,7 @@ namespace Movselex.Core.Models
             SelectedTheme = newConfig.SelectedTheme;
             FilteringMode = newConfig.FilteringMode;
             MpcExePath = newConfig.MpcExePath;
+            
 
         }
     }

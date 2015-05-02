@@ -41,8 +41,11 @@ namespace Movselex.Core
 
         public const string VideoSizeFormat = "{0}x{1}";
 
+        public const string SeasonFormat = "{0} {1}";
+
         public const int CurrentSchemaVersion = 1;
 
+        // ReSharper disable once InconsistentNaming
         public static readonly Type[] SupportSQLiteFunctions = new[]
         {
             typeof (SumStringSQLiteFunction),

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Annotations;
 using FinalstreamCommons.Database;
 using FinalstreamCommons.Database.SQLiteFunctions;
+using FinalstreamCommons.Utils;
 using Movselex.Core.Models.SQLiteFunctions;
 using Movselex.Core.Resources;
 
@@ -32,7 +33,7 @@ namespace Movselex.Core.Models
         public MovselexDatabaseAccessor(MovselexAppConfig appConfig)
         {
             _appConfig = appConfig;
-            ChangeDatabase(_appConfig.SelectDatabase);
+            //ChangeDatabase(_appConfig.SelectDatabase);
             _sqlBuilder = new MovselexSQLBuilder();
         }
 
@@ -119,7 +120,8 @@ namespace Movselex.Core.Models
                     AddDate = DateTime.Now.ToString(ApplicationDefinitions.SqliteDateTimeFormat),
                     LastPlayDate = (string)null,
                     Played = 0,
-                    VideoSize = mediaFile.VideoSize
+                    VideoSize = mediaFile.VideoSize,
+                    Season = string.Format(ApplicationDefinitions.SeasonFormat, mediaFile.UpdateDateTime.Year, DateUtils.GetSeasonString(mediaFile.UpdateDateTime))
                 });
 
             mediaFile.UpdateId(SqlExecuter.Query<long>(SQLResource.SelectLastInsertRowid).SingleOrDefault());

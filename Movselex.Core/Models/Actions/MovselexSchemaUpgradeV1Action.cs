@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FinalstreamCommons.Database;
+using FinalstreamCommons.Utils;
 using NLog;
 
 namespace Movselex.Core.Models.Actions
@@ -26,7 +27,16 @@ namespace Movselex.Core.Models.Actions
                 {
                     sqlExecuter.Execute("ALTER TABLE MOVLIST ADD COLUMN SEASON TEXT");
 
+                    var libraries = sqlExecuter.Query<LibraryItem>("SELECT * FROM MOVLIST");
 
+                    foreach (var library in libraries)
+                    {
+                        var season = string.Format(ApplicationDefinitions.SeasonFormat, library.Date.Year, DateUtils.GetSeasonString(library.Date));
+
+                        sqlExecuter.Execute("UPDATE MOVLIST SET SEASON = @Season WHERE ID = @Id", new { Id = library.Id, Season = season });
+                    }
+
+                    tran.Commit();
                 }
                 catch (SQLiteException ex)
                 {

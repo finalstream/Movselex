@@ -27,7 +27,8 @@
 
         double PlayTimeSeconds { get; }
 
-        LibraryItem Library { get; }
+        string Season { get; }
+
 
         /// <summary>
         /// 更新します。

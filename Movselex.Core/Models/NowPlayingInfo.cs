@@ -101,6 +101,22 @@ namespace Movselex.Core.Models
             }
         }
 
+        #region Season変更通知プロパティ
+
+        private string _season;
+
+        public string Season
+        {
+            get { return _season; }
+            set
+            {
+                if (_season == value) return;
+                _season = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 更新します。
@@ -133,6 +149,7 @@ namespace Movselex.Core.Models
         public void SetLibrary(LibraryItem library)
         {
             Library = library;
+            Season = library.Season;
         }
     }
 }

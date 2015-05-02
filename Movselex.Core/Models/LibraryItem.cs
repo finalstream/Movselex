@@ -276,6 +276,23 @@ namespace Movselex.Core.Models
 
         #endregion
 
+        #region Season変更通知プロパティ
+
+        private string _season;
+
+        public string Season
+        {
+            get { return _season; }
+            set
+            {
+                if (_season == value) return;
+                _season = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         #region IsSelected変更通知プロパティ
 
         private bool _isSelected;

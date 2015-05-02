@@ -115,7 +115,8 @@ namespace Movselex.Core.Resources {
         ///  LASTPLAYDATE,
         ///  DRIVE,
         ///  FILESIZE,
-        ///  PLAYED
+        ///  PLAYED,
+        ///  SEASON
         ///) VALUES (
         ///  @FilePath,
         ///  @Title,
@@ -134,7 +135,8 @@ namespace Movselex.Core.Resources {
         ///  @LastPlayDate,
         ///  SUBSTR(@FilePath,1,1),
         ///  @Filesize,
-        ///  @Played
+        ///  @Played,
+        ///  @Season
         ///) に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string InsertLibrary {
@@ -281,7 +283,8 @@ namespace Movselex.Core.Resources {
         ///  PLAYCOUNT,
         ///  ADDDATE,
         ///  LASTPLAYDATE,
-        ///  GPL.GID
+        ///  GPL.GID,
+        ///  SEASON
         ///FROM MOVLIST PL 
         ///LEFT JOIN MOVGROUPLIST GPL
         ///ON PL.GID = GPL.GID に類似しているローカライズされた文字列を検索します。

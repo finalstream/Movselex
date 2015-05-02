@@ -25,7 +25,7 @@ namespace Movselex.Core.Models
                 // フィルタリング
                 var filterString = libCondition.FilteringText.ToLower();
                 sb.Append(" AND ");
-                var normalFilter = "lower(IFNULL(FILEPATH,'') || IFNULL(TITLE,'') || IFNULL(GPL.GROUPNAME,'')) LIKE '%" +
+                var normalFilter = "lower(IFNULL(FILEPATH,'') || IFNULL(TITLE,'') || IFNULL(GPL.GROUPNAME,'') || IFNULL(SEASON,'')) LIKE '%" +
                         EscapeSQL(filterString) + "%' ";
                 if (filterString.Length < 3)
                 {
