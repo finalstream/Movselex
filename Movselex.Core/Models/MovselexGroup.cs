@@ -70,6 +70,7 @@ namespace Movselex.Core.Models
 
                 if (group != null)
                 {
+                    // 同じキーワードのグループが見つかったら情報を更新して抜ける
                     var gid = group.GID;
 
                     // グループのレーティングを取得
@@ -80,7 +81,7 @@ namespace Movselex.Core.Models
                     // グループ最終更新日時更新
                     _databaseAccessor.UpdateGroupLastUpdateDatetime(gid);
 
-                    break;
+                    return;
                 }
             }
 
@@ -88,7 +89,7 @@ namespace Movselex.Core.Models
             var ungroupLibraries = _databaseAccessor.SelectUnGroupingLibrary(keywords);
 
             var unGroups = ungroupLibraries
-                .GroupBy(x => Regex.Replace(MovselexUtils.ReplaceTitle(x.Title).Replace(" - ", ""), @"\d+", "").Trim())
+                .GroupBy(x => Regex.Replace(MovselexUtils.ReplaceTitle(x.Title).Replace(" - ", " "), @"\d+", "").Trim())
                 .Select(x=> new {Key = x.Key, Count = x.Count(), Libraries= x.ToList()}).ToArray();
             if (unGroups.Any()) unGroups.DebugWriteJson("UnGroup Keywords");
 
@@ -98,14 +99,18 @@ namespace Movselex.Core.Models
 
             if (maxUnGroup != null)
             {
+                var groupNameandKeyword = maxUnGroup.Key.TrimEnd();
+
+                //if (groupNameandKeyword.EndsWith(" -")) groupNameandKeyword = StringUtils.ReplaceLastOnce(groupNameandKeyword, " -", "");
+
                 // グループを登録する
-                var gid = RegistGroup(maxUnGroup.Key, maxUnGroup.Key);
-                JoinGroup(maxUnGroup.Key, maxUnGroup.Key, maxUnGroup.Libraries);
+                var gid = RegistGroup(groupNameandKeyword, groupNameandKeyword);
+                JoinGroup(groupNameandKeyword, groupNameandKeyword, maxUnGroup.Libraries);
 
                 // グループのレーティングを取得
                 var groupRating = GetGroupRating(gid);
 
-                mediaFile.UpdateGroup(gid, maxUnGroup.Key, maxUnGroup.Key, groupRating);
+                mediaFile.UpdateGroup(gid, groupNameandKeyword, groupNameandKeyword, groupRating);
 
                 // グループ最終更新日時更新
                 _databaseAccessor.UpdateGroupLastUpdateDatetime(gid);

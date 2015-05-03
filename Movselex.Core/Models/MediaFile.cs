@@ -77,7 +77,7 @@ namespace Movselex.Core.Models
             FilePath = filepath;
             Rating = RatingType.Nothing;
 
-            MovieTitle = MovselexUtils.ReplaceTitle(FilePath);
+            MovieTitle = MovselexUtils.ReplaceTitle(Path.GetFileNameWithoutExtension(FilePath));
 
             try
             {

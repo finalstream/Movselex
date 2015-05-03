@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FinalstreamCommons.Utils;
 
 namespace Movselex.Core.Models
 {
@@ -15,10 +16,9 @@ namespace Movselex.Core.Models
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static string ReplaceTitle(string s)
+        public static string ReplaceTitle(string ss)
         {
-            var ss = Path.GetFileNameWithoutExtension(s);
-            if (ss == null) return s;
+            if (ss == null) return ss;
 
             var sss = ss.Replace("　", " ").
                 Replace("（", "(")
@@ -38,7 +38,7 @@ namespace Movselex.Core.Models
         /// <returns></returns>
         public static string[] CreateKeywords(string title)
         {
-            string[] titlewords = title.Split(' ');
+            string[] titlewords = title.Replace(" - ", " ").Split(' ');
 
             var wordList = new List<string>();
 
