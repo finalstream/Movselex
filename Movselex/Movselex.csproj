@@ -121,6 +121,7 @@
     <Compile Include="Views\Converters\IsFavoriteConverter.cs" />
     <Compile Include="Views\Converters\IsCompleteConverter.cs" />
     <Compile Include="Views\Converters\IsPlayedConverter.cs" />
+    <Compile Include="Views\Converters\IsShuffleToButtonNameConverter.cs" />
     <Compile Include="Views\Pages\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>

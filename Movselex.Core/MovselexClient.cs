@@ -319,9 +319,9 @@ namespace Movselex.Core
             Refresh();
         }
 
-        public void ShuffleLibrary()
+        public void TrimmingLibrary(int librarySelectIndex, bool isShuffle)
         {
-            var action = new ShuffleLibraryAction(AppConfig.LimitNum);
+            var action = new TrimmingLibraryAction(librarySelectIndex, isShuffle);
             action.AfterAction = () => OnRefreshed(EventArgs.Empty);
             _actionExecuter.Post(action);
         }

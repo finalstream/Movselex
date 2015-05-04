@@ -78,7 +78,9 @@ namespace Movselex.Core
         /// <summary>
         ///     ライブラリをシャッフルします。
         /// </summary>
-        void ShuffleLibrary();
+        /// <param name="librarySelectIndex"></param>
+        /// <param name="isShuffle"></param>
+        void TrimmingLibrary(int librarySelectIndex, bool isShuffle);
 
         /// <summary>
         ///     スローします。

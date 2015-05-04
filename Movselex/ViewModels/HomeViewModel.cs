@@ -125,17 +125,17 @@ namespace Movselex.ViewModels
 
         #endregion
 
-        #region IsShufflable変更通知プロパティ
+        #region IsTrimmable変更通知プロパティ
 
-        private bool _isShufflable;
+        private bool _isTrimmable;
 
-        public bool IsShufflable
+        public bool IsTrimmable
         {
-            get { return _isShufflable; }
+            get { return _isTrimmable; }
             set
             {
-                if (_isShufflable == value) return;
-                _isShufflable = value;
+                if (_isTrimmable == value) return;
+                _isTrimmable = value;
                 RaisePropertyChanged();
             }
         }
@@ -154,7 +154,7 @@ namespace Movselex.ViewModels
                 if (_libraryCount == value) return;
                 _libraryCount = value;
                 IsThrowable = !String.IsNullOrEmpty(AppConfig.MpcExePath) && value > 0 && value <= AppConfig.LimitNum;
-                IsShufflable = value > 0;
+                IsTrimmable = value > 0;
                 RaisePropertyChanged();
             }
         }
@@ -194,7 +194,7 @@ namespace Movselex.ViewModels
                 _currentFiltering = value;
                 if (value != null)
                 {
-                    SetSearchKeyword("");
+                    SetSearchKeyword(null);
                     _client.ChangeFiltering(value.Model);
                 }
                 RaisePropertyChanged();
@@ -216,7 +216,7 @@ namespace Movselex.ViewModels
                 _currentGroup = value;
                 if (value != null)
                 {
-                    SetSearchKeyword("");
+                    SetSearchKeyword(null);
                     _client.ChangeGroup(value.Model);
                 }
                 RaisePropertyChanged();
@@ -253,6 +253,24 @@ namespace Movselex.ViewModels
             {
                 if (_searchText == value) return;
                 _searchText = value;
+                if (_searchText != null) _searchTextChangedSubject.OnNext(_searchText);
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region IsShuffle変更通知プロパティ
+
+        private bool _isShuffle = true;
+
+        public bool IsShuffle
+        {
+            get { return _isShuffle; }
+            set
+            {
+                if (_isShuffle == value) return;
+                _isShuffle = value;
                 RaisePropertyChanged();
             }
         }
@@ -350,18 +368,7 @@ namespace Movselex.ViewModels
                 // テキストフィルタリングする
                 _client.FilteringLibrary(x);
             });
-            var listner = new PropertyChangedEventListener(this)
-            {
-                (sender, args) =>
-                {
-                    if (args.PropertyName == "SearchText")
-                    {
-                        _searchTextChangedSubject.OnNext(SearchText);
-                    }
-                }
-            };
-            CompositeDisposable.Add(h);
-            CompositeDisposable.Add(listner);
+
 
 
             // データベース変更イベントリスナー
@@ -465,9 +472,9 @@ namespace Movselex.ViewModels
             _client.SwitchLibraryMode();
         }
 
-        public void Shuffle()
+        public void Trimming()
         {
-            _client.ShuffleLibrary();
+            _client.TrimmingLibrary(LibrarySelectIndex, IsShuffle);
         }
 
         public void Throw()
@@ -644,6 +651,11 @@ namespace Movselex.ViewModels
         public void SetSearchKeyword(string keyword)
         {
             this.SearchText = keyword;
+        }
+
+        public void SetShuffleMode(bool isShuffle)
+        {
+            IsShuffle = isShuffle;
         }
 
         protected override void Dispose(bool disposing)

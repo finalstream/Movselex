@@ -246,5 +246,16 @@ namespace Movselex.Core.Models
                 _log.Info("Deleted File. FilePath:{0}", libraryItem.FilePath);
             }
         }
+
+        public void Trimming(int librarySelectIndex, int limitNum)
+        {
+            var startIndex = librarySelectIndex == -1 ? 0 : librarySelectIndex;
+            var libraries = LibraryItems.Skip(librarySelectIndex).Take(limitNum).ToArray();
+            LibraryItems.Clear();
+            foreach (var libraryItem in libraries)
+            {
+                LibraryItems.Add(libraryItem);
+            }
+        }
     }
 }
