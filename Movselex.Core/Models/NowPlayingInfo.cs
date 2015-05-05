@@ -22,7 +22,11 @@ namespace Movselex.Core.Models
 
         public string ViewTitle
         {
-            get { return string.IsNullOrEmpty(_viewTitle) ? "" :MovselexUtils.ReplaceTitle(_viewTitle); }
+            get
+            {
+                if (string.IsNullOrEmpty(_viewTitle)) return "";
+                return MovselexUtils.ReplaceTitle(_viewTitle);
+            }
             set
             {
                 if (_viewTitle == value) return;
@@ -150,6 +154,7 @@ namespace Movselex.Core.Models
         {
             Library = library;
             Season = library.Season;
+            if(!string.IsNullOrEmpty(library.Title)) ViewTitle = library.Title;
         }
     }
 }

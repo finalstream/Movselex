@@ -309,6 +309,8 @@ namespace Movselex.ViewModels
             _client = MovselexClientFactory.Create(Assembly.GetExecutingAssembly(),
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultAppConfigFilePath));
 
+            _client.ExceptionThrowed += ClientOnExceptionThrowed;
+
             CreateReadOnlyDispatcherCollection();
             CreateListener();
 
@@ -331,6 +333,27 @@ namespace Movselex.ViewModels
 
             _client.Initialize();
 
+        }
+
+        /// <summary>
+        /// クライアントで例外が発生したら。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="exception"></param>
+        private void ClientOnExceptionThrowed(object sender, Exception exception)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (exception is MovselexException)
+                {
+                    ModernDialog.ShowMessage(exception.Message, "Error", MessageBoxButton.OK);
+                }
+                else
+                {
+                    ModernDialog.ShowMessage("不明なエラーが発生しました。エラーログを開発元に送付してください。", "Error",
+               MessageBoxButton.OK);
+                }
+            });
         }
 
 
@@ -500,7 +523,7 @@ namespace Movselex.ViewModels
 
         private void Sandbox()
         {
-
+            Client.ExecEmpty();
             //var paramDic = new Dictionary<string, InputParam>();
             //paramDic.Add("GroupTitle", new InputParam("GroupTitle", "Group1"));
             //var inputTextContent = new InputTextContent("グループを登録します。", paramDic);

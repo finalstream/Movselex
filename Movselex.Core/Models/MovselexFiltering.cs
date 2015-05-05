@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FinalstreamCommons.Collections;
 using FinalstreamCommons.Extentions;
 using Livet;
 using Newtonsoft.Json;
@@ -16,14 +17,14 @@ namespace Movselex.Core.Models
     /// </summary>
     internal class MovselexFiltering : NotificationObject, IMovselexFiltering
     {
-        public ObservableCollection<FilteringItem> FilteringItems { get; private set; } 
+        public SelectableObservableCollection<FilteringItem> FilteringItems { get; private set; } 
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
         /// </summary>
         public MovselexFiltering()
         {
-            FilteringItems = new ObservableCollection<FilteringItem>();
+            FilteringItems = new SelectableObservableCollection<FilteringItem>();
         }
 
         /// <summary>

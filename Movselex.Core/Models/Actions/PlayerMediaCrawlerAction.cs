@@ -49,6 +49,7 @@ namespace Movselex.Core.Models.Actions
         protected override void InvokeCoreAsync()
         {
             var info = _mpcPlayerInfoGetter.Get(_exePath);
+            if (info.Title == "" && info.TimeString == "") return; // シーク中はなぜか空が返却されるのでその場合は無視する。
             OnUpdated(info);
         }
     }

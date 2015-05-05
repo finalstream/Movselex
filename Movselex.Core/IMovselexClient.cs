@@ -9,10 +9,12 @@ namespace Movselex.Core
 {
     public interface IMovselexClient : IAppClient
     {
+        event EventHandler<Exception> ExceptionThrowed;
+
         /// <summary>
         ///     フィルタリング情報。
         /// </summary>
-        ObservableCollection<FilteringItem> Filterings { get; }
+        SelectableObservableCollection<FilteringItem> Filterings { get; }
 
         /// <summary>
         ///     ライブラリ情報。
@@ -22,7 +24,7 @@ namespace Movselex.Core
         /// <summary>
         ///     グループ情報。
         /// </summary>
-        ObservableCollection<GroupItem> Groups { get; }
+        SelectableObservableCollection<GroupItem> Groups { get; }
 
         ObservableCollection<PlayingItem> Playings { get; }
 

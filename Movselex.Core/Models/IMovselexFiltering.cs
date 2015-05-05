@@ -1,12 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using FinalstreamCommons.Collections;
 using Livet;
 
 namespace Movselex.Core.Models
 {
     public interface IMovselexFiltering
     {
-        ObservableCollection<FilteringItem> FilteringItems { get; }
+        SelectableObservableCollection<FilteringItem> FilteringItems { get; }
 
         /// <summary>
         /// フィルタ条件をロードします。

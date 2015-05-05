@@ -54,7 +54,7 @@ namespace Movselex.Core
 
         #endregion
 
-        public ObservableCollection<FilteringItem> Filterings { 
+        public SelectableObservableCollection<FilteringItem> Filterings { 
             get
             {
                 return MovselexFiltering.FilteringItems;
@@ -67,7 +67,7 @@ namespace Movselex.Core
                 return MovselexLibrary.LibraryItems;
             }
         }
-        public ObservableCollection<GroupItem> Groups
+        public SelectableObservableCollection<GroupItem> Groups
         {
             get
             {
@@ -138,6 +138,7 @@ namespace Movselex.Core
             AppConfig = MovselexAppConfig.Empty;
 
             _actionExecuter = new ActionExecuter<MovselexClient>(this);
+            _actionExecuter.ExecuteFailed += (sender, exception) => OnExceptionThrowed(exception);
             _databaseAccessor = new MovselexDatabaseAccessor(AppConfig);
             MovselexFiltering = new MovselexFiltering();
             MovselexPlaying = new MovselexPlaying(_databaseAccessor);
@@ -149,7 +150,6 @@ namespace Movselex.Core
             ProgressInfo = new ProgressInfo();
         }
 
-        
 
         /// <summary>
         /// 初期化します。
@@ -219,7 +219,6 @@ namespace Movselex.Core
         public void RegistFiles(IEnumerable<string> files)
         {
             var action = new RegistFileAction(files);
-            action.AfterAction = Refresh;
             _actionExecuter.Post(action);
         }
 
@@ -264,10 +263,11 @@ namespace Movselex.Core
                 playMonitoringAction.CountUpTimePlayed += (sender, l) => _actionExecuter.Post(new IncrementPlayCountAction(l));
                 playMonitoringAction.SwitchTitle += (sender, s) => _actionExecuter.Post(new UpdateNowPlayInfoAction(s));
 
-                _backgroundWorker = new BackgroundWorker(new BackgroundAction[]
+                _backgroundWorker = new BackgroundWorker(TimeSpan.FromMilliseconds(1000), new BackgroundAction[]
                 {
                     playerMediaCrawlerAction, 
-                    playMonitoringAction
+                    playMonitoringAction,
+                    new AutoUpdateLibraryAction(this), 
                 });
                 _backgroundWorker.Start();
                 OnInitialized(EventArgs.Empty);
@@ -279,6 +279,7 @@ namespace Movselex.Core
         {
             if (databaseName == null) return;
             _databaseAccessor.ChangeDatabase(databaseName);
+            LibraryUpdater.ClearSearchDirectoryPaths();
             //MovselexDatabaseAccessor = new MovselexDatabaseAccessor(databaseName);
             Refresh();
         }
@@ -301,10 +302,10 @@ namespace Movselex.Core
             if (Filterings.FirstOrDefault(x => x.IsSelected) != null) _log.Debug(Filterings.FirstOrDefault(x => x.IsSelected).DisplayValue);
             AppConfig.SelectFiltering = filteringItem.DisplayValue;
             AppConfig.FilteringMode = FilteringMode.SQL;
-            foreach (var groupItem in Groups)
-            {
-                groupItem.IsSelected = false;
-            }
+
+            // TODO: Action内で処理するようにする。
+            Groups.ClearSelection();
+
             Refresh();
         }
 
@@ -312,10 +313,10 @@ namespace Movselex.Core
         {
             if (Groups.FirstOrDefault(x => x.IsSelected) != null) _log.Debug(Groups.FirstOrDefault(x => x.IsSelected).GroupName);
             AppConfig.FilteringMode = FilteringMode.Group;
-            foreach (var filteringItem in Filterings)
-            {
-                filteringItem.IsSelected = false;
-            }
+
+            // TODO: Action内で処理するようにする。
+            Filterings.ClearSelection();
+
             Refresh();
         }
 

@@ -47,7 +47,7 @@ namespace Movselex
             _log.Error("Catch UnhandledException.", e.ExceptionObject as Exception);
 
             ModernDialog.ShowMessage("不明なエラーが発生しました。アプリケーションを終了します。エラーログを開発元に送付してください。", "Critical Error",
-                MessageBoxButton.OK);
+               MessageBoxButton.OK);
 
             Environment.Exit(1);
         }

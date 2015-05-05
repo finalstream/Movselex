@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FinalstreamCommons.Collections;
 using FinalstreamCommons.Utils;
 using Livet;
 
 namespace Movselex.Core.Models
 {
-    public class GroupItem : NotificationObject
+    public class GroupItem : NotificationObject, ISelectableItem
     {
         /// <summary>
         /// グループID。

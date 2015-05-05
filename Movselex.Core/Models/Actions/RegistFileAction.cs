@@ -16,6 +16,9 @@ namespace Movselex.Core.Models.Actions
         public override void InvokeProgress(MovselexClient client)
         {
             client.LibraryUpdater.RegistFiles(_files, client.ProgressInfo);
+
+            // フィルタをAll Movieに戻す。
+            client.Filterings.SingleSelection(0);
         }
     }
 }

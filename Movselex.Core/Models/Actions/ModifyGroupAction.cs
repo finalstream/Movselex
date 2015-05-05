@@ -18,6 +18,12 @@ namespace Movselex.Core.Models.Actions
         public override void InvokeCore(MovselexClient client)
         {
             client.MovselexGroup.ModifyGroup(_group, _groupName, _keyword);
+            
+            // ライブラリに更新対象のグループがあったら更新する。
+            foreach (var libraryItem in client.MovselexLibrary.LibraryItems)
+            {
+                if (libraryItem.Gid == _group.Gid) libraryItem.ModifyGroupName(_groupName);
+            }
         }
     }
 }

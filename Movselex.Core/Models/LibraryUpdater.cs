@@ -65,5 +65,10 @@ namespace Movselex.Core.Models
             return Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories)
                     .Where(x => _supportExts.Contains(Path.GetExtension(x).ToLower()));
         }
+
+        public void ClearSearchDirectoryPaths()
+        {
+            _searchDirectoryPaths.Clear();
+        }
     }
 }

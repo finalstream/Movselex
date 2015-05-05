@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDefinitions.cs" />
+    <Compile Include="Models\Actions\AutoUpdateLibraryAction.cs" />
     <Compile Include="Models\Actions\GetCandidateGroupNameAction.cs" />
     <Compile Include="IMovselexClient.cs" />
     <Compile Include="Models\Actions\CallbackAction.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Models\LibraryUpdater.cs" />
     <Compile Include="Models\MediaPlayerClassicThrower.cs" />
     <Compile Include="Models\MediaThrower.cs" />
+    <Compile Include="Models\MovselexException.cs" />
     <Compile Include="Models\MovselexPlaying.cs" />
     <Compile Include="Models\MovselexUtils.cs" />
     <Compile Include="Models\MpcPlayerInfoGetter.cs" />

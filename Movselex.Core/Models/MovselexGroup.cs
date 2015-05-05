@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FinalstreamCommons.Collections;
 using FinalstreamCommons.Extentions;
 using FinalstreamCommons.Utils;
 using Livet;
@@ -13,14 +15,14 @@ namespace Movselex.Core.Models
     internal class MovselexGroup : IMovselexGroup
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
-        public ObservableCollection<GroupItem> GroupItems { get; private set; }
+        public SelectableObservableCollection<GroupItem> GroupItems { get; private set; }
 
         private readonly IMovselexDatabaseAccessor _databaseAccessor;
 
         public MovselexGroup(IMovselexDatabaseAccessor databaseAccessor)
         {
             _databaseAccessor = databaseAccessor;
-            GroupItems = new ObservableCollection<GroupItem>();
+            GroupItems = new SelectableObservableCollection<GroupItem>();
         }
 
 
@@ -65,7 +67,7 @@ namespace Movselex.Core.Models
             foreach (var keyword in keywords)
             {
                 // 小文字で検索
-                var group = _databaseAccessor.SelectMatchGroupKeyword(keyword.ToLower());
+                var group = _databaseAccessor.SelectMatchGroupKeyword(keyword).FirstOrDefault();
 
 
                 if (group != null)
@@ -89,7 +91,14 @@ namespace Movselex.Core.Models
             var ungroupLibraries = _databaseAccessor.SelectUnGroupingLibrary(keywords);
 
             var unGroups = ungroupLibraries
-                .GroupBy(x => Regex.Replace(MovselexUtils.ReplaceTitle(x.Title).Replace(" - ", " "), @"\d+", "").Trim())
+                .GroupBy(x =>
+                {
+                    var key = MovselexUtils.ReplaceTitle(x.Title).Replace(" - ", " ").TrimEnd();
+                    var works = key.Split(' ');
+                    if (StringUtils.IsNumeric(works[works.Length - 1])) works[works.Length - 1] = "";
+
+                    return string.Join(" ", works).Trim();
+                })
                 .Select(x=> new {Key = x.Key, Count = x.Count(), Libraries= x.ToList()}).ToArray();
             if (unGroups.Any()) unGroups.DebugWriteJson("UnGroup Keywords");
 
@@ -191,13 +200,24 @@ namespace Movselex.Core.Models
             return gid;
         }
 
-        public void ModifyGroup(GroupItem group, string groupName, string keyword)
+        /// <summary>
+        /// グループ情報を変更します。
+        /// </summary>
+        /// <param name="group"></param>
+        /// <param name="newGroupName"></param>
+        /// <param name="keyword"></param>
+        public void ModifyGroup(GroupItem group, string newGroupName, string keyword)
         {
             var oldGroupName = group.GroupName;
-            group.ModifyNameAndKeyword(groupName, keyword);
+            group.ModifyNameAndKeyword(newGroupName, keyword);
             _databaseAccessor.UpdateGroup(group);
             _databaseAccessor.UpdateLibraryReplaceGroupName(group.Gid, oldGroupName, group.GroupName);
 
+        }
+
+        public IEnumerable<dynamic> GetMatchKeywordGroups(string keyword)
+        {
+            return _databaseAccessor.SelectMatchGroupKeyword(keyword);
         }
     }
 }

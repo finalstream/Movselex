@@ -1,4 +1,5 @@
 ﻿using System;
+using FinalstreamCommons.Collections;
 using Livet;
 
 namespace Movselex.Core.Models
@@ -6,7 +7,7 @@ namespace Movselex.Core.Models
     /// <summary>
     /// コンディションリストの１レコードを表します。
     /// </summary>
-    public class FilteringItem : NotificationObject, IEquatable<FilteringItem>
+    public class FilteringItem : NotificationObject, IEquatable<FilteringItem>, ISelectableItem
     {
         public string Value { get; private set; }
 

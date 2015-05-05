@@ -84,17 +84,17 @@ namespace Movselex.ViewModels.Pages.Settings
                 "FinalstreamCommons.dll",
                 "Finalstream Commons",
                 "Framework",
-                "OSS Coming Soon...",
+                "MIT License",
                 "Copyright (c) 2015 FINALSTREAM",
-                "http://www.finalstream.net/"));
+                "https://github.com/finalstream/FinalstreamCommons"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
                 "FinalstreamUIComponents.dll",
                 "Finalstream UI Components",
                 "UI Component",
-                "OSS Coming Soon...",
+                "MIT License",
                 "Copyright (c) 2015 FINALSTREAM",
-                "http://www.finalstream.net/"));
+                "https://github.com/finalstream/FinalstreamUIComponents"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
                 "Livet.dll",
@@ -137,6 +137,13 @@ namespace Movselex.ViewModels.Pages.Settings
                 null,
                 "https://github.com/StackExchange/dapper-dot-net"));
 
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "RestSharp.dll",
+                "RestSharp",
+                "Rest Client",
+                "Apache License 2.0",
+                null,
+                "http://restsharp.org/"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
                 "taglib-sharp.dll",

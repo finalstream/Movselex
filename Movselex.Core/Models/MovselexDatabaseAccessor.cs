@@ -134,9 +134,9 @@ namespace Movselex.Core.Models
         /// </summary>
         /// <param name="keyword"></param>
         /// <returns>取得出来なかった場合はnullが返ります。</returns>
-        public dynamic SelectMatchGroupKeyword(string keyword)
+        public IEnumerable<dynamic> SelectMatchGroupKeyword(string keyword)
         {
-            return SqlExecuter.Query<dynamic>(SQLResource.SelectGroupKeyword, new { Keyword = keyword}).FirstOrDefault();
+            return SqlExecuter.Query<dynamic>(SQLResource.SelectGroupKeyword, new { Keyword = keyword.ToLower()});
         }
 
         public void UpdateGroupLastUpdateDatetime(long gid)

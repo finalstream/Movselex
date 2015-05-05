@@ -14,7 +14,7 @@ namespace Movselex.Core.Models
         string GetMostUseDirectoryPath();
         IEnumerable<string> SelectAllLibraryFilePaths();
         bool InsertMediaFile(MediaFile mediaFile);
-        dynamic SelectMatchGroupKeyword(string keyword);
+        IEnumerable<dynamic> SelectMatchGroupKeyword(string keyword);
         void UpdateGroupLastUpdateDatetime(long gid);
         RatingType GetGroupRating(long gid);
         long GetIdFromFileName(string filename);

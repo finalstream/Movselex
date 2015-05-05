@@ -352,5 +352,10 @@ namespace Movselex.Core.Models
             Gid = 0;
             GroupName = null;
         }
+
+        public void ModifyGroupName(string groupName)
+        {
+            GroupName = groupName;
+        }
     }
 }

@@ -271,7 +271,7 @@ namespace Movselex.Core.Resources {
         ///   SELECT 
         ///  PL.ID,
         ///  FILEPATH,
-        ///  GPL.GROUPNAME,
+        ///  GPL.GROUPNAME AS GROUPNAME,
         ///  TITLE,
         ///  NO,
         ///  LENGTH,
@@ -283,7 +283,7 @@ namespace Movselex.Core.Resources {
         ///  PLAYCOUNT,
         ///  ADDDATE,
         ///  LASTPLAYDATE,
-        ///  GPL.GID,
+        ///  GPL.GID AS GID,
         ///  SEASON
         ///FROM MOVLIST PL 
         ///LEFT JOIN MOVGROUPLIST GPL
