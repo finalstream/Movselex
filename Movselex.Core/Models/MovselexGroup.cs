@@ -88,33 +88,39 @@ namespace Movselex.Core.Models
             }
 
             // グループが見つからなかったら自動グループ登録
-            var ungroupLibraries = _databaseAccessor.SelectUnGroupingLibrary(keywords);
+            var unGroupingItem = _databaseAccessor.SelectUnGroupingLibrary(keywords);
 
-            var unGroups = ungroupLibraries
-                .GroupBy(x =>
-                {
-                    var key = MovselexUtils.ReplaceTitle(x.Title).Replace(" - ", " ").TrimEnd();
-                    var works = key.Split(' ');
-                    if (StringUtils.IsNumeric(works[works.Length - 1])) works[works.Length - 1] = "";
+            if (unGroupingItem == null) return; // キーワードに一致するライブラリが見つからなかったら抜ける。
 
-                    return string.Join(" ", works).Trim();
-                })
-                .Select(x=> new {Key = x.Key, Count = x.Count(), Libraries= x.ToList()}).ToArray();
-            if (unGroups.Any()) unGroups.DebugWriteJson("UnGroup Keywords");
+            unGroupingItem.DebugWriteJson("UnGroupItem");
 
-            var maxUnGroup = unGroups.FirstOrDefault(x => x.Count == unGroups.Select(xx => xx.Count).Max());
+            //var unGroups = ungroupLibraries
+            //    .GroupBy(x =>
+            //    {
+            //        var key = MovselexUtils.ReplaceTitle(x.Title).Replace(" - ", " ").TrimEnd();
+            //        var works = key.Split(' ');
+            //        if (StringUtils.IsNumeric(works[works.Length - 1])) works[works.Length - 1] = "";
 
-            maxUnGroup.DebugWriteJson("MaxUnGroup");
+            //        return string.Join(" ", works).Trim();
+            //    })
+            //    .Select(x=> new {Key = x.Key, Count = x.Count(), Libraries= x.ToList()}).ToArray();
+            //if (unGroups.Any()) unGroups.DebugWriteJson("UnGroup Keywords");
 
-            if (maxUnGroup != null)
+            //var maxUnGroup = unGroups.FirstOrDefault(x => x.Count == unGroups.Select(xx => xx.Count).Max());
+
+            //maxUnGroup.DebugWriteJson("MaxUnGroup");
+
+            if (unGroupingItem != null)
             {
-                var groupNameandKeyword = maxUnGroup.Key.TrimEnd();
+                var keyword = unGroupingItem.Item1;
+                var unGroupLibraries = unGroupingItem.Item2;
+                var groupNameandKeyword = keyword.TrimEnd();
 
                 //if (groupNameandKeyword.EndsWith(" -")) groupNameandKeyword = StringUtils.ReplaceLastOnce(groupNameandKeyword, " -", "");
 
                 // グループを登録する
                 var gid = RegistGroup(groupNameandKeyword, groupNameandKeyword);
-                JoinGroup(groupNameandKeyword, groupNameandKeyword, maxUnGroup.Libraries);
+                JoinGroup(groupNameandKeyword, groupNameandKeyword, unGroupLibraries);
 
                 // グループのレーティングを取得
                 var groupRating = GetGroupRating(gid);
@@ -194,6 +200,7 @@ namespace Movselex.Core.Models
         /// <param name="keyword"></param>
         private long RegistGroup(string groupName, string keyword)
         {
+            ValidateRegistGroup(keyword);
             _databaseAccessor.InsertGroup(groupName, keyword);
             var gid = _databaseAccessor.SelectLastInsertRowId();
             _log.Info("Registed Group. Gid:{0} GroupName:{1} Keyword:{2}", gid, groupName, keyword);
@@ -208,6 +215,7 @@ namespace Movselex.Core.Models
         /// <param name="keyword"></param>
         public void ModifyGroup(GroupItem group, string newGroupName, string keyword)
         {
+            ValidateRegistGroup(keyword, group);
             var oldGroupName = group.GroupName;
             group.ModifyNameAndKeyword(newGroupName, keyword);
             _databaseAccessor.UpdateGroup(group);
@@ -219,5 +227,16 @@ namespace Movselex.Core.Models
         {
             return _databaseAccessor.SelectMatchGroupKeyword(keyword);
         }
+
+        public void ValidateRegistGroup(string keyword, GroupItem ownGroup = null)
+        {
+            var sameKeywordGroups = GetMatchKeywordGroups(keyword);
+            if (ownGroup != null) sameKeywordGroups = sameKeywordGroups.Where(x => x.GID != ownGroup.Gid);  // グループ更新のときは自分を除く。
+            if (sameKeywordGroups.Any())
+            {
+                // 同じキーワードのグループがすでに存在したらエラー
+                throw new MovselexException(string.Format("すでに同じキーワードのグループが登録されています。\nキーワード：{0}", keyword.ToLower()));
+            }
+        }
     }
-}
+ }

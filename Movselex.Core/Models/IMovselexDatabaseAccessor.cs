@@ -32,7 +32,7 @@ namespace Movselex.Core.Models
         void UpdateGidById(long gid, long id);
         void UpdateGroup(GroupItem group);
         void UpdateLibraryReplaceGroupName(long gid, string oldGroupName, string newGroupName);
-        IEnumerable<LibraryItem> SelectUnGroupingLibrary(IEnumerable<string> keywords);
+        Tuple<string, IEnumerable<LibraryItem>> SelectUnGroupingLibrary(IEnumerable<string> keywords);
         void UpdateLibraryUnGroup(long id);
         void InsertPlayingList(long id, int sort);
         void DeletePlayingList();

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using FinalstreamCommons.Collections;
 using FinalstreamCommons.Frameworks;
 using FinalstreamCommons.Frameworks.Actions;
+using FinalstreamCommons.Utils;
 using Livet;
 using Movselex.Core.Models;
 using Movselex.Core.Models.Actions;
@@ -374,6 +376,11 @@ namespace Movselex.Core
             var action = new GetCandidateGroupNameAction(groupName);
             action.AfterAction = () => { afterAction.Invoke(action.CandidateGroupNames); };
             _actionExecuter.Post(action);
+        }
+
+        public void OpenLibraryFolder(LibraryItem libraryItem)
+        {
+            Process.Start("EXPLORER.EXE", string.Format("/n,/select,\"{0}\"", libraryItem.FilePath));
         }
 
         #region Dispose

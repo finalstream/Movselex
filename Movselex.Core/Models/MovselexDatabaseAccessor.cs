@@ -262,17 +262,17 @@ namespace Movselex.Core.Models
                 });
         }
 
-        public IEnumerable<LibraryItem> SelectUnGroupingLibrary(IEnumerable<string> keywords)
+        public Tuple<string,IEnumerable<LibraryItem>> SelectUnGroupingLibrary(IEnumerable<string> keywords)
         {
-            // TODO: SQLBuilderを使うようにする。
-            var keywordCond = new StringBuilder();
             foreach (var keyword in keywords)
             {
-                if (keywordCond.Length > 0) keywordCond.Append(" OR ");
-                keywordCond.Append(string.Format(" lower(TITLE) LIKE '%{0}%'", MovselexSQLBuilder.EscapeSQL(keyword.ToLower())));
+                var keywordCond = string.Format(" lower(TITLE) LIKE '%{0}%'", MovselexSQLBuilder.EscapeSQL(keyword.ToLower()));
+                var sql = string.Format("SELECT ID, TITLE  FROM MOVLIST WHERE GID IS NULL AND ({0})", keywordCond.ToString());
+                var result = SqlExecuter.Query<LibraryItem>(sql);
+                if (result.Any()) return new Tuple<string, IEnumerable<LibraryItem>>(keyword, result); 
             }
-            var sql = string.Format("SELECT ID, TITLE  FROM MOVLIST WHERE GID IS NULL AND ({0})", keywordCond.ToString());
-            return SqlExecuter.Query<LibraryItem>(sql);
+            
+            return null;
         }
 
         public void UpdateLibraryUnGroup(long id)

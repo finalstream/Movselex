@@ -345,7 +345,14 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
-					<Separator></Separator>
+                    <MenuItem Header="Open Folder">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="OpenLibraryFolder" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </MenuItem>
+                    <Separator></Separator>
 					<MenuItem Header="UnGroup...">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">

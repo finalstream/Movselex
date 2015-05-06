@@ -58,7 +58,7 @@ namespace Movselex.Core.Models.Actions
 
                     FileUtils.Move(library.FilePath, newfilepath);
 
-                    _log.Debug("Moved File. {0} to {1}.", library.FilePath, newfilepath);
+                    _log.Info("Moved File. {0} to {1}.", library.FilePath, newfilepath);
 
                     movedDic.Add(library.Id, newfilepath);
 

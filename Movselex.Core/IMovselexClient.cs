@@ -108,5 +108,6 @@ namespace Movselex.Core
         void SaveConfig();
         void DeleteLibrary(LibraryItem[] selectLibraries, bool isDeleteFile);
         void GetCandidateGroupName(string groupName, Action<IEnumerable<string>> action);
+        void OpenLibraryFolder(LibraryItem libraryItem);
     }
 }

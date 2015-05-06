@@ -357,5 +357,10 @@ namespace Movselex.Core.Models
         {
             GroupName = groupName;
         }
+
+        public void ModifyTitle(string title)
+        {
+            Title = title;
+        }
     }
 }

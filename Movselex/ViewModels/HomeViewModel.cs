@@ -385,7 +385,7 @@ namespace Movselex.ViewModels
         {
             var h = _searchTextChangedSubject
                 .Throttle(TimeSpan.FromMilliseconds(1000))
-                .DistinctUntilChanged()
+                //.DistinctUntilChanged()
                 .Subscribe(x =>
             {
                 // テキストフィルタリングする
@@ -592,6 +592,7 @@ namespace Movselex.ViewModels
 
         public void Grouping()
         {
+            if (LibrarySelectIndex == -1) return;
             var paramDic = new Dictionary<string, InputParam>();
 
             var library = Libraries[LibrarySelectIndex].Model;
@@ -655,10 +656,18 @@ namespace Movselex.ViewModels
 
         }
 
+        public void OpenLibraryFolder()
+        {
+            if (LibrarySelectIndex == -1) return;
+            _client.OpenLibraryFolder(Libraries[LibrarySelectIndex].Model);
+        }
+
         public void DeleteLibrary()
         {
             var selectLibraries = Libraries.Where(x => x.IsSelected).Select(x=>x.Model).ToArray();
-            var dlg = new ModernDialog() { Content = string.Format("{0}を削除します。よろしいですか？?",
+            if (!selectLibraries.Any()) return;
+
+            var dlg = new ModernDialog() { Content = string.Format("{0}を削除します。よろしいですか？",
                 selectLibraries.IsSingle() ? selectLibraries.Single().Title : string.Format("選択した{0}つのアイテム", selectLibraries.Count())), Title = DialogUtils.MessageTitleQuestion, MinHeight = 0};
             var yes = dlg.YesButton;
             yes.Content = "yes(with file)";

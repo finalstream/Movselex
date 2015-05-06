@@ -22,7 +22,12 @@ namespace Movselex.Core.Models.Actions
             // ライブラリに更新対象のグループがあったら更新する。
             foreach (var libraryItem in client.MovselexLibrary.LibraryItems)
             {
-                if (libraryItem.Gid == _group.Gid) libraryItem.ModifyGroupName(_groupName);
+                if (libraryItem.Gid == _group.Gid)
+                {
+                    var oldGroupName = libraryItem.GroupName;
+                    libraryItem.ModifyGroupName(_groupName);
+                    libraryItem.ModifyTitle(libraryItem.Title.Replace(oldGroupName, _groupName));
+                }
             }
         }
     }
