@@ -342,6 +342,11 @@ namespace Movselex.Core.Models
             Rating = newRating;
         }
 
+        /// <summary>
+        /// ファイルパスを更新します。
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <remarks>ドライブレターも更新します。</remarks>
         public void ModifyFilePath(string filepath)
         {
             FilePath = filepath;

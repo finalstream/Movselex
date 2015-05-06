@@ -345,14 +345,21 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
-                    <MenuItem Header="Open Folder">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="OpenLibraryFolder" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </MenuItem>
-                    <Separator></Separator>
+					<MenuItem Header="Move File...">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="MoveLibraryFile" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</MenuItem>
+					<MenuItem Header="Open Folder">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="OpenLibraryFolder" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</MenuItem>
+					<Separator></Separator>
 					<MenuItem Header="UnGroup...">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
@@ -437,14 +444,14 @@
 					<ColumnDefinition></ColumnDefinition>
 					<ColumnDefinition Width="25"></ColumnDefinition>
 				</Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Canvas.ZIndex="2"  Content="{Binding IsShuffle, Converter={StaticResource IsShuffleToButtonNameConverter}}" Margin="0,5,0,5" IsEnabled="{Binding IsTrimmable}">
+				<Button Grid.Column="0" Canvas.ZIndex="2"  Content="{Binding IsShuffle, Converter={StaticResource IsShuffleToButtonNameConverter}}" Margin="0,5,0,5" IsEnabled="{Binding IsTrimmable}">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
 							<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="Trimming"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
-                <Button Grid.Column="1" Canvas.ZIndex="1" Margin="-1,5,0,5" behaviors:LeftClickContextBehavior.Enabled="True">
+				<Button Grid.Column="1" Canvas.ZIndex="1" Margin="-1,5,0,5" behaviors:LeftClickContextBehavior.Enabled="True">
 					<ContentControl Style="{StaticResource icon}" Content="{StaticResource icon-arrowdown}" Width="24" Height="24" Margin="-16,-10,-10,-12" VerticalAlignment="Center" HorizontalAlignment="Center" />
 					<Button.ContextMenu>
 						<ContextMenu>

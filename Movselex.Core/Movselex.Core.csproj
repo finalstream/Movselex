@@ -143,6 +143,7 @@
     <Compile Include="Models\RatingType.cs" />
     <Compile Include="Models\MovselexSQLBuilder.cs" />
     <Compile Include="Models\SQLiteFunctions\IsMatchMigemoSQLiteFunction.cs" />
+    <Compile Include="Models\Actions\MoveLibraryFileAction.cs" />
     <Compile Include="MovselexClient.cs" />
     <Compile Include="MovselexClientFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

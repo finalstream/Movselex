@@ -383,6 +383,11 @@ namespace Movselex.Core
             Process.Start("EXPLORER.EXE", string.Format("/n,/select,\"{0}\"", libraryItem.FilePath));
         }
 
+        public void MoveLibraryFile(string moveDestDirectory, LibraryItem[] selectLibraries)
+        {
+            _actionExecuter.Post(new MoveLibraryFileAction(moveDestDirectory, selectLibraries));
+        }
+
         #region Dispose
 
         // Flag: Has Dispose already been called?

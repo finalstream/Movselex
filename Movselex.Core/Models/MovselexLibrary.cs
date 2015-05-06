@@ -210,6 +210,8 @@ namespace Movselex.Core.Models
                 foreach (var kv in movedDic)
                 {
                     _databaseAccessor.UpdateLibraryFilePath(kv);
+                    var library = LibraryItems.FirstOrDefault(x => x.Id == kv.Key);
+                    _log.Info("Update Library FilePath. Libarary:{0} NewPath:{1}", library != null? library.Title : kv.Key.ToString(), kv.Value);
                 }
                 tran.Commit();
             }

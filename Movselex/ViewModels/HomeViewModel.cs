@@ -550,11 +550,8 @@ namespace Movselex.ViewModels
 
             var group = CurrentGroup.Model;
 
-            // 移動先フォルダ作成
-            var moveDirectory = baseDirectory + "\\" + group.GroupName;
-
             var result = ModernDialog.ShowMessage(string.Format("{0} を {1} に移動します。よろしいですか？",
-                group.GroupName, moveDirectory), "Question?", MessageBoxButton.YesNo);
+                group.GroupName,  Path.Combine(baseDirectory, group.GroupName)), "Question?", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes) _client.MoveGroupDirectory(CurrentGroup.Model, baseDirectory);
         }
@@ -662,6 +659,26 @@ namespace Movselex.ViewModels
             _client.OpenLibraryFolder(Libraries[LibrarySelectIndex].Model);
         }
 
+        public void MoveLibraryFile()
+        {
+
+            var selectLibraries = Libraries.Where(x => x.IsSelected).Select(x => x.Model).ToArray();
+            if (!selectLibraries.Any()) return;
+
+            var moveDestDirectory = DialogUtils.ShowFolderDialog(
+                "移動する場所を指定してください。指定した場所にそのまま移動します。",
+                _client.AppConfig.MoveBaseDirectory);
+
+            if (string.IsNullOrEmpty(moveDestDirectory)) return;
+
+
+            var result = ModernDialog.ShowMessage(string.Format("{0} を {1} に移動します。よろしいですか？",
+                selectLibraries.IsSingle() ? selectLibraries.Single().Title : string.Format("選択した{0}つのアイテム", selectLibraries.Count()), moveDestDirectory), "Question?", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes) _client.MoveLibraryFile(moveDestDirectory, selectLibraries);
+
+        }
+
         public void DeleteLibrary()
         {
             var selectLibraries = Libraries.Where(x => x.IsSelected).Select(x=>x.Model).ToArray();
@@ -670,14 +687,21 @@ namespace Movselex.ViewModels
             var dlg = new ModernDialog() { Content = string.Format("{0}を削除します。よろしいですか？",
                 selectLibraries.IsSingle() ? selectLibraries.Single().Title : string.Format("選択した{0}つのアイテム", selectLibraries.Count())), Title = DialogUtils.MessageTitleQuestion, MinHeight = 0};
             var yes = dlg.YesButton;
-            yes.Content = "yes(with file)";
+            yes.Content = "yes (with file)";
             var ok = dlg.OkButton;
-            ok.Content = "yes(only libaray)";
+            ok.Content = "yes (only libaray)";
             dlg.Buttons = new Button[] { yes, ok, dlg.NoButton };
             var result = dlg.ShowDialog();
             if (result == false) return;
 
-            _client.DeleteLibrary(selectLibraries, dlg.MessageBoxResult == MessageBoxResult.Yes);
+            var isDeleteFile = dlg.MessageBoxResult == MessageBoxResult.Yes;
+            if (isDeleteFile)
+            {
+                var result2 = ModernDialog.ShowMessage("ファイルも削除します。よろしいですか？", DialogUtils.MessageTitleQuestion, MessageBoxButton.YesNo);
+                if (result2 == MessageBoxResult.No) return;
+            }
+
+            _client.DeleteLibrary(selectLibraries, isDeleteFile);
         }
 
         public void SetSearchKeyword(string keyword)
