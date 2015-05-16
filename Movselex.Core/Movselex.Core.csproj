@@ -96,8 +96,10 @@
     <Compile Include="Models\Actions\MovselexProgressAction.cs" />
     <Compile Include="Models\Actions\RegistFileAction.cs" />
     <Compile Include="Models\Actions\GroupingAction.cs" />
+    <Compile Include="Models\Actions\ReloadFilteringAction.cs" />
     <Compile Include="Models\Actions\UnGroupAction.cs" />
     <Compile Include="Models\Actions\UpdateNowPlayInfoAction.cs" />
+    <Compile Include="Models\FilteringConfig.cs" />
     <Compile Include="Models\FilteringItemComparer.cs" />
     <Compile Include="Models\IMediaFile.cs" />
     <Compile Include="Models\IProgressInfo.cs" />
@@ -166,6 +168,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.ja.resx" />
     <EmbeddedResource Include="Resources\SQLResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>

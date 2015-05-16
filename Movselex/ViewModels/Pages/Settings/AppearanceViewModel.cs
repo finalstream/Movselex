@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Media;
+using FinalstreamCommons.Utils;
 using FirstFloor.ModernUI.Presentation;
+using Livet;
 
 namespace Movselex.ViewModels.Pages.Settings
 {
@@ -9,10 +12,12 @@ namespace Movselex.ViewModels.Pages.Settings
     /// A simple view model for configuring theme, font and accent colors.
     /// </summary>
     public class AppearanceViewModel
-        : NotifyPropertyChanged
+        : ViewModel
     {
         private const string FontSmall = "small";
         private const string FontLarge = "large";
+
+        private readonly CultureInfo[] _supportCultures = CultureUtils.CreateCultureInfos(new[] {"en", "ja"});
 
         // 9 accent colors from metro design principles
         /*private Color[] accentColors = new Color[]{
@@ -64,6 +69,8 @@ namespace Movselex.ViewModels.Pages.Settings
 
             this.SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? FontLarge : FontSmall;
             SyncThemeAndColor();
+            this.SelectedCulture = CultureUtils.GetCulture(App.Config.Language, _supportCultures);
+
 
             AppearanceManager.Current.PropertyChanged += OnAppearanceManagerPropertyChanged;
         }
@@ -90,6 +97,11 @@ namespace Movselex.ViewModels.Pages.Settings
             get { return this.themes; }
         }
 
+        public CultureInfo[] Cultures
+        {
+            get { return _supportCultures; }
+        }
+
         public string[] FontSizes
         {
             get { return new string[] { FontSmall, FontLarge }; }
@@ -108,7 +120,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 if (this.selectedTheme != value)
                 {
                     this.selectedTheme = value;
-                    OnPropertyChanged("SelectedTheme");
+                    RaisePropertyChanged();
 
                     App.Config.SelectedTheme = value.DisplayName;
                     // and update the actual theme
@@ -116,6 +128,24 @@ namespace Movselex.ViewModels.Pages.Settings
                 }
             }
         }
+
+        #region SelectedLaun変更通知プロパティ
+
+        private CultureInfo _selectedCulture;
+
+        public CultureInfo SelectedCulture
+        {
+            get { return _selectedCulture; }
+            set
+            {
+                if (_selectedCulture == value) return;
+                _selectedCulture = value;
+                RaisePropertyChanged();
+                App.Config.Language = value.Name;
+            }
+        }
+
+        #endregion
 
         public string SelectedFontSize
         {
@@ -125,7 +155,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 if (this.selectedFontSize != value)
                 {
                     this.selectedFontSize = value;
-                    OnPropertyChanged("SelectedFontSize");
+                    RaisePropertyChanged();
 
                     AppearanceManager.Current.FontSize = value == FontLarge ? FontSize.Large : FontSize.Small;
                 }
@@ -141,7 +171,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 {
                     this.selectedAccentColor = value;
                     App.Config.AccentColor = value;
-                    OnPropertyChanged("SelectedAccentColor");
+                    RaisePropertyChanged();
 
                     //AppearanceManager.Current.AccentColor = value;
                 }

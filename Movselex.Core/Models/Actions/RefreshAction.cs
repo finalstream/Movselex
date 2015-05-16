@@ -28,10 +28,10 @@ namespace Movselex.Core.Models.Actions
 
         public override void InvokeCore(MovselexClient client)
         {
-            LoadDatabase(client);
+            //LoadDatabase(client);
 
             // フィルタリングロード
-            client.MovselexFiltering.Load();
+            //client.MovselexFiltering.Load(client.AppConfig.Language);
 
             LibraryCondition libCondition;
             switch (_filteringMode)

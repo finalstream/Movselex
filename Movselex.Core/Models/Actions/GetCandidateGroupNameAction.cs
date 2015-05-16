@@ -22,7 +22,7 @@ namespace Movselex.Core.Models.Actions
 
             var response = google.Query(_groupName);
 
-            CandidateGroupNames = response.items.Select(x => x.title);
+            CandidateGroupNames = response.items != null ? response.items.Select(x => x.title) : Enumerable.Empty<string>();
         }
     }
 }

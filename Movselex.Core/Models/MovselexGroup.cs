@@ -235,7 +235,7 @@ namespace Movselex.Core.Models
             if (sameKeywordGroups.Any())
             {
                 // 同じキーワードのグループがすでに存在したらエラー
-                throw new MovselexException(string.Format("すでに同じキーワードのグループが登録されています。\nキーワード：{0}", keyword.ToLower()));
+                throw new MovselexException(string.Format(Properties.Resources.ErrorMessageRegistedDuplicateKeyword, keyword.ToLower()));
             }
         }
     }

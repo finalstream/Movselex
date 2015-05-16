@@ -61,6 +61,7 @@ namespace Movselex.ViewModels
 
         public void Initialize()
         {
+
         }
 
         public Rect WindowRect {get { return App.Config.WindowBounds; }}

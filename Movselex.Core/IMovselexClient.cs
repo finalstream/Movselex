@@ -110,5 +110,6 @@ namespace Movselex.Core
         void GetCandidateGroupName(string groupName, Action<IEnumerable<string>> action);
         void OpenLibraryFolder(LibraryItem libraryItem);
         void MoveLibraryFile(string moveDestDirectory, LibraryItem[] selectLibraries);
+        void ReloadFiltering();
     }
 }

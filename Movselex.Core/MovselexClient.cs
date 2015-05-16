@@ -388,6 +388,11 @@ namespace Movselex.Core
             _actionExecuter.Post(new MoveLibraryFileAction(moveDestDirectory, selectLibraries));
         }
 
+        public void ReloadFiltering()
+        {
+            _actionExecuter.Post(new ReloadFilteringAction());
+        }
+
         #region Dispose
 
         // Flag: Has Dispose already been called?

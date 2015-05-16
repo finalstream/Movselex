@@ -1,17 +1,16 @@
-using System.IO;
+ï»¿using System;
+using System.Collections.Generic;
 using System.Linq;
-using FinalstreamCommons.Extentions;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Movselex.Core.Models.Actions
 {
-    internal class InitializeAction : RefreshAction
+    class ReloadFilteringAction : MovselexAction
     {
         public override void InvokeCore(MovselexClient client)
         {
-            // ƒf[ƒ^ƒx[ƒXƒ[ƒh
-            LoadDatabase(client);
-
-            // ƒtƒBƒ‹ƒ^ƒŠƒ“ƒOƒ[ƒh
+            // ãƒ•ã‚£ãƒ«ã‚¿ãƒªãƒ³ã‚°ãƒ­ãƒ¼ãƒ‰
             client.MovselexFiltering.Load(client.AppConfig.Language);
         }
     }

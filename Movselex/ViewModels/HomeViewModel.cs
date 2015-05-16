@@ -25,6 +25,7 @@ using Livet.Commands;
 using Livet.EventListeners;
 using Movselex.Core;
 using Movselex.Core.Models;
+using Movselex.Models;
 using NLog;
 using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
@@ -37,10 +38,9 @@ namespace Movselex.ViewModels
         private readonly IMovselexClient _client;
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
-        private readonly ISubject<string> _searchTextChangedSubject = new Subject<string>(); 
+        private readonly ISubject<string> _searchTextChangedSubject = new Subject<string>();
 
         public IMovselexClient Client { get { return _client; }}
-
 
         /// <summary>
         ///     データベース情報。
@@ -332,7 +332,6 @@ namespace Movselex.ViewModels
             };
 
             _client.Initialize();
-
         }
 
         /// <summary>
@@ -350,7 +349,7 @@ namespace Movselex.ViewModels
                 }
                 else
                 {
-                    ModernDialog.ShowMessage("不明なエラーが発生しました。エラーログを開発元に送付してください。", "Error",
+                    ModernDialog.ShowMessage(Resources.MessageUnknownError, "Error",
                MessageBoxButton.OK);
                 }
             });
@@ -424,12 +423,17 @@ namespace Movselex.ViewModels
                 }
             };
             CompositeDisposable.Add(filteringListener);
-
+            
             // 設定変更イベントリスナー
             var configListener = new PropertyChangedEventListener(AppConfig)
             {
                 {"AccentColor", (sender, args) => AppearanceManager.Current.AccentColor = AppConfig.AccentColor},
-                 {"SelectedTheme", (sender, args) => AppearanceManager.Current.ThemeSource = AppConfig.SelectedTheme == "light"? AppearanceManager.LightThemeSource : AppearanceManager.DarkThemeSource},
+                {"SelectedTheme", (sender, args) => AppearanceManager.Current.ThemeSource = AppConfig.SelectedTheme == "light"? AppearanceManager.LightThemeSource : AppearanceManager.DarkThemeSource},
+                {"Language", (sender, args) =>
+                {
+                    MovselexResource.Current.ChangeCulture(AppConfig.Language);
+                    _client.ReloadFiltering();
+                }}
             };
             CompositeDisposable.Add(configListener);
         }
@@ -478,6 +482,7 @@ namespace Movselex.ViewModels
 
         public void Initialize()
         {
+            
             //_filterings = _client.Filterings.FilteringItems;
 
             //foreach (var filteringItem in client.Filterings.FilteringItems)
@@ -488,6 +493,7 @@ namespace Movselex.ViewModels
             //var listener = new CollectionChangedEventListener(
             //    _client.Filterings.FilteringItems);
             //CompositeDisposable.Add(listener);
+            
         }
 
         public void SwitchLibraryMode()
@@ -521,6 +527,8 @@ namespace Movselex.ViewModels
 #endif
         }
 
+        
+
         private void Sandbox()
         {
             Client.ExecEmpty();
@@ -543,14 +551,14 @@ namespace Movselex.ViewModels
             if(CurrentGroup == null) return;
 
             var baseDirectory = DialogUtils.ShowFolderDialog(
-                "移動する場所を指定してください。指定した場所にグループ名でフォルダを作成して移動します。",
+                Resources.MessageMoveGroupDirectory,
                 _client.AppConfig.MoveBaseDirectory);
 
             if (string.IsNullOrEmpty(baseDirectory)) return;
 
             var group = CurrentGroup.Model;
 
-            var result = ModernDialog.ShowMessage(string.Format("{0} を {1} に移動します。よろしいですか？",
+            var result = ModernDialog.ShowMessage(string.Format(Resources.ConfirmMessageMove,
                 group.GroupName,  Path.Combine(baseDirectory, group.GroupName)), "Question?", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes) _client.MoveGroupDirectory(CurrentGroup.Model, baseDirectory);
@@ -558,6 +566,7 @@ namespace Movselex.ViewModels
 
         public void EditGroup()
         {
+            if(CurrentGroup == null) return;
             _client.GetCandidateGroupName(CurrentGroup.Model.GroupName, (candidateGroupNames) =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -566,10 +575,10 @@ namespace Movselex.ViewModels
                     var paramDic = new Dictionary<string, InputParam>();
                     paramDic.Add("GroupName", new InputParam("GroupName", group.GroupName, candidateGroupNames));
                     paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", group.Keyword));
-                    var inputTextContent = new InputTextContent("グループを編集します。", paramDic);
+                    var inputTextContent = new InputTextContent(Resources.MessageEditGroup, paramDic);
                     var dlg = new ModernDialog
                     {
-                        Title = "Edit Group",
+                        Title = Resources.EditGroup,
                         Content = inputTextContent
                     };
                     dlg.Buttons = new Button[] { dlg.OkButton, dlg.CancelButton };
@@ -619,7 +628,7 @@ namespace Movselex.ViewModels
                 paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", keyword));
             }
 
-            var inputTextContent = new InputTextContent("グループを登録します。", paramDic);
+            var inputTextContent = new InputTextContent(Resources.MessageRegistGroup, paramDic);
             var dlg = new ModernDialog
             {
                 Title = "Grouping",
@@ -646,8 +655,8 @@ namespace Movselex.ViewModels
             var selectLibraries = Libraries.Where(x => x.IsSelected).Select(x=>x.Model).ToArray();
             if (!selectLibraries.Any()) return;
 
-            var result = ModernDialog.ShowMessage(string.Format("{0}のグループを解除します。よろしいですか？",
-                selectLibraries.IsSingle() ? selectLibraries.Single().Title :  string.Format("選択した{0}つのアイテム", selectLibraries.Count())), DialogUtils.MessageTitleQuestion, MessageBoxButton.YesNo);
+            var result = ModernDialog.ShowMessage(string.Format(Resources.ConfirmMessageUnGroup,
+                selectLibraries.IsSingle() ? selectLibraries.Single().Title :  string.Format(Resources.MessageSelectedItems, selectLibraries.Count())), DialogUtils.MessageTitleQuestion, MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes) _client.UnGroupLibrary(selectLibraries);
 
@@ -666,14 +675,14 @@ namespace Movselex.ViewModels
             if (!selectLibraries.Any()) return;
 
             var moveDestDirectory = DialogUtils.ShowFolderDialog(
-                "移動する場所を指定してください。指定した場所にそのまま移動します。",
+                Resources.MessageMoveFile,
                 _client.AppConfig.MoveBaseDirectory);
 
             if (string.IsNullOrEmpty(moveDestDirectory)) return;
 
 
-            var result = ModernDialog.ShowMessage(string.Format("{0} を {1} に移動します。よろしいですか？",
-                selectLibraries.IsSingle() ? selectLibraries.Single().Title : string.Format("選択した{0}つのアイテム", selectLibraries.Count()), moveDestDirectory), "Question?", MessageBoxButton.YesNo);
+            var result = ModernDialog.ShowMessage(string.Format(Resources.ConfirmMessageMove,
+                selectLibraries.IsSingle() ? selectLibraries.Single().Title : string.Format(Resources.MessageSelectedItems, selectLibraries.Count()), moveDestDirectory), "Question?", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes) _client.MoveLibraryFile(moveDestDirectory, selectLibraries);
 
@@ -684,8 +693,11 @@ namespace Movselex.ViewModels
             var selectLibraries = Libraries.Where(x => x.IsSelected).Select(x=>x.Model).ToArray();
             if (!selectLibraries.Any()) return;
 
-            var dlg = new ModernDialog() { Content = string.Format("{0}を削除します。よろしいですか？",
-                selectLibraries.IsSingle() ? selectLibraries.Single().Title : string.Format("選択した{0}つのアイテム", selectLibraries.Count())), Title = DialogUtils.MessageTitleQuestion, MinHeight = 0};
+            var dlg = new ModernDialog() { Content = string.Format(Resources.ConfirmMessageDelete,
+                selectLibraries.IsSingle() ? selectLibraries.Single().Title : string.Format(Resources.MessageSelectedItems, selectLibraries.Count())),
+                                           Title = DialogUtils.MessageTitleQuestion,
+                                           MinHeight = 0
+            };
             var yes = dlg.YesButton;
             yes.Content = "yes (with file)";
             var ok = dlg.OkButton;
@@ -697,7 +709,7 @@ namespace Movselex.ViewModels
             var isDeleteFile = dlg.MessageBoxResult == MessageBoxResult.Yes;
             if (isDeleteFile)
             {
-                var result2 = ModernDialog.ShowMessage("ファイルも削除します。よろしいですか？", DialogUtils.MessageTitleQuestion, MessageBoxButton.YesNo);
+                var result2 = ModernDialog.ShowMessage(Resources.ConfirmMessageFileDelete, DialogUtils.MessageTitleQuestion, MessageBoxButton.YesNo);
                 if (result2 == MessageBoxResult.No) return;
             }
 

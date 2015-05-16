@@ -11,6 +11,7 @@
 			 xmlns:conv="clr-namespace:Movselex.Views.Converters"
 			 xmlns:converters="clr-namespace:FinalstreamUIComponents.Converters;assembly=FinalstreamUIComponents"
 			 xmlns:system="clr-namespace:System;assembly=mscorlib"
+			 xmlns:models="clr-namespace:Movselex.Models"
 			 mc:Ignorable="d"
 			 d:DesignHeight="600" d:DesignWidth="1100"
 			 d:DataContext="{d:DesignInstance viewModels:HomeViewModel}"
@@ -21,7 +22,20 @@
 		<viewModels:MainWindowViewModel/>
 	</UserControl.DataContext>
 	-->
-	
+
+	<i:Interaction.Triggers>
+
+		<!--Viewに特別な要件が存在しない限りは、トリガーやアクションの自作にこだわらず積極的にコードビハインドを使いましょう -->
+		<!--Viewのコードビハインドは、基本的にView内で完結するロジックとViewModelからのイベントの受信(専用リスナを使用する)に限るとトラブルが少なくなります -->
+		<!--Livet1.1からはコードビハインドでViewModelのイベントを受信するためのWeakEventLisnterサポートが追加されています -->
+
+		<!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
+		<i:EventTrigger EventName="Loaded">
+			<behaviors1:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+		</i:EventTrigger>
+
+	</i:Interaction.Triggers>
+
 	<UserControl.Resources>
 
 		<Style TargetType="TextBlock" x:Key="Header">
@@ -231,14 +245,14 @@
 			</DataGrid.Columns>
 			<DataGrid.ContextMenu>
 				<ContextMenu>
-					<MenuItem Header="グループ編集">
+					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.EditGroup}" HeaderStringFormat="{}{0}...">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
 								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="EditGroup" />
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
-					<MenuItem Header="グループでファイルを移動">
+					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.MoveGroupFiles}" HeaderStringFormat="{}{0}...">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
 								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="MoveGroupDirectory" />
@@ -338,21 +352,21 @@
 			
 			<DataGrid.ContextMenu>
 				<ContextMenu>
-					<MenuItem Header="Grouping...">
+					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.Grouping}" HeaderStringFormat="{}{0}...">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
 								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="Grouping" />
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
-					<MenuItem Header="Move File...">
+					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.MoveFile}" HeaderStringFormat="{}{0}...">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
 								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="MoveLibraryFile" />
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
-					<MenuItem Header="Open Folder">
+					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.OpenFolder}">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
 								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="OpenLibraryFolder" />
@@ -360,14 +374,14 @@
 						</i:Interaction.Triggers>
 					</MenuItem>
 					<Separator></Separator>
-					<MenuItem Header="UnGroup...">
+					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.UnGroup}" HeaderStringFormat="{}{0}...">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
 								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="UnGroup" />
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
-					<MenuItem Header="Delete...">
+					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.Delete}" HeaderStringFormat="{}{0}...">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">
 								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DeleteLibrary" />

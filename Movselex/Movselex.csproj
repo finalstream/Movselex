@@ -109,6 +109,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\MovselexResource.cs" />
     <Compile Include="ViewModels\DatabaseViewModel.cs" />
     <Compile Include="ViewModels\FilteringViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
@@ -195,6 +196,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.ja.resx" />
     <None Include="database\blank.movselexdatabase">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

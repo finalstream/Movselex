@@ -37,10 +37,15 @@
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Text="Theme:" VerticalAlignment="Center" Margin="0,0,16,4" />
-                    <ComboBox Grid.Column="1" ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" DisplayMemberPath="DisplayName" VerticalAlignment="Center" Margin="0,0,0,4" />
+                    
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Theme:" VerticalAlignment="Center" Margin="0,0,16,4" />
+                    <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" DisplayMemberPath="DisplayName" VerticalAlignment="Center" Margin="0,0,0,4" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Language:" VerticalAlignment="Center" Margin="0,0,16,4" />
+                    <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Cultures}" SelectedItem="{Binding SelectedCulture, Mode=TwoWay}" DisplayMemberPath="EnglishName"  VerticalAlignment="Center" Margin="0,0,0,4" />
 
                     <!--<TextBlock Grid.Row="1" Text="Font size:" VerticalAlignment="Center" Margin="0,0,16,0" />
                     <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding FontSizes}" SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" VerticalAlignment="Center" />-->

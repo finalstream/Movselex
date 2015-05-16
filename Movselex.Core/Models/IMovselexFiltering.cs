@@ -12,6 +12,6 @@ namespace Movselex.Core.Models
         /// <summary>
         /// フィルタ条件をロードします。
         /// </summary>
-        void Load();
+        void Load(string language);
     }
 }

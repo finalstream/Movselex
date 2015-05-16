@@ -188,7 +188,7 @@ namespace Movselex.ViewModels.Pages.Settings
 
         public void OpenDialogExePath()
         {
-            var exepath = DialogUtils.ShowFileDialog("MPC-HC.exeを指定してください。", "exeファイル(*.exe)|*.exe");
+            var exepath = DialogUtils.ShowFileDialog(Movselex.Properties.Resources.MessageSelectMpcExe, "exe File(*.exe)|*.exe");
             if (exepath != null) ExePath = exepath;
         }
     }

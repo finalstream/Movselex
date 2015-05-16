@@ -30,12 +30,13 @@ namespace Movselex.Core.Models
         /// <summary>
         /// フィルタ条件をロードします。
         /// </summary>
-        public void Load()
+        /// <param name="language"></param>
+        public void Load(string language)
         {
             var absolutePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ApplicationDefinitions.DefaultFilteringFilePath);
 
-            var filters = JsonConvert.DeserializeObject<List<FilteringItem>>(
-                File.ReadAllText(absolutePath));
+            var filters = JsonConvert.DeserializeObject<List<FilteringConfig>>(
+                File.ReadAllText(absolutePath)).Select(x => new FilteringItem(x.Value, x.DisplayValue[language])).ToArray();
 
             FilteringItems.DiffUpdate(filters, new FilteringItemComparer());
 

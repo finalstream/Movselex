@@ -1,38 +1,38 @@
 ﻿[
   {
-    "Value": "",
-    "DisplayValue": "ALL MOVIE"
+	"Value": "",
+	"DisplayValue": { "en":"ALL MOVIE", "ja":"ALL MOVIE"}
   },
   {
-    "Value": "INNER JOIN (SELECT ID,SORT FROM PLAYINGLIST) PLAYING ON PL.ID=PLAYING.ID ORDER BY PLAYING.SORT",
-    "DisplayValue": "再生中"
+	"Value": "INNER JOIN (SELECT ID,SORT FROM PLAYINGLIST) PLAYING ON PL.ID=PLAYING.ID ORDER BY PLAYING.SORT",
+	"DisplayValue": { "en":"Playing", "ja":"再生中"}
   },
   {
-    "Value": "AND PLAYED = 0 ORDER BY ADDDATE DESC",
-    "DisplayValue": "未再生"
+	"Value": "AND PLAYED = 0 ORDER BY ADDDATE DESC",
+	"DisplayValue": { "en":"Unplayed", "ja":"未再生"}
   },
   {
-    "Value": "ORDER BY LASTPLAYDATE DESC",
-    "DisplayValue": "再生履歴"
+	"Value": "ORDER BY LASTPLAYDATE DESC",
+	"DisplayValue": { "en":"Play History", "ja":"再生履歴"}
   },
   {
-    "Value": "AND DATETIME(ADDDATE,'LOCALTIME') >= DATETIME(DATETIME('NOW','LOCALTIME'), '-7 DAY','LOCALTIME') ORDER BY ADDDATE DESC",
-    "DisplayValue": "1週間以内に追加した"
+	"Value": "AND DATETIME(ADDDATE,'LOCALTIME') >= DATETIME(DATETIME('NOW','LOCALTIME'), '-7 DAY','LOCALTIME') ORDER BY ADDDATE DESC",
+	"DisplayValue": { "en":"Added a Week", "ja":"1週間以内に追加した"}
   },
   {
-    "Value": "AND PLAYCOUNT >= 3 ORDER BY  PLAYCOUNT / ROUND(JULIANDAY(DATETIME('NOW', 'LOCALTIME')) - JULIANDAY(DATETIME(ADDDATE))) DESC",
-    "DisplayValue": "再生頻度が多いもの"
+	"Value": "AND PLAYCOUNT >= 3 ORDER BY  PLAYCOUNT / ROUND(JULIANDAY(DATETIME('NOW', 'LOCALTIME')) - JULIANDAY(DATETIME(ADDDATE))) DESC",
+	"DisplayValue": { "en":"High Playback", "ja":"再生頻度が多いもの"}
   },
   {
-    "Value": "AND length(LENGTH) >= 6 ORDER BY LENGTH DESC",
-    "DisplayValue": "映画っぽいもの"
+	"Value": "AND length(LENGTH) >= 6 ORDER BY LENGTH DESC",
+	"DisplayValue":  { "en":"Like Movie Time", "ja":"映画っぽいもの"}
   },
   {
-    "Value": "AND length(LENGTH) <= 4 ORDER BY LENGTH DESC",
-    "DisplayValue": "再生時間が１０分以内"
+	"Value": "AND length(LENGTH) <= 4 ORDER BY LENGTH DESC",
+	"DisplayValue": { "en":"PlayTime 10 min", "ja":"再生時間が１０分以内"}
   },
   {
-    "Value": "AND GETFILESIZE(FILEPATH) = 0 ORDER BY PL.ID DESC",
-    "DisplayValue": "存在しないもの"
+	"Value": "AND GETFILESIZE(FILEPATH) = 0 ORDER BY PL.ID DESC",
+	"DisplayValue": { "en":"Not Exist", "ja":"存在しないもの"}
   }
 ]

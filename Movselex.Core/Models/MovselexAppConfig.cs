@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using FinalstreamCommons.Frameworks;
@@ -28,7 +29,8 @@ namespace Movselex.Core.Models
             AccentColor = Color.FromRgb(0x1b, 0xa1, 0xe2),
             SelectedTheme = "light",
             FilteringMode = FilteringMode.SQL,
-            MpcExePath = ""
+            MpcExePath = "",
+            Language = CultureInfo.CurrentUICulture.Parent.Name
         };
 
         public string AppVersion { get; set; }
@@ -64,6 +66,22 @@ namespace Movselex.Core.Models
 
         public string MpcExePath { get; set; }
 
+        #region Language変更通知プロパティ
+
+        private string _language;
+
+        public string Language
+        {
+            get { return _language; }
+            set
+            {
+                if (_language == value) return;
+                _language = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         #region LibraryMode変更通知プロパティ
 
@@ -140,7 +158,7 @@ namespace Movselex.Core.Models
             MpcExePath = "";
         }*/
 
-        public MovselexAppConfig(string appVersion, int schemaVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, string selectFiltering, string titleFormat, FilteringMode filteringMode, string mpcExePath)
+        public MovselexAppConfig(string appVersion, int schemaVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, string selectFiltering, string titleFormat, FilteringMode filteringMode, string mpcExePath, string language)
         {
             AppVersion = appVersion;
             SchemaVersion = schemaVersion;
@@ -156,6 +174,7 @@ namespace Movselex.Core.Models
             TitleFormat = titleFormat;
             FilteringMode = filteringMode;
             MpcExePath = mpcExePath;
+            Language = language;
         }
 
         public MovselexAppConfig()
@@ -182,7 +201,7 @@ namespace Movselex.Core.Models
             SelectedTheme = newConfig.SelectedTheme;
             FilteringMode = newConfig.FilteringMode;
             MpcExePath = newConfig.MpcExePath;
-            
+            if (newConfig.Language != null) Language = newConfig.Language;
 
         }
     }

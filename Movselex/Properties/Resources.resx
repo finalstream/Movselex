@@ -117,4 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfirmMessageDelete" xml:space="preserve">
+    <value>You you want to delete the {0}. Are you sure?</value>
+  </data>
+  <data name="ConfirmMessageFileDelete" xml:space="preserve">
+    <value>It also deletes files. Are you sure?</value>
+  </data>
+  <data name="ConfirmMessageMove" xml:space="preserve">
+    <value>It will move the {0} to {1}. Are you sure?</value>
+  </data>
+  <data name="ConfirmMessageUnGroup" xml:space="preserve">
+    <value>It will release a group of {0}. Are you sure?</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EditGroup" xml:space="preserve">
+    <value>Edit Group</value>
+  </data>
+  <data name="Grouping" xml:space="preserve">
+    <value>Grouping</value>
+  </data>
+  <data name="MessageEditGroup" xml:space="preserve">
+    <value>Edit the group.</value>
+  </data>
+  <data name="MessageFatalError" xml:space="preserve">
+    <value>An unknown error has occurred. It will exit the application. Please send the error log to the developer.</value>
+  </data>
+  <data name="MessageMoveFile" xml:space="preserve">
+    <value>Please specify the location where you want to move. Move directly to the specified location.</value>
+  </data>
+  <data name="MessageMoveGroupDirectory" xml:space="preserve">
+    <value>Please specify the location where you want to move. Moves to create a folder in the group name in the specified location.</value>
+  </data>
+  <data name="MessageRegistGroup" xml:space="preserve">
+    <value>Register the group.</value>
+  </data>
+  <data name="MessageSelectedItems" xml:space="preserve">
+    <value>The selected {0} item</value>
+  </data>
+  <data name="MessageSelectMpcExe" xml:space="preserve">
+    <value>Please specify the MPC-HC.exe.</value>
+  </data>
+  <data name="MessageUnknownError" xml:space="preserve">
+    <value>An unknown error has occurred. Please send the error log to the developer.</value>
+  </data>
+  <data name="MoveFile" xml:space="preserve">
+    <value>Move File</value>
+  </data>
+  <data name="MoveGroupFiles" xml:space="preserve">
+    <value>Move Group Files</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Open Folder</value>
+  </data>
+  <data name="UnGroup" xml:space="preserve">
+    <value>UnGroup</value>
+  </data>
 </root>
