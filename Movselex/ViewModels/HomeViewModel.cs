@@ -194,7 +194,7 @@ namespace Movselex.ViewModels
                 _currentFiltering = value;
                 if (value != null)
                 {
-                    SetSearchKeyword(null);
+                    this.SearchText = null;
                     _client.ChangeFiltering(value.Model);
                 }
                 RaisePropertyChanged();
@@ -216,7 +216,7 @@ namespace Movselex.ViewModels
                 _currentGroup = value;
                 if (value != null)
                 {
-                    SetSearchKeyword(null);
+                    this.SearchText = null;
                     _client.ChangeGroup(value.Model);
                 }
                 RaisePropertyChanged();
@@ -253,7 +253,7 @@ namespace Movselex.ViewModels
             {
                 if (_searchText == value) return;
                 _searchText = value;
-                if (_searchText != null) _searchTextChangedSubject.OnNext(_searchText);
+                _searchTextChangedSubject.OnNext(_searchText);
                 RaisePropertyChanged();
             }
         }
@@ -716,14 +716,14 @@ namespace Movselex.ViewModels
             _client.DeleteLibrary(selectLibraries, isDeleteFile);
         }
 
-        public void SetSearchKeyword(string keyword)
-        {
-            this.SearchText = keyword;
-        }
-
         public void SetShuffleMode(bool isShuffle)
         {
             IsShuffle = isShuffle;
+        }
+
+        public void SetSearchKeyword(string searchKeyword)
+        {
+            SearchText = searchKeyword;
         }
 
         protected override void Dispose(bool disposing)

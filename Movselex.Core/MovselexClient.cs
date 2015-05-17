@@ -102,8 +102,9 @@ namespace Movselex.Core
 
         
         public INowPlayingInfo NowPlayingInfo { get; private set; }
-        
-        
+
+        public string FilteringText { get; private set; }
+
         public ObservableCollection<string> Databases { get; private set; }
         public MovselexFiltering MovselexFiltering { get; private set; }
         public MovselexLibrary MovselexLibrary { get; private set; }
@@ -231,6 +232,8 @@ namespace Movselex.Core
 
         public void FilteringLibrary(string filteringText)
         {
+            FilteringText = filteringText;
+            if (filteringText == null) return; 
             _actionExecuter.Post(new FilteringLibraryAction(filteringText));
         }
 

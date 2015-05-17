@@ -12,7 +12,7 @@ namespace Movselex.Core.Models.Actions
 
         public override void InvokeCore(MovselexClient client)
         {
-
+            client.Filterings.ClearSelection();
             client.MovselexLibrary.Load(new LibraryCondition(
                 FilteringMode.SQL, 
                 FilteringCondition.Empty, 

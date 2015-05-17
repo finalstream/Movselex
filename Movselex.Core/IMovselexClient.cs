@@ -33,6 +33,7 @@ namespace Movselex.Core
         /// </summary>
         INowPlayingInfo NowPlayingInfo { get; }
 
+
         /// <summary>
         ///     アプリ設定。
         /// </summary>

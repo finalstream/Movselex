@@ -40,7 +40,8 @@ namespace Movselex.Core.Models.Actions
                     // 選択状態のフィルタのSQLを取得してロード
                     libCondition = new LibraryCondition(_filteringMode,
                         client.MovselexFiltering.FilteringItems.Where(x => x.IsSelected).Select(x => x.Value).FirstOrDefault(),
-                        client.AppConfig.MaxLimitNum);
+                        string.IsNullOrEmpty(client.FilteringText)? client.AppConfig.MaxLimitNum : 0,
+                        client.FilteringText);
                     break;
                 case FilteringMode.Group:
                     // 選択状態のグループのSQLを取得してロード
