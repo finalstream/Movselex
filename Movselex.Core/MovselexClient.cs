@@ -331,7 +331,7 @@ namespace Movselex.Core
 
         public void Throw(int librarySelectIndex)
         {
-            var libraries = MovselexLibrary.LibraryItems.Skip(librarySelectIndex).Take(AppConfig.LimitNum);
+            var libraries = MovselexLibrary.LibraryItems.Skip(librarySelectIndex).Take(AppConfig.MaxGenerateNum);
             _actionExecuter.Post(new ThrowAction(libraries));
         }
 

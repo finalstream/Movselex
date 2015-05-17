@@ -132,18 +132,36 @@ namespace Movselex.ViewModels.Pages.Settings
 
         #endregion
 
-        #region LimitNum変更通知プロパティ
+        #region MaxGenerateNum変更通知プロパティ
 
-        private int _limitNum;
+        private int _maxGenerateNum;
 
-        public int LimitNum
+        public int MaxGenerateNum
         {
-            get { return App.Config.LimitNum; }
+            get { return App.Config.MaxGenerateNum; }
             set
             {
-                if (_limitNum == value) return;
-                _limitNum = value;
-                App.Config.LimitNum = value;
+                if (_maxGenerateNum == value) return;
+                _maxGenerateNum = value;
+                App.Config.MaxGenerateNum = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region MaxLimitNum変更通知プロパティ
+
+        private int _maxLimitNum;
+
+        public int MaxLimitNum
+        {
+            get { return App.Config.MaxLimitNum; }
+            set
+            {
+                if (_maxLimitNum == value) return;
+                _maxLimitNum = value;
+                App.Config.MaxLimitNum = value;
                 RaisePropertyChanged();
             }
         }

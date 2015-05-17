@@ -20,7 +20,8 @@ namespace Movselex.Core.Models
             ScreenNo = 1,
             IsFullScreen = false,
             SupportExtentions = new[] { ".avi",".mpg",".mp4",".mkv",".flv",".wmv" },
-            LimitNum = 30,
+            MaxGenerateNum = 30,
+            MaxLimitNum = 100,
             MoveBaseDirectory = "",
             SelectDatabase = "library",
             SelectFiltering = "ALL MOVIE",
@@ -52,7 +53,9 @@ namespace Movselex.Core.Models
 
         public string[] SupportExtentions { get; set; }
 
-        public int LimitNum { get; set; }
+        public int MaxGenerateNum { get; set; }
+
+        public int MaxLimitNum { get; set; }
 
         public string MoveBaseDirectory { get; set; }
 
@@ -146,7 +149,7 @@ namespace Movselex.Core.Models
             ScreenNo = 1;
             IsFullScreen = false;
             SupportExtentions = new[] { ".avi",".mpg",".mp4",".mkv",".flv",".wmv" };
-            LimitNum = 30;
+            MaxGenerateNum = 30;
             MoveBaseDirectory = "";
             SelectDatabase = "library";
             SelectFiltering = "ALL MOVIE";
@@ -157,25 +160,6 @@ namespace Movselex.Core.Models
             FilteringMode = FilteringMode.SQL;
             MpcExePath = "";
         }*/
-
-        public MovselexAppConfig(string appVersion, int schemaVersion, Rect windowBounds, string playerExePath, int screenNo, bool isFullScreen, string[] supportExtentions, int limitNum, string moveBaseDirectory, string selectDatabase, string selectFiltering, string titleFormat, FilteringMode filteringMode, string mpcExePath, string language)
-        {
-            AppVersion = appVersion;
-            SchemaVersion = schemaVersion;
-            WindowBounds = windowBounds;
-            PlayerExePath = playerExePath;
-            ScreenNo = screenNo;
-            IsFullScreen = isFullScreen;
-            SupportExtentions = supportExtentions;
-            LimitNum = limitNum;
-            MoveBaseDirectory = moveBaseDirectory;
-            SelectDatabase = selectDatabase;
-            SelectFiltering = selectFiltering;
-            TitleFormat = titleFormat;
-            FilteringMode = filteringMode;
-            MpcExePath = mpcExePath;
-            Language = language;
-        }
 
         public MovselexAppConfig()
         {
@@ -191,7 +175,8 @@ namespace Movselex.Core.Models
             ScreenNo = newConfig.ScreenNo;
             IsFullScreen = newConfig.IsFullScreen;
             SupportExtentions = newConfig.SupportExtentions;
-            LimitNum = newConfig.LimitNum;
+            if (newConfig.MaxGenerateNum != 0) MaxGenerateNum = newConfig.MaxGenerateNum;
+            if (newConfig.MaxLimitNum != 0) MaxLimitNum = newConfig.MaxLimitNum;
             MoveBaseDirectory = newConfig.MoveBaseDirectory;
             SelectDatabase = newConfig.SelectDatabase;
             SelectFiltering = newConfig.SelectFiltering;

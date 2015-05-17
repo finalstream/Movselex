@@ -9,11 +9,11 @@ namespace Movselex.Core.Models
     class FilteringConfig
     {
 
-        public string Value { get; private set; }
+        public FilteringCondition Value { get; private set; }
 
         public Dictionary<string, string> DisplayValue { get; private set; }
 
-        public FilteringConfig(string value, Dictionary<string, string> displayValue)
+        public FilteringConfig(FilteringCondition value, Dictionary<string, string> displayValue)
         {
             Value = value;
             DisplayValue = displayValue;

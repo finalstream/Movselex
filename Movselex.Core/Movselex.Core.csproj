@@ -99,6 +99,7 @@
     <Compile Include="Models\Actions\ReloadFilteringAction.cs" />
     <Compile Include="Models\Actions\UnGroupAction.cs" />
     <Compile Include="Models\Actions\UpdateNowPlayInfoAction.cs" />
+    <Compile Include="Models\FilteringCondition.cs" />
     <Compile Include="Models\FilteringConfig.cs" />
     <Compile Include="Models\FilteringItemComparer.cs" />
     <Compile Include="Models\IMediaFile.cs" />

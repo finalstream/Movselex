@@ -28,11 +28,11 @@ namespace Movselex.Core.Models.Actions
 
             if (_isShuffle)
             {
-                client.MovselexLibrary.Shuffle(appConfig.LimitNum);
+                client.MovselexLibrary.Shuffle(appConfig.MaxGenerateNum);
             }
             else
             {
-                client.MovselexLibrary.Trimming(_librarySelectIndex, appConfig.LimitNum);
+                client.MovselexLibrary.Trimming(_librarySelectIndex, appConfig.MaxGenerateNum);
             }
 
             client.MovselexGroup.Load(client.MovselexLibrary.LibraryItems.Select(x=>x.Gid).Distinct());

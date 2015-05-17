@@ -176,6 +176,14 @@ namespace Movselex.ViewModels.Pages.Settings
                 "MIT License",
                 "Copyright (c) 2007 James Newton-King",
                 "http://www.newtonsoft.com/json"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                null,
+                "Modern UI Icons",
+                "Icon",
+                "Creative Commons License BY-ND 3.0",
+                null,
+                "http://modernuiicons.com/"));
         }
     }
 }

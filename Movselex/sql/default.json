@@ -1,38 +1,38 @@
 ﻿[
   {
-	"Value": "",
+	"Value": { "Sql": "", "IsLimited": true },
 	"DisplayValue": { "en":"ALL MOVIE", "ja":"ALL MOVIE"}
   },
   {
-	"Value": "INNER JOIN (SELECT ID,SORT FROM PLAYINGLIST) PLAYING ON PL.ID=PLAYING.ID ORDER BY PLAYING.SORT",
+	"Value": { "Sql": "INNER JOIN (SELECT ID,SORT FROM PLAYINGLIST) PLAYING ON PL.ID=PLAYING.ID ORDER BY PLAYING.SORT", "IsLimited": false },
 	"DisplayValue": { "en":"Playing", "ja":"再生中"}
   },
   {
-	"Value": "AND PLAYED = 0 ORDER BY ADDDATE DESC",
+	"Value": { "Sql": "AND PLAYED = 0 ORDER BY ADDDATE DESC", "IsLimited": false },
 	"DisplayValue": { "en":"Unplayed", "ja":"未再生"}
   },
   {
-	"Value": "ORDER BY LASTPLAYDATE DESC",
+	"Value": { "Sql": "ORDER BY LASTPLAYDATE DESC", "IsLimited": true },
 	"DisplayValue": { "en":"Play History", "ja":"再生履歴"}
   },
   {
-	"Value": "AND DATETIME(ADDDATE,'LOCALTIME') >= DATETIME(DATETIME('NOW','LOCALTIME'), '-7 DAY','LOCALTIME') ORDER BY ADDDATE DESC",
+	"Value": { "Sql": "AND DATETIME(ADDDATE,'LOCALTIME') >= DATETIME(DATETIME('NOW','LOCALTIME'), '-7 DAY','LOCALTIME') ORDER BY ADDDATE DESC", "IsLimited": false },
 	"DisplayValue": { "en":"Added a Week", "ja":"1週間以内に追加した"}
   },
   {
-	"Value": "AND PLAYCOUNT >= 3 ORDER BY  PLAYCOUNT / ROUND(JULIANDAY(DATETIME('NOW', 'LOCALTIME')) - JULIANDAY(DATETIME(ADDDATE))) DESC",
+	"Value": { "Sql": "AND PLAYCOUNT >= 3 ORDER BY  PLAYCOUNT / ROUND(JULIANDAY(DATETIME('NOW', 'LOCALTIME')) - JULIANDAY(DATETIME(ADDDATE))) DESC", "IsLimited": true },
 	"DisplayValue": { "en":"High Playback", "ja":"再生頻度が多いもの"}
   },
   {
-	"Value": "AND length(LENGTH) >= 6 ORDER BY LENGTH DESC",
+	"Value": { "Sql": "AND length(LENGTH) >= 6 ORDER BY LENGTH DESC", "IsLimited": false },
 	"DisplayValue":  { "en":"Like Movie Time", "ja":"映画っぽいもの"}
   },
   {
-	"Value": "AND length(LENGTH) <= 4 ORDER BY LENGTH DESC",
+	"Value": { "Sql": "AND length(LENGTH) <= 4 ORDER BY LENGTH DESC", "IsLimited": false },
 	"DisplayValue": { "en":"PlayTime 10 min", "ja":"再生時間が１０分以内"}
   },
   {
-	"Value": "AND GETFILESIZE(FILEPATH) = 0 ORDER BY PL.ID DESC",
+	"Value": { "Sql": "AND GETFILESIZE(FILEPATH) = 0 ORDER BY PL.ID DESC", "IsLimited": false },
 	"DisplayValue": { "en":"Not Exist", "ja":"存在しないもの"}
   }
 ]

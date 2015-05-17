@@ -12,7 +12,12 @@ namespace Movselex.Core.Models.Actions
 
         public override void InvokeCore(MovselexClient client)
         {
-            client.MovselexLibrary.Load(new LibraryCondition(FilteringMode.SQL, "", _filteringText));
+
+            client.MovselexLibrary.Load(new LibraryCondition(
+                FilteringMode.SQL, 
+                FilteringCondition.Empty, 
+                client.AppConfig.MaxLimitNum,
+                _filteringText));
             client.MovselexGroup.Load();
         }
     }

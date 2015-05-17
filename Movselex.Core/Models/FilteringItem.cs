@@ -9,7 +9,7 @@ namespace Movselex.Core.Models
     /// </summary>
     public class FilteringItem : NotificationObject, IEquatable<FilteringItem>, ISelectableItem
     {
-        public string Value { get; private set; }
+        public FilteringCondition Value { get; private set; }
 
         public string DisplayValue { get; private set; }
 
@@ -30,7 +30,7 @@ namespace Movselex.Core.Models
 
         #endregion
 
-        public FilteringItem(string value, string displayValue)
+        public FilteringItem(FilteringCondition value, string displayValue)
         {
             Value = value;
             DisplayValue = displayValue;

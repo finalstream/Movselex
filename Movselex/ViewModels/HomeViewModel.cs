@@ -153,7 +153,7 @@ namespace Movselex.ViewModels
             {
                 if (_libraryCount == value) return;
                 _libraryCount = value;
-                IsThrowable = !String.IsNullOrEmpty(AppConfig.MpcExePath) && value > 0 && value <= AppConfig.LimitNum;
+                IsThrowable = !String.IsNullOrEmpty(AppConfig.MpcExePath) && value > 0 && value <= AppConfig.MaxGenerateNum;
                 IsTrimmable = value > 0;
                 RaisePropertyChanged();
             }

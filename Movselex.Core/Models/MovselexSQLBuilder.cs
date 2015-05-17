@@ -39,7 +39,7 @@ namespace Movselex.Core.Models
                 }
             }
 
-            var condSql = libCondition.ConditionSQL;
+            var condSql = libCondition.Condition.Sql;
 
             switch (libCondition.FilteringMode)
             {
@@ -70,6 +70,7 @@ namespace Movselex.Core.Models
             var sql = sb.ToString();
             if (isFullSql) sql = SQLResource.SelectLibraryList + " " + condSql;
             if (!sql.ToUpper().Contains("ORDER BY")) sql += " ORDER BY PL.DATE desc ";
+            if (libCondition.Condition.IsLimited && libCondition.MaxLimitNum > 0) sql += string.Format(" LIMIT {0}", libCondition.MaxLimitNum);
             return sql;
         }
 
