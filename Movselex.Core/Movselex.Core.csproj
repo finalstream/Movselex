@@ -94,6 +94,7 @@
     <Compile Include="Models\Actions\MovselexSchemaUpgradeV1Action.cs" />
     <Compile Include="Models\Actions\PlayMonitoringAction.cs" />
     <Compile Include="Models\Actions\MovselexProgressAction.cs" />
+    <Compile Include="Models\Actions\DiffRefreshAction.cs" />
     <Compile Include="Models\Actions\RegistFileAction.cs" />
     <Compile Include="Models\Actions\GroupingAction.cs" />
     <Compile Include="Models\Actions\ReloadFilteringAction.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Models\FilteringCondition.cs" />
     <Compile Include="Models\FilteringConfig.cs" />
     <Compile Include="Models\FilteringItemComparer.cs" />
+    <Compile Include="Models\GroupItemComparer.cs" />
     <Compile Include="Models\IMediaFile.cs" />
     <Compile Include="Models\IProgressInfo.cs" />
     <Compile Include="Models\Actions\EmptyAction.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Models\Actions\TrimmingLibraryAction.cs" />
     <Compile Include="Models\Actions\ThrowAction.cs" />
     <Compile Include="Models\Actions\UpdateLibraryAction.cs" />
+    <Compile Include="Models\LibraryItemComparer.cs" />
     <Compile Include="Models\MediaFile.cs" />
     <Compile Include="Models\MovselexDatabaseAccessor.cs" />
     <Compile Include="Models\FilteringItem.cs" />

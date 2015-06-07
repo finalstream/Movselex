@@ -33,24 +33,7 @@ namespace Movselex.Core.Models.Actions
             // フィルタリングロード
             //client.MovselexFiltering.Load(client.AppConfig.Language);
 
-            LibraryCondition libCondition;
-            switch (_filteringMode)
-            {
-                case FilteringMode.SQL:
-                    // 選択状態のフィルタのSQLを取得してロード
-                    libCondition = new LibraryCondition(_filteringMode,
-                        client.MovselexFiltering.FilteringItems.Where(x => x.IsSelected).Select(x => x.Value).FirstOrDefault(),
-                        string.IsNullOrEmpty(client.FilteringText)? client.AppConfig.MaxLimitNum : 0,
-                        client.FilteringText);
-                    break;
-                case FilteringMode.Group:
-                    // 選択状態のグループのSQLを取得してロード
-                    libCondition = new LibraryCondition(_filteringMode,
-                        client.MovselexGroup.GroupItems.Where(x => x.IsSelected).Select(x => new FilteringCondition(x.GroupName, false)).FirstOrDefault());
-                    break;
-                default:
-                    return;
-            }
+            var libCondition = CreateLibraryCondition(client);
             
             client.MovselexLibrary.Load(libCondition);
 
@@ -58,6 +41,28 @@ namespace Movselex.Core.Models.Actions
 
             client.MovselexPlaying.Load();
         }
+
+        protected LibraryCondition CreateLibraryCondition(MovselexClient client)
+        {
+            switch (_filteringMode)
+            {
+                case FilteringMode.SQL:
+                    // 選択状態のフィルタのSQLを取得してロード
+                    return new LibraryCondition(_filteringMode,
+                        client.MovselexFiltering.FilteringItems.Where(x => x.IsSelected).Select(x => x.Value).FirstOrDefault(),
+                        string.IsNullOrEmpty(client.FilteringText) ? client.AppConfig.MaxLimitNum : 0,
+                        client.FilteringText);
+                    break;
+                case FilteringMode.Group:
+                    // 選択状態のグループのSQLを取得してロード
+                    return new LibraryCondition(_filteringMode,
+                        client.MovselexGroup.GroupItems.Where(x => x.IsSelected).Select(x => new FilteringCondition(x.GroupName, false)).FirstOrDefault());
+                    break;
+                default:
+                    return null;
+            }
+        }
+
 
         /// <summary>
         /// データベースをロードします。

@@ -46,7 +46,7 @@ namespace Movselex.Core.Models.Actions
                     client.ProgressInfo.UpdateProgressMessage("Moving Library Files",oldFilePath, i++,
                         _selectLibraries.Length);
 
-                    var isMoved = FileUtils.Move(oldFilePath, newfilepath);
+                    var isMoved = File.Exists(oldFilePath) && FileUtils.Move(oldFilePath, newfilepath);
 
                     if (isMoved)
                     {

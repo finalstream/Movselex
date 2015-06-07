@@ -195,7 +195,7 @@ namespace Movselex.ViewModels
                 if (value != null)
                 {
                     this.SearchText = null;
-                    _client.ChangeFiltering(value.Model);
+                    _client.ChangeFiltering(value.Model, SearchText);
                 }
                 RaisePropertyChanged();
             }
@@ -216,7 +216,7 @@ namespace Movselex.ViewModels
                 _currentGroup = value;
                 if (value != null)
                 {
-                    this.SearchText = null;
+                    if (string.IsNullOrEmpty(this.SearchText)) this.SearchText = null;
                     _client.ChangeGroup(value.Model);
                 }
                 RaisePropertyChanged();
@@ -520,7 +520,6 @@ namespace Movselex.ViewModels
         public void UpdateLibrary()
         {
             _client.UpdateLibrary();
-            _client.Refresh();
 
 #if DEBUG
             Sandbox();

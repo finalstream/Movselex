@@ -33,6 +33,7 @@ namespace Movselex.Core.Models
         {
             var groups = _databaseAccessor.SelectGroup();
 
+
             GroupItems.Clear();
             foreach (var groupItem in groups)
             {
@@ -42,7 +43,7 @@ namespace Movselex.Core.Models
 
         public void Load(IEnumerable<long> gids)
         {
-            var groups = _databaseAccessor.SelectGroup().ToArray();
+            var groups = _databaseAccessor.SelectGroup();
 
             GroupItems.Clear();
             foreach (var gid in gids)
@@ -238,5 +239,12 @@ namespace Movselex.Core.Models
                 throw new MovselexException(string.Format(Properties.Resources.ErrorMessageRegistedDuplicateKeyword, keyword.ToLower()));
             }
         }
+
+        public void DiffLoad()
+        {
+            var groups = _databaseAccessor.SelectGroup().ToArray();
+
+            GroupItems.DiffUpdate(groups, new GroupItemComparer());
+        }
     }
- }
+}

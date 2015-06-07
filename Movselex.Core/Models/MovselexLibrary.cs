@@ -259,5 +259,12 @@ namespace Movselex.Core.Models
                 LibraryItems.Add(libraryItem);
             }
         }
+
+        public void DiffLoad(LibraryCondition libCondition)
+        {
+            var libraries = _databaseAccessor.SelectLibraryList(libCondition).ToArray();
+            LibraryItems.DiffUpdate(libraries,
+                new LibraryItemComparer());
+        }
     }
 }

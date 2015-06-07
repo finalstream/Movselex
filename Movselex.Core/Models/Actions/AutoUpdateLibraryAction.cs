@@ -9,6 +9,7 @@ namespace Movselex.Core.Models.Actions
 {
     class AutoUpdateLibraryAction : BackgroundIntervalAction
     {
+
         private readonly MovselexClient _client;
 
         public AutoUpdateLibraryAction(MovselexClient client)
@@ -19,6 +20,7 @@ namespace Movselex.Core.Models.Actions
         protected override void InvokeCore()
         {
             _client.UpdateLibrary();
+
         }
     }
 }

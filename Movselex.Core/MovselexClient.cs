@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using FinalstreamCommons.Collections;
@@ -160,7 +161,7 @@ namespace Movselex.Core
         protected override void InitializeCore()
         {
 
-            AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
+            if (File.Exists(_appConfigFilePath)) AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
             AppConfig.AppVersion = ExecutingAssemblyInfo.FileVersion;
 
             UpgradeSchema();
@@ -195,6 +196,17 @@ namespace Movselex.Core
         public void Refresh()
         {
             var action = new RefreshAction(AppConfig.FilteringMode);
+            action.AfterAction = () => OnRefreshed(EventArgs.Empty);
+            _actionExecuter.Post(action);
+        }
+
+        /// <summary>
+        /// 差分リフレッシュします。
+        /// </summary>
+        /// <param name="filteringText"></param>
+        public void DiffRefresh()
+        {
+            var action = new DiffRefreshAction(AppConfig.FilteringMode);
             action.AfterAction = () => OnRefreshed(EventArgs.Empty);
             _actionExecuter.Post(action);
         }
@@ -267,6 +279,7 @@ namespace Movselex.Core
                 playerMediaCrawlerAction.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
                 playMonitoringAction.CountUpTimePlayed += (sender, l) => _actionExecuter.Post(new IncrementPlayCountAction(l));
                 playMonitoringAction.SwitchTitle += (sender, s) => _actionExecuter.Post(new UpdateNowPlayInfoAction(s));
+                
 
                 _backgroundWorker = new BackgroundWorker(TimeSpan.FromMilliseconds(1000), new BackgroundAction[]
                 {
@@ -302,11 +315,13 @@ namespace Movselex.Core
         /// フィルタを変更します。
         /// </summary>
         /// <param name="filteringItem"></param>
-        public void ChangeFiltering(FilteringItem filteringItem)
+        /// <param name="searchText"></param>
+        public void ChangeFiltering(FilteringItem filteringItem, string searchText)
         {
             if (Filterings.FirstOrDefault(x => x.IsSelected) != null) _log.Debug(Filterings.FirstOrDefault(x => x.IsSelected).DisplayValue);
             AppConfig.SelectFiltering = filteringItem.DisplayValue;
             AppConfig.FilteringMode = FilteringMode.SQL;
+            FilteringText = searchText;
 
             // TODO: Action内で処理するようにする。
             Groups.ClearSelection();
@@ -345,7 +360,9 @@ namespace Movselex.Core
 
         public void UpdateLibrary()
         {
-            _actionExecuter.Post(new UpdateLibraryAction());
+            var action = new UpdateLibraryAction();
+            action.AfterAction = DiffRefresh;
+            _actionExecuter.Post(action);
         }
 
 

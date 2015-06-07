@@ -70,7 +70,8 @@ namespace Movselex.Core
         ///     フィルタリングを変更します。
         /// </summary>
         /// <param name="filteringItem"></param>
-        void ChangeFiltering(FilteringItem filteringItem);
+        /// <param name="searchText"></param>
+        void ChangeFiltering(FilteringItem filteringItem, string searchText);
 
         /// <summary>
         ///     グループを変更します。
@@ -112,5 +113,6 @@ namespace Movselex.Core
         void OpenLibraryFolder(LibraryItem libraryItem);
         void MoveLibraryFile(string moveDestDirectory, LibraryItem[] selectLibraries);
         void ReloadFiltering();
+        void DiffRefresh();
     }
 }
