@@ -12,6 +12,7 @@
 			 xmlns:converters="clr-namespace:FinalstreamUIComponents.Converters;assembly=FinalstreamUIComponents"
 			 xmlns:system="clr-namespace:System;assembly=mscorlib"
 			 xmlns:models="clr-namespace:Movselex.Models"
+			 xmlns:commands="clr-namespace:FinalstreamUIComponents.Commands;assembly=FinalstreamUIComponents"
 			 mc:Ignorable="d"
 			 d:DesignHeight="600" d:DesignWidth="1100"
 			 d:DataContext="{d:DesignInstance viewModels:HomeViewModel}"
@@ -274,7 +275,7 @@
 		<DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" RowHeaderWidth="0" 
 				  IsReadOnly="True"  ItemsSource="{Binding Libraries}" AutoGenerateColumns="False" 
 				  Margin="5,10,0,10" BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}"
-				  SelectedIndex="{Binding LibrarySelectIndex}" RowHeight="30">
+				  SelectedIndex="{Binding LibrarySelectIndex}" SelectedItem="{Binding SelectLibrary}" RowHeight="30">
 
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="" Width="10">
@@ -348,7 +349,7 @@
 				<Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
 					<Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 				</Style>
-			</DataGrid.RowStyle>
+            </DataGrid.RowStyle>
 			
 			<DataGrid.ContextMenu>
 				<ContextMenu>
@@ -393,7 +394,10 @@
 			
 			<i:Interaction.Triggers>
 				<i:EventTrigger EventName="MouseDoubleClick">
-					<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DoubleClickLibrary"/>
+                    <commands:InteractiveCommand Command="{Binding DoubleClickLibraryCommand}" />
+				</i:EventTrigger>
+				<i:EventTrigger EventName="Sorting">
+					<commands:InteractiveCommand Command="{Binding DataGridSortingCommand}" />
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
 			<i:Interaction.Behaviors>
@@ -453,6 +457,14 @@
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 			</Button>
+			<Button Grid.Column="1" Content="{Binding IsShuffle, Converter={StaticResource IsShuffleToButtonNameConverter}}" Margin="0,5,0,5" IsEnabled="{Binding IsTrimmable}">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="Click">
+						<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="Trimming"/>
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+			</Button>
+			<!--
 			<Grid Grid.Column="1">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition></ColumnDefinition>
@@ -487,6 +499,7 @@
 					</Button.ContextMenu>
 				</Button>
 			</Grid>
+			-->
 			<Button Grid.Column="2" Margin="5,5,0,5">
 				<!-- Your vector graphics here -->
 				<ContentControl Style="{StaticResource icon}" Content="{StaticResource icon-refresh}" Width="32" Height="32" Margin="-10,-10,-10,-12" VerticalAlignment="Center" HorizontalAlignment="Center" />

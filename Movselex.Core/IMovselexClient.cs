@@ -90,10 +90,10 @@ namespace Movselex.Core
         ///     スローします。
         /// </summary>
         /// <param name="librarySelectIndex"></param>
-        void Throw(int librarySelectIndex);
+        void Throw(IEnumerable<LibraryItem> librarySelectIndex);
 
 
-        void InterruptThrow(int librarySelectIndex);
+        void InterruptThrow(LibraryItem librarySelectIndex);
 
         void UpdateLibrary();
         void Refresh();

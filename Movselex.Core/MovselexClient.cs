@@ -347,15 +347,14 @@ namespace Movselex.Core
             _actionExecuter.Post(action);
         }
 
-        public void Throw(int librarySelectIndex)
+        public void Throw(IEnumerable<LibraryItem> libraries)
         {
-            var libraries = MovselexLibrary.LibraryItems.Skip(librarySelectIndex).Take(AppConfig.MaxGenerateNum);
             _actionExecuter.Post(new ThrowAction(libraries));
         }
 
-        public void InterruptThrow(int librarySelectIndex)
+        public void InterruptThrow(LibraryItem library)
         {
-            _actionExecuter.Post(new ThrowAction(MovselexLibrary.LibraryItems[librarySelectIndex]));
+            _actionExecuter.Post(new ThrowAction(library));
         }
 
         public void UpdateLibrary()

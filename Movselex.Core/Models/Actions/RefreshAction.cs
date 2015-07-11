@@ -52,12 +52,10 @@ namespace Movselex.Core.Models.Actions
                         client.MovselexFiltering.FilteringItems.Where(x => x.IsSelected).Select(x => x.Value).FirstOrDefault(),
                         string.IsNullOrEmpty(client.FilteringText) ? client.AppConfig.MaxLimitNum : 0,
                         client.FilteringText);
-                    break;
                 case FilteringMode.Group:
                     // 選択状態のグループのSQLを取得してロード
                     return new LibraryCondition(_filteringMode,
                         client.MovselexGroup.GroupItems.Where(x => x.IsSelected).Select(x => new FilteringCondition(x.GroupName, false)).FirstOrDefault());
-                    break;
                 default:
                     return null;
             }

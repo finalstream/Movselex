@@ -151,7 +151,7 @@
     <value>移動する場所を指定してください。指定した場所にグループ名でフォルダを作成して移動します。</value>
   </data>
   <data name="MessageRegistGroup" xml:space="preserve">
-    <value>グループを登録します。</value>
+    <value>グループに登録します。</value>
   </data>
   <data name="MessageSelectedItems" xml:space="preserve">
     <value>選択した{0}つのアイテム</value>

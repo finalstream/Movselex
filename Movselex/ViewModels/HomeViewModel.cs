@@ -11,16 +11,21 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 using FinalstreamCommons.Extentions;
 using FinalstreamCommons.Utils;
+using FinalstreamUIComponents.Commands;
 using FinalstreamUIComponents.Models;
 using FinalstreamUIComponents.Views;
 using FirstFloor.ModernUI;
 using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
 using Livet;
+using Livet.Behaviors;
 using Livet.Commands;
 using Livet.EventListeners;
 using Movselex.Core;
@@ -153,7 +158,7 @@ namespace Movselex.ViewModels
             {
                 if (_libraryCount == value) return;
                 _libraryCount = value;
-                IsThrowable = !String.IsNullOrEmpty(AppConfig.MpcExePath) && value > 0 && value <= AppConfig.MaxGenerateNum;
+                IsThrowable = !String.IsNullOrEmpty(AppConfig.MpcExePath) && value > 0;
                 IsTrimmable = value > 0;
                 RaisePropertyChanged();
             }
@@ -225,6 +230,7 @@ namespace Movselex.ViewModels
 
         #endregion
 
+        
         #region LibrarySelectIndex変更通知プロパティ
 
         private int _librarySelectIndex;
@@ -236,6 +242,24 @@ namespace Movselex.ViewModels
             {
                 if (_librarySelectIndex == value) return;
                 _librarySelectIndex = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+        
+
+        #region LibrarySelectItem変更通知プロパティ
+
+        private LibraryViewModel _SelectLibrary;
+
+        public LibraryViewModel SelectLibrary
+        {
+            get { return _SelectLibrary; }
+            set
+            {
+                if (_SelectLibrary == value) return;
+                _SelectLibrary = value;
                 RaisePropertyChanged();
             }
         }
@@ -508,17 +532,15 @@ namespace Movselex.ViewModels
 
         public void Throw()
         {
-            _client.Throw(LibrarySelectIndex);
-        }
-
-        public void DoubleClickLibrary()
-        {
-            Libraries[LibrarySelectIndex].DebugWriteJson();
-            _client.InterruptThrow(LibrarySelectIndex);
+            var view = CollectionViewSource.GetDefaultView(Libraries).OfType<LibraryViewModel>();
+            var libraries = view.Select(x=>x.Model).Skip(LibrarySelectIndex).Take(AppConfig.MaxGenerateNum);
+            _client.Throw(libraries);
         }
 
         public void UpdateLibrary()
         {
+            var view = CollectionViewSource.GetDefaultView(Libraries);
+
             _client.UpdateLibrary();
 
 #if DEBUG
@@ -664,7 +686,7 @@ namespace Movselex.ViewModels
         public void OpenLibraryFolder()
         {
             if (LibrarySelectIndex == -1) return;
-            _client.OpenLibraryFolder(Libraries[LibrarySelectIndex].Model);
+            _client.OpenLibraryFolder(SelectLibrary.Model);
         }
 
         public void MoveLibraryFile()
@@ -724,6 +746,56 @@ namespace Movselex.ViewModels
         {
             SearchText = searchKeyword;
         }
+
+        #region Commands
+
+        DelegateCommand<DataGridSortingEventArgs> _dataGridSortingCommand;
+        public DelegateCommand<DataGridSortingEventArgs> DataGridSortingCommand
+        {
+            get
+            {
+                return _dataGridSortingCommand ?? (_dataGridSortingCommand = new DelegateCommand<DataGridSortingEventArgs>(
+                args =>
+                {
+                    var sortDirection = args.Column.SortDirection;
+                    if (sortDirection == ListSortDirection.Descending)
+                    {
+                        // 降順の次はソートを無効にする
+                        args.Column.SortDirection = null;
+                        args.Handled = true;
+                        var view = CollectionViewSource.GetDefaultView(Libraries);
+                        view.SortDescriptions.Clear();
+                    }
+                    
+                })); 
+            }
+        }
+
+        DelegateCommand<MouseButtonEventArgs> _doubleClickLibraryCommand;
+        public DelegateCommand<MouseButtonEventArgs> DoubleClickLibraryCommand
+        {
+            get
+            {
+                return _doubleClickLibraryCommand ?? (_doubleClickLibraryCommand = new DelegateCommand<MouseButtonEventArgs>(
+                args =>
+                {
+                    var dep = args.OriginalSource as DependencyObject;
+                    while (dep != null && !(dep is DataGridRow)) {
+                        dep = VisualTreeHelper.GetParent(dep);
+                    }
+                    
+                    if (dep is DataGridRow)
+                    {
+                        // 行がクリックされたときだけ処理する
+                        SelectLibrary.Model.DebugWriteJson();
+                        _client.InterruptThrow(SelectLibrary.Model);
+                    }
+                }));
+            }
+        }
+
+        #endregion
+
 
         protected override void Dispose(bool disposing)
         {
