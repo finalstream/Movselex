@@ -349,7 +349,7 @@
 				<Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
 					<Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 				</Style>
-            </DataGrid.RowStyle>
+			</DataGrid.RowStyle>
 			
 			<DataGrid.ContextMenu>
 				<ContextMenu>
@@ -394,10 +394,10 @@
 			
 			<i:Interaction.Triggers>
 				<i:EventTrigger EventName="MouseDoubleClick">
-                    <commands:InteractiveCommand Command="{Binding DoubleClickLibraryCommand}" />
+					<commands:InteractiveCommandAction Command="{Binding DoubleClickLibraryCommand}" />
 				</i:EventTrigger>
 				<i:EventTrigger EventName="Sorting">
-					<commands:InteractiveCommand Command="{Binding DataGridSortingCommand}" />
+					<commands:InteractiveCommandAction Command="{Binding DataGridSortingCommand}" />
 				</i:EventTrigger>
 			</i:Interaction.Triggers>
 			<i:Interaction.Behaviors>
