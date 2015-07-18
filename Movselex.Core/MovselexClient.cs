@@ -357,6 +357,11 @@ namespace Movselex.Core
             _actionExecuter.Post(new ThrowAction(library));
         }
 
+        public void InterruptThrow(long id)
+        {
+            _actionExecuter.Post(new ThrowAction(id));
+        }
+
         public void UpdateLibrary()
         {
             var action = new UpdateLibraryAction();

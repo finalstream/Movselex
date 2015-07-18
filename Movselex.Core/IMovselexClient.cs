@@ -93,7 +93,7 @@ namespace Movselex.Core
         void Throw(IEnumerable<LibraryItem> librarySelectIndex);
 
 
-        void InterruptThrow(LibraryItem librarySelectIndex);
+        void InterruptThrow(LibraryItem library);
 
         void UpdateLibrary();
         void Refresh();
@@ -114,5 +114,6 @@ namespace Movselex.Core
         void MoveLibraryFile(string moveDestDirectory, LibraryItem[] selectLibraries);
         void ReloadFiltering();
         void DiffRefresh();
+        void InterruptThrow(long id);
     }
 }

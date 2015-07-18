@@ -17,7 +17,9 @@ namespace Movselex.Core.Models.Actions
 
         private readonly Mode _mode;
 
-        private IEnumerable<LibraryItem> _libraryItems; 
+        private IEnumerable<LibraryItem> _libraryItems;
+
+        private long _id = -1;
 
         public ThrowAction(LibraryItem library)
         {
@@ -31,10 +33,22 @@ namespace Movselex.Core.Models.Actions
             _libraryItems = libraries;
         }
 
+        public ThrowAction(long id)
+        {
+            _mode = Mode.Interrupt;
+            _id = id;
+        }
+
         public override void InvokeCore(MovselexClient client)
         {
             var playing = client.MovselexPlaying;
             var thrower = new MediaPlayerClassicThrower(client.AppConfig);
+
+            if (_id != -1)
+            {
+                // id指定の場合
+                _libraryItems = new[] {client.MovselexLibrary.GetLibraryItem(_id)};
+            }
 
             if (_mode == Mode.Interrupt)
             {

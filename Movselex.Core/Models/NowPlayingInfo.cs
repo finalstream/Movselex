@@ -14,7 +14,23 @@ namespace Movselex.Core.Models
 
         public long Id { get; private set; }
 
-        public LibraryItem Library { get; private set; }
+        #region Library変更通知プロパティ
+
+        private LibraryItem _Library;
+
+        public LibraryItem Library
+        {
+            get { return _Library; }
+            set
+            {
+                if (_Library == value) return;
+                _Library = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
 
         #region ViewTitle変更通知プロパティ
 
@@ -122,6 +138,91 @@ namespace Movselex.Core.Models
 
         #endregion
 
+        #region GroupName変更通知プロパティ
+
+        private string _GroupName;
+
+        public string GroupName
+        {
+            get { return _GroupName; }
+            set
+            {
+                if (_GroupName == value) return;
+                _GroupName = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region CanPrevious変更通知プロパティ
+
+        private bool _CanPrevious;
+
+        public bool CanPrevious
+        {
+            get { return _CanPrevious; }
+            set
+            {
+                if (_CanPrevious == value) return;
+                _CanPrevious = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region CanNext変更通知プロパティ
+
+        private bool _CanNext;
+
+        public bool CanNext
+        {
+            get { return _CanNext; }
+            set
+            {
+                if (_CanNext == value) return;
+                _CanNext = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region PreviousId変更通知プロパティ
+
+        private long _PreviousId;
+
+        public long PreviousId
+        {
+            get { return _PreviousId; }
+            set
+            {
+                if (_PreviousId == value) return;
+                _PreviousId = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region NextId変更通知プロパティ
+
+        private long _NextId;
+
+        public long NextId
+        {
+            get { return _NextId; }
+            set
+            {
+                if (_NextId == value) return;
+                _NextId = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// 更新します。
         /// </summary>
@@ -154,7 +255,31 @@ namespace Movselex.Core.Models
         {
             Library = library;
             Season = library.Season;
+            GroupName = !string.IsNullOrEmpty(library.GroupName) ? library.GroupName : "";
             if(!string.IsNullOrEmpty(library.Title)) ViewTitle = library.Title;
+        }
+
+        public void SetPreviousAndNextId(Tuple<long?, long?> prevnextId)
+        {
+            if (prevnextId.Item1 != null)
+            {
+                PreviousId = (long)prevnextId.Item1;
+                CanPrevious = true;
+            }
+            else
+            {
+                CanPrevious = false;
+            }
+
+            if (prevnextId.Item2 != null)
+            {
+                NextId = (long)prevnextId.Item2;
+                CanNext = true;
+            }
+            else
+            {
+                CanNext = false;
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Movselex.Core.Models
+﻿using System;
+
+namespace Movselex.Core.Models
 {
     public interface INowPlayingInfo
     {
@@ -29,6 +31,15 @@
 
         string Season { get; }
 
+        string GroupName { get; }
+
+        bool CanPrevious { get; }
+
+        bool CanNext { get; }
+
+        long PreviousId { get; }
+
+        long NextId { get; }
 
         /// <summary>
         /// 更新します。
@@ -39,5 +50,6 @@
 
         void SetId(long id);
         void SetLibrary(LibraryItem library);
+        void SetPreviousAndNextId(Tuple<long?, long?> prevnextId);
     }
 }

@@ -296,6 +296,16 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   SELECT (SELECT ID FROM MOVLIST WHERE GID = @Gid AND ABS(NO) &lt; @No ORDER BY ABS(NO) DESC Limit 1) Previous,
+        ///(SELECT ID FROM MOVLIST WHERE GID = @Gid AND ABS(NO) &gt; @No ORDER BY ABS(NO) ASC Limit 1) Next に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectLibraryPreviousAndNextId {
+            get {
+                return ResourceManager.GetString("SelectLibraryPreviousAndNextId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   SELECT GETDIRPATH(FILEPATH) FP, COUNT(*) CNT FROM MOVLIST GROUP BY FP ORDER BY CNT DESC に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SelectMostUseDirectoryPath {

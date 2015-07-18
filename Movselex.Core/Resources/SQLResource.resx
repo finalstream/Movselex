@@ -512,4 +512,9 @@ WHERE ID = @Id</value>
 WHERE ID = @Id</value>
     <comment>ライブラリ削除</comment>
   </data>
+  <data name="SelectLibraryPreviousAndNextId" xml:space="preserve">
+    <value>SELECT (SELECT ID FROM MOVLIST WHERE GID = @Gid AND ABS(NO) &lt; ABS(@No) ORDER BY ABS(NO) DESC Limit 1) Previous,
+(SELECT ID FROM MOVLIST WHERE GID = @Gid AND ABS(NO) &gt; ABS(@No) ORDER BY ABS(NO) ASC Limit 1) Next</value>
+    <comment>PreviousとNextのIDを取得</comment>
+  </data>
 </root>

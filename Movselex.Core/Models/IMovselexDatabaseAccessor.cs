@@ -39,5 +39,6 @@ namespace Movselex.Core.Models
         IEnumerable<LibraryItem> SelectPlayingList();
         LibraryItem SelectLibrary(long id);
         void DeleteLibrary(long id);
+        Tuple<long?, long?> SelectLibraryPreviousAndNextId(long gid, string no);
     }
 }

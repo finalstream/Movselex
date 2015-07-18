@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -265,6 +267,11 @@ namespace Movselex.Core.Models
             var libraries = _databaseAccessor.SelectLibraryList(libCondition).ToArray();
             LibraryItems.DiffUpdate(libraries,
                 new LibraryItemComparer());
+        }
+
+        public Tuple<long?, long?> GetPreviousAndNextId(long gid, string no)
+        {
+            return _databaseAccessor.SelectLibraryPreviousAndNextId(gid, no);
         }
     }
 }

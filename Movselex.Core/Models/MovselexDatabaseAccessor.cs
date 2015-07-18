@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -304,6 +305,11 @@ namespace Movselex.Core.Models
         public void DeleteLibrary(long id)
         {
             SqlExecuter.Execute(SQLResource.DeleteLibrary, new {Id = id});
+        }
+
+        public Tuple<long?, long?> SelectLibraryPreviousAndNextId(long gid, string no)
+        {
+            return SqlExecuter.Query<dynamic>(SQLResource.SelectLibraryPreviousAndNextId, new { Gid = gid, No = no }).Select(x=> new Tuple<long?, long?>(x.Previous, x.Next)).FirstOrDefault();
         }
     }
 }

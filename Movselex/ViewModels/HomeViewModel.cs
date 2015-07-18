@@ -24,6 +24,7 @@ using FinalstreamUIComponents.Views;
 using FirstFloor.ModernUI;
 using FirstFloor.ModernUI.Presentation;
 using FirstFloor.ModernUI.Windows.Controls;
+using FirstFloor.ModernUI.Windows.Media;
 using Livet;
 using Livet.Behaviors;
 using Livet.Commands;
@@ -113,22 +114,23 @@ namespace Movselex.ViewModels
             get { return _playings; }
         }
 
-        #region IsThrowable変更通知プロパティ
+        #region CanThrow変更通知プロパティ
 
-        private bool _isThrowable;
+        private bool _canThrow;
 
-        public bool IsThrowable
+        public bool CanThrow
         {
-            get { return _isThrowable; }
+            get { return _canThrow; }
             set
             {
-                if (_isThrowable == value) return;
-                _isThrowable = value;
+                if (_canThrow == value) return;
+                _canThrow = value;
                 RaisePropertyChanged();
             }
         }
 
         #endregion
+
 
         #region IsTrimmable変更通知プロパティ
 
@@ -158,7 +160,7 @@ namespace Movselex.ViewModels
             {
                 if (_libraryCount == value) return;
                 _libraryCount = value;
-                IsThrowable = !String.IsNullOrEmpty(AppConfig.MpcExePath) && value > 0;
+                CanThrow = !String.IsNullOrEmpty(AppConfig.MpcExePath) && value > 0;
                 IsTrimmable = value > 0;
                 RaisePropertyChanged();
             }
@@ -744,17 +746,28 @@ namespace Movselex.ViewModels
 
         public void SetSearchKeyword(string searchKeyword)
         {
+
             SearchText = searchKeyword;
+        }
+
+        public void Previous(long previousId)
+        {
+            _client.InterruptThrow(previousId);
+        }
+
+        public void Next(long nextId)
+        {
+            _client.InterruptThrow(nextId);
         }
 
         #region Commands
 
-        DelegateCommand<DataGridSortingEventArgs> _dataGridSortingCommand;
-        public DelegateCommand<DataGridSortingEventArgs> DataGridSortingCommand
+        DelegateCommand<DataGridSortingEventArgs> _librarydataGridSortingCommand;
+        public DelegateCommand<DataGridSortingEventArgs> LibraryDataGridSortingCommand
         {
             get
             {
-                return _dataGridSortingCommand ?? (_dataGridSortingCommand = new DelegateCommand<DataGridSortingEventArgs>(
+                return _librarydataGridSortingCommand ?? (_librarydataGridSortingCommand = new DelegateCommand<DataGridSortingEventArgs>(
                 args =>
                 {
                     var sortDirection = args.Column.SortDirection;
@@ -768,6 +781,29 @@ namespace Movselex.ViewModels
                     }
                     
                 })); 
+            }
+        }
+
+        DelegateCommand<DataGridSortingEventArgs> _groupdataGridSortingCommand;
+        public DelegateCommand<DataGridSortingEventArgs> GroupDataGridSortingCommand
+        {
+            get
+            {
+                return _groupdataGridSortingCommand ?? (_groupdataGridSortingCommand = new DelegateCommand<DataGridSortingEventArgs>(
+                args =>
+                {
+                    var sortDirection = args.Column.SortDirection;
+                    if (sortDirection == ListSortDirection.Descending)
+                    {
+                        // 降順の次はソートを無効にする
+                        args.Column.SortDirection = null;
+                        args.Handled = true;
+                        var view = CollectionViewSource.GetDefaultView(Groups);
+                        view.SortDescriptions.Clear();
+                    }
+                    if (CurrentGroup != null) CurrentGroup.Model.IsSelected = false; // ソートするとVMに選択状態が反映されないので応急処置。
+
+                }));
             }
         }
 

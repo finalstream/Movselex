@@ -20,7 +20,10 @@ namespace Movselex.Core.Models.Actions
             {
                 library = client.MovselexLibrary.GetLibraryItem(id);
             }
+            var prevnext = client.MovselexLibrary.GetPreviousAndNextId(library.Gid, library.No);
+
             client.NowPlayingInfo.SetLibrary(library);
+            client.NowPlayingInfo.SetPreviousAndNextId(prevnext);
             client.MovselexPlaying.Refresh(library);
         }
     }
