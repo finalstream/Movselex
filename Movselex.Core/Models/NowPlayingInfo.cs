@@ -138,23 +138,6 @@ namespace Movselex.Core.Models
 
         #endregion
 
-        #region GroupName変更通知プロパティ
-
-        private string _GroupName;
-
-        public string GroupName
-        {
-            get { return _GroupName; }
-            set
-            {
-                if (_GroupName == value) return;
-                _GroupName = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        #endregion
-
         #region CanPrevious変更通知プロパティ
 
         private bool _CanPrevious;
@@ -255,7 +238,6 @@ namespace Movselex.Core.Models
         {
             Library = library;
             Season = library.Season;
-            GroupName = !string.IsNullOrEmpty(library.GroupName) ? library.GroupName : "";
             if(!string.IsNullOrEmpty(library.Title)) ViewTitle = library.Title;
         }
 

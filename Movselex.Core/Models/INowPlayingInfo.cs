@@ -31,8 +31,6 @@ namespace Movselex.Core.Models
 
         string Season { get; }
 
-        string GroupName { get; }
-
         bool CanPrevious { get; }
 
         bool CanNext { get; }
@@ -40,6 +38,8 @@ namespace Movselex.Core.Models
         long PreviousId { get; }
 
         long NextId { get; }
+
+        LibraryItem Library { get; }
 
         /// <summary>
         /// 更新します。

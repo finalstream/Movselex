@@ -139,15 +139,23 @@
 					</i:Interaction.Triggers>
 				</TextBlock>
 			</Border>
-			<TextBlock Text="{Binding NowPlayingInfo.ViewTitle}"  Style="{StaticResource Header}" FontWeight="{Binding NowPlayingInfo.GroupName, Converter={StaticResource StringIsNullOrEmptyToFontBoldConverter}}" Margin="5,5,5,5">
+			<Image Source="{Binding NowPlayingInfo.Library.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16" Margin="0,3,0,0">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="MouseLeftButtonUp">
-						<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="SetSearchKeyword" MethodParameter="{Binding NowPlayingInfo.GroupName}" />
+						<behaviors1:LivetCallMethodAction MethodTarget="{Binding}" MethodName="ModifyIsFavorite" MethodParameter="{Binding NowPlayingInfo.Library}" />
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+			</Image>
+			<TextBlock Text="{Binding NowPlayingInfo.ViewTitle}"  Style="{StaticResource Header}" FontWeight="{Binding NowPlayingInfo.Library.GroupName, Converter={StaticResource StringIsNullOrEmptyToFontBoldConverter}}" Margin="5,5,5,5">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="MouseLeftButtonUp">
+						<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="SetSearchKeyword" MethodParameter="{Binding NowPlayingInfo.Library.GroupName}" />
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 			</TextBlock>
+			
 		</StackPanel>
-		<TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding NowPlayingInfo.ViewPlayTime}" Style="{StaticResource Header}" FontWeight="{Binding NowPlayingInfo.GroupName, Converter={StaticResource StringIsNullOrEmptyToFontBoldConverter}}" Margin="10,5,0,5" HorizontalAlignment="Right"></TextBlock>
+		<TextBlock Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Text="{Binding NowPlayingInfo.ViewPlayTime}" Style="{StaticResource Header}" FontWeight="{Binding NowPlayingInfo.Library.GroupName, Converter={StaticResource StringIsNullOrEmptyToFontBoldConverter}}" Margin="10,5,0,5" HorizontalAlignment="Right"></TextBlock>
 		
 
 		<!-- FilteringText -->

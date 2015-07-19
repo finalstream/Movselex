@@ -760,6 +760,17 @@ namespace Movselex.ViewModels
             _client.InterruptThrow(nextId);
         }
 
+        /// <summary>
+        ///     お気に入りの状態を変更します。
+        /// </summary>
+        /// <param name="item"></param>
+        public void ModifyIsFavorite(LibraryItem item)
+        {
+            item.DebugWriteJson();
+
+            App.Client.ModifyIsFavorite(item);
+        }
+
         #region Commands
 
         DelegateCommand<DataGridSortingEventArgs> _librarydataGridSortingCommand;
