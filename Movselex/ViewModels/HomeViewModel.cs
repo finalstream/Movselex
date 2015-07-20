@@ -773,48 +773,25 @@ namespace Movselex.ViewModels
 
         #region Commands
 
-        DelegateCommand<DataGridSortingEventArgs> _librarydataGridSortingCommand;
-        public DelegateCommand<DataGridSortingEventArgs> LibraryDataGridSortingCommand
+        CancelableDataGridSortingCommand _librarydataGridSortingCommand;
+        public CancelableDataGridSortingCommand LibraryDataGridSortingCommand
         {
             get
             {
-                return _librarydataGridSortingCommand ?? (_librarydataGridSortingCommand = new DelegateCommand<DataGridSortingEventArgs>(
-                args =>
-                {
-                    var sortDirection = args.Column.SortDirection;
-                    if (sortDirection == ListSortDirection.Descending)
-                    {
-                        // 降順の次はソートを無効にする
-                        args.Column.SortDirection = null;
-                        args.Handled = true;
-                        var view = CollectionViewSource.GetDefaultView(Libraries);
-                        view.SortDescriptions.Clear();
-                    }
-                    
-                })); 
+                return _librarydataGridSortingCommand ?? (_librarydataGridSortingCommand = new CancelableDataGridSortingCommand(Libraries)); 
             }
         }
 
-        DelegateCommand<DataGridSortingEventArgs> _groupdataGridSortingCommand;
-        public DelegateCommand<DataGridSortingEventArgs> GroupDataGridSortingCommand
+        CancelableDataGridSortingCommand _groupdataGridSortingCommand;
+        public CancelableDataGridSortingCommand GroupDataGridSortingCommand
         {
             get
             {
-                return _groupdataGridSortingCommand ?? (_groupdataGridSortingCommand = new DelegateCommand<DataGridSortingEventArgs>(
-                args =>
-                {
-                    var sortDirection = args.Column.SortDirection;
-                    if (sortDirection == ListSortDirection.Descending)
-                    {
-                        // 降順の次はソートを無効にする
-                        args.Column.SortDirection = null;
-                        args.Handled = true;
-                        var view = CollectionViewSource.GetDefaultView(Groups);
-                        view.SortDescriptions.Clear();
-                    }
-                    if (CurrentGroup != null) CurrentGroup.Model.IsSelected = false; // ソートするとVMに選択状態が反映されないので応急処置。
-
-                }));
+                return _groupdataGridSortingCommand ??
+                       (_groupdataGridSortingCommand = new CancelableDataGridSortingCommand(Groups,
+                           () => {
+                                     if (CurrentGroup != null) CurrentGroup.Model.IsSelected = false;
+                           }));
             }
         }
 
