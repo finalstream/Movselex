@@ -130,7 +130,7 @@ LEFT JOIN (SELECT GID, SUM(FILESIZE) FILESIZE FROM MOVLIST GROUP BY GID) FSL ON 
   </data>
   <data name="SelectLibraryList" xml:space="preserve">
     <value>SELECT 
-  PL.ID,
+  PL.ID AS ID,
   FILEPATH,
   GPL.GROUPNAME AS GROUPNAME,
   TITLE,
@@ -396,7 +396,7 @@ WHERE FILEPATH like :FilePath limit 1</value>
     <comment>再生中のGID取得</comment>
   </data>
   <data name="SelectGroupIdCount" xml:space="preserve">
-    <value>SELECT count(GID) GCNT
+    <value>SELECT count(GID) GCNT 
 FROM MOVLIST
 WHERE GID = @Gid
 GROUP BY GID</value>

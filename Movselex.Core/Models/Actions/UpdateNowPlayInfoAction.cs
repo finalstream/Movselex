@@ -22,6 +22,8 @@ namespace Movselex.Core.Models.Actions
             }
             var prevnext = client.MovselexLibrary.GetPreviousAndNextId(library.Gid, library.No);
 
+            client.MovselexLibrary.ResetIsPlaying(library);
+
             client.NowPlayingInfo.SetLibrary(library);
             client.NowPlayingInfo.SetPreviousAndNextId(prevnext);
             client.MovselexPlaying.Refresh(library);

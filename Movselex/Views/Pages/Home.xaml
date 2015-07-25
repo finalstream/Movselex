@@ -374,6 +374,7 @@
 			</DataGrid.Columns>
 			<DataGrid.RowStyle>
 				<Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                    <Setter Property="FontWeight" Value="{Binding Model.IsPlaying, Converter={StaticResource BooleanToFontWeightConverter}}"></Setter>
 					<Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 				</Style>
 			</DataGrid.RowStyle>

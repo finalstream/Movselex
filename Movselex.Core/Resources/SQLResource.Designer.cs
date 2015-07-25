@@ -188,7 +188,7 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   SELECT count(GID) GCNT
+        ///   SELECT count(GID) GCNT 
         ///FROM MOVLIST
         ///WHERE GID = @Gid
         ///GROUP BY GID に類似しているローカライズされた文字列を検索します。
@@ -269,7 +269,7 @@ namespace Movselex.Core.Resources {
         
         /// <summary>
         ///   SELECT 
-        ///  PL.ID,
+        ///  PL.ID AS ID,
         ///  FILEPATH,
         ///  GPL.GROUPNAME AS GROUPNAME,
         ///  TITLE,
@@ -296,8 +296,8 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   SELECT (SELECT ID FROM MOVLIST WHERE GID = @Gid AND ABS(NO) &lt; @No ORDER BY ABS(NO) DESC Limit 1) Previous,
-        ///(SELECT ID FROM MOVLIST WHERE GID = @Gid AND ABS(NO) &gt; @No ORDER BY ABS(NO) ASC Limit 1) Next に類似しているローカライズされた文字列を検索します。
+        ///   SELECT (SELECT ID FROM MOVLIST WHERE GID = @Gid AND ABS(NO) &lt; ABS(@No) ORDER BY ABS(NO) DESC Limit 1) Previous,
+        ///(SELECT ID FROM MOVLIST WHERE GID = @Gid AND ABS(NO) &gt; ABS(@No) ORDER BY ABS(NO) ASC Limit 1) Next に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SelectLibraryPreviousAndNextId {
             get {

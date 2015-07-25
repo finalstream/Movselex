@@ -17,7 +17,7 @@ namespace Movselex.Core.Models.Actions
                 FilteringMode.SQL, 
                 FilteringCondition.Empty, 
                 client.AppConfig.MaxLimitNum,
-                _filteringText));
+                _filteringText), client.NowPlayingInfo);
             client.MovselexGroup.Load();
         }
     }

@@ -54,13 +54,15 @@ namespace Movselex.Core.Models
         /// ライブラリデータをロードします。
         /// </summary>
         /// <param name="libCondition"></param>
-        public void Load(LibraryCondition libCondition)
+        /// <param name="nowPlayingInfo"></param>
+        public void Load(LibraryCondition libCondition, INowPlayingInfo nowPlayingInfo)
         {
             var libraries = _databaseAccessor.SelectLibraryList(libCondition);
 
             LibraryItems.Clear();
             foreach (var libraryItem in libraries)
             {
+                if (nowPlayingInfo.Library != null && nowPlayingInfo.Id == libraryItem.Id) libraryItem.IsPlaying = true; 
                 LibraryItems.Add(libraryItem);
             }
         }
@@ -272,6 +274,15 @@ namespace Movselex.Core.Models
         public Tuple<long?, long?> GetPreviousAndNextId(long gid, string no)
         {
             return _databaseAccessor.SelectLibraryPreviousAndNextId(gid, no);
+        }
+
+        public void ResetIsPlaying(LibraryItem nowLibrary)
+        {
+            foreach (var libraryItem in LibraryItems)
+            {
+                libraryItem.IsPlaying = false;
+            }
+            nowLibrary.IsPlaying = true;
         }
     }
 }

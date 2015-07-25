@@ -310,6 +310,23 @@ namespace Movselex.Core.Models
 
         #endregion
 
+        #region IsPlaying変更通知プロパティ
+
+        private bool _isPlaying;
+
+        public bool IsPlaying
+        {
+            get { return _isPlaying; }
+            set
+            {
+                if (_isPlaying == value) return;
+                _isPlaying = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// 追加された日時を取得します。
         /// </summary>

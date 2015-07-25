@@ -158,7 +158,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\SQLResource1.Designer.cs">
+    <Compile Include="Resources\SQLResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SQLResource.resx</DependentUpon>
@@ -176,6 +176,7 @@
     <EmbeddedResource Include="Resources\SQLResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>SQLResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

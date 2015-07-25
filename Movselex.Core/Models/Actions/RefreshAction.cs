@@ -35,7 +35,8 @@ namespace Movselex.Core.Models.Actions
 
             var libCondition = CreateLibraryCondition(client);
             
-            client.MovselexLibrary.Load(libCondition);
+            client.MovselexLibrary.Load(libCondition, client.NowPlayingInfo);
+            
 
             if(_filteringMode == FilteringMode.SQL) client.MovselexGroup.Load();
 
