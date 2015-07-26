@@ -129,7 +129,7 @@
 		</Grid.ColumnDefinitions>
 
 		<!-- Header -->
-		<StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+		<StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" Visibility="{Binding NowPlayingInfo.ViewPlayTime, Converter={StaticResource StringIsNullOrEmptyToVisibilityConverter}}">
 			<Border BorderBrush="{DynamicResource Accent}" BorderThickness="2" Padding="3" VerticalAlignment="Center" CornerRadius="2" Margin="5,7,5,5" Visibility="{Binding NowPlayingInfo.Season, Converter={StaticResource StringIsNullOrEmptyToVisibilityConverter}}">
 				<TextBlock Text="{Binding NowPlayingInfo.Season}" FontWeight="Bold" Foreground="{DynamicResource Accent}" >
 					<i:Interaction.Triggers>
@@ -139,7 +139,7 @@
 					</i:Interaction.Triggers>
 				</TextBlock>
 			</Border>
-			<Image Source="{Binding NowPlayingInfo.Library.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Stretch="Uniform" Width="16" Height="16" Margin="0,3,0,0">
+			<Image Source="{Binding NowPlayingInfo.Library.IsFavorite, Converter={StaticResource IsFavoriteConverter}}" Visibility="{Binding NowPlayingInfo.Season, Converter={StaticResource StringIsNullOrEmptyToVisibilityConverter}}" Stretch="Uniform" Width="16" Height="16" Margin="0,3,0,0">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="MouseLeftButtonUp">
 						<behaviors1:LivetCallMethodAction MethodTarget="{Binding}" MethodName="ModifyIsFavorite" MethodParameter="{Binding NowPlayingInfo.Library}" />
@@ -374,7 +374,7 @@
 			</DataGrid.Columns>
 			<DataGrid.RowStyle>
 				<Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource {x:Type DataGridRow}}">
-                    <Setter Property="FontWeight" Value="{Binding Model.IsPlaying, Converter={StaticResource BooleanToFontWeightConverter}}"></Setter>
+					<Setter Property="FontWeight" Value="{Binding Model.IsPlaying, Converter={StaticResource BooleanToFontWeightConverter}}"></Setter>
 					<Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 				</Style>
 			</DataGrid.RowStyle>

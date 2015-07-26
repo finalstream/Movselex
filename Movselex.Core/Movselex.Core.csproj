@@ -137,7 +137,6 @@
     <Compile Include="Models\MovselexUtils.cs" />
     <Compile Include="Models\MpcPlayerInfoGetter.cs" />
     <Compile Include="Models\PlayerInfoGetter.cs" />
-    <Compile Include="Models\PlayerMediaCrawler.cs" />
     <Compile Include="Models\MovselexGroup.cs" />
     <Compile Include="Models\MovselexAppConfig.cs" />
     <Compile Include="Models\MovselexFiltering.cs" />

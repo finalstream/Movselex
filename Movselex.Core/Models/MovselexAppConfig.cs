@@ -67,7 +67,22 @@ namespace Movselex.Core.Models
 
         public FilteringMode FilteringMode { get; set; }
 
-        public string MpcExePath { get; set; }
+        #region MpcExePath変更通知プロパティ
+
+        private string _mpcExePath;
+
+        public string MpcExePath
+        {
+            get { return _mpcExePath; }
+            set
+            {
+                if (_mpcExePath == value) return;
+                _mpcExePath = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         #region Language変更通知プロパティ
 
@@ -185,7 +200,7 @@ namespace Movselex.Core.Models
             AccentColor = newConfig.AccentColor;
             SelectedTheme = newConfig.SelectedTheme;
             FilteringMode = newConfig.FilteringMode;
-            MpcExePath = newConfig.MpcExePath;
+            if (newConfig.MpcExePath != null) MpcExePath = newConfig.MpcExePath;
             if (newConfig.Language != null) Language = newConfig.Language;
 
         }

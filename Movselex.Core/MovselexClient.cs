@@ -272,25 +272,30 @@ namespace Movselex.Core
             var action = new InitializeAction();
             action.AfterAction = () =>
             {
-                // 初期化完了後
-                var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
-                var playMonitoringAction = new PlayMonitoringAction(this.NowPlayingInfo);
+                OnInitialized(EventArgs.Empty);
+            };
+            _actionExecuter.Post(action);
+        }
 
-                playerMediaCrawlerAction.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
-                playMonitoringAction.CountUpTimePlayed += (sender, l) => _actionExecuter.Post(new IncrementPlayCountAction(l));
-                playMonitoringAction.SwitchTitle += (sender, s) => _actionExecuter.Post(new UpdateNowPlayInfoAction(s));
-                
+        public void ResetBackgroundWorker()
+        {
+            if (_backgroundWorker != null) _backgroundWorker.Dispose();
 
-                _backgroundWorker = new BackgroundWorker(TimeSpan.FromMilliseconds(1000), new BackgroundAction[]
+            var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
+            var playMonitoringAction = new PlayMonitoringAction(this.NowPlayingInfo);
+
+            playerMediaCrawlerAction.Updated += (sender, info) => NowPlayingInfo.Update(info.Title, info.TimeString);
+            playMonitoringAction.CountUpTimePlayed += (sender, l) => _actionExecuter.Post(new IncrementPlayCountAction(l));
+            playMonitoringAction.SwitchTitle += (sender, s) => _actionExecuter.Post(new UpdateNowPlayInfoAction(s));
+
+
+            _backgroundWorker = new BackgroundWorker(TimeSpan.FromMilliseconds(1000), new BackgroundAction[]
                 {
                     playerMediaCrawlerAction, 
                     playMonitoringAction,
                     new AutoUpdateLibraryAction(this), 
                 });
-                _backgroundWorker.Start();
-                OnInitialized(EventArgs.Empty);
-            };
-            _actionExecuter.Post(action);
+            _backgroundWorker.Start();
         }
 
         public void ChangeDatabase(string databaseName)
