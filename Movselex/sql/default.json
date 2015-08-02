@@ -21,7 +21,7 @@
   },
   {
 	"Value": { "Sql": "AND PLAYCOUNT >= 3 ORDER BY  PLAYCOUNT / ROUND(JULIANDAY(DATETIME('NOW', 'LOCALTIME')) - JULIANDAY(DATETIME(ADDDATE))) DESC", "IsLimited": true },
-	"DisplayValue": { "en":"High Playback", "ja":"再生頻度が多いもの"}
+	"DisplayValue": { "en":"High Playback", "ja":"再生頻度が高いもの"}
   },
   {
 	"Value": { "Sql": "AND length(LENGTH) >= 6 ORDER BY LENGTH DESC", "IsLimited": false },
