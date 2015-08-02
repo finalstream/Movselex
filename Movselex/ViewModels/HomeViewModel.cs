@@ -274,7 +274,7 @@ namespace Movselex.ViewModels
                     "MpcExePath", (sender, args) =>
                     {
                         CanThrow = !String.IsNullOrEmpty(AppConfig.MpcExePath);
-                        _client.ResetBackgroundWorker();
+                        if (_client.IsInitialized) _client.ResetBackgroundWorker();
                     }
                 }
             };

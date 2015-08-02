@@ -272,6 +272,8 @@ namespace Movselex.Core
             var action = new InitializeAction();
             action.AfterAction = () =>
             {
+                IsInitialized = true;
+                ResetBackgroundWorker();
                 OnInitialized(EventArgs.Empty);
             };
             _actionExecuter.Post(action);
