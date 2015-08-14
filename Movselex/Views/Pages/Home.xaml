@@ -312,9 +312,9 @@
 						</Style>
 					</DataGridTextColumn.CellStyle>
 				</DataGridTextColumn>
-				<DataGridTextColumn Header="Group" Width="100" 
+				<DataGridTextColumn Header="Group" Width="1*" 
 									Binding="{Binding Model.GroupName}" ElementStyle="{StaticResource TextItem}"  />
-				<DataGridTextColumn Header="Title" Width="*"
+				<DataGridTextColumn Header="Title" Width="2*"
 									Binding="{Binding Model.Title}" ElementStyle="{StaticResource TextItem}" />
 				<DataGridTextColumn Header="No" Width="60"
 									Binding="{Binding Model.No}" ElementStyle="{StaticResource TextItemRight}">
