@@ -44,7 +44,7 @@ namespace Movselex
         //集約エラーハンドラ
         private void CurrentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            _log.Error("Catch UnhandledException.", e.ExceptionObject as Exception);
+            _log.Error(e.ExceptionObject as Exception, "Catch UnhandledException.");
 
             ModernDialog.ShowMessage(Movselex.Properties.Resources.MessageFatalError, "Critical Error",
                MessageBoxButton.OK);

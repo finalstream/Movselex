@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinalstreamCommons.Database;
-using FinalstreamCommons.Frameworks;
-using FinalstreamCommons.Frameworks.Actions;
-using FinalstreamCommons.Utils;
+﻿using System.IO;
+using Firk.Core.Actions;
+using Firk.Database;
 using NLog;
 
 namespace Movselex.Core.Models.Actions

@@ -109,6 +109,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\LibraryDataGridSortingCommand.cs" />
+    <Compile Include="Comparers\LibararyNoNaturalComparer.cs" />
     <Compile Include="Models\MovselexResource.cs" />
     <Compile Include="ViewModels\DatabaseViewModel.cs" />
     <Compile Include="ViewModels\FilteringViewModel.cs" />
@@ -266,6 +268,10 @@
     <ProjectReference Include="..\..\FinalstreamUIComponents\FinalstreamUIComponents.csproj">
       <Project>{3df18075-0985-4164-8fdd-6ab1736e9b0f}</Project>
       <Name>FinalstreamUIComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Firk\source\Firk.csproj">
+      <Project>{59fd5b81-feb9-4299-bcfb-c8e985970e1f}</Project>
+      <Name>Firk</Name>
     </ProjectReference>
     <ProjectReference Include="..\Movselex.Core\Movselex.Core.csproj">
       <Project>{f819d8cd-372d-4584-9bb9-22fb4a7e5252}</Project>

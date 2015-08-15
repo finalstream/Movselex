@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using FinalstreamCommons.Collections;
-using FinalstreamCommons.Frameworks;
+using Firk.Core;
 using Movselex.Core.Models;
 
 namespace Movselex.Core

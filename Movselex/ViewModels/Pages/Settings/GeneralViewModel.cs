@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Windows.Forms;
-using FinalstreamCommons.Frameworks;
+﻿using System.Windows.Forms;
+using FinalstreamCommons.Models;
 using FinalstreamCommons.Utils;
 using Livet;
-using Livet.Commands;
-using Livet.Messaging;
-using Livet.Messaging.IO;
-using Livet.EventListeners;
-using Livet.Messaging.Windows;
-
-using Movselex.Models;
+using Movselex.Properties;
 
 namespace Movselex.ViewModels.Pages.Settings
 {
@@ -206,7 +194,7 @@ namespace Movselex.ViewModels.Pages.Settings
 
         public void OpenDialogExePath()
         {
-            var exepath = DialogUtils.ShowFileDialog(Movselex.Properties.Resources.MessageSelectMpcExe, "exe File(*.exe)|*.exe");
+            var exepath = DialogUtils.ShowFileDialog(Resources.MessageSelectMpcExe, "exe File(*.exe)|*.exe");
             if (exepath != null) ExePath = exepath;
         }
     }

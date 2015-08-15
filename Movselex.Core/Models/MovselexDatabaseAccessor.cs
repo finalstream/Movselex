@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Annotations;
-using FinalstreamCommons.Database;
-using FinalstreamCommons.Database.SQLiteFunctions;
 using FinalstreamCommons.Utils;
-using Movselex.Core.Models.SQLiteFunctions;
+using Firk.Database;
 using Movselex.Core.Resources;
 
 namespace Movselex.Core.Models

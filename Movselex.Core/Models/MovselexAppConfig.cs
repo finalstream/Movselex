@@ -1,10 +1,7 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
-using FinalstreamCommons.Frameworks;
 using Livet;
-using Newtonsoft.Json;
 
 namespace Movselex.Core.Models
 {

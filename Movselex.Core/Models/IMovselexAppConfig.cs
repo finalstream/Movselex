@@ -1,4 +1,4 @@
-﻿using FinalstreamCommons.Frameworks;
+﻿using Firk.Core;
 
 namespace Movselex.Core.Models
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using FinalstreamCommons.Frameworks;
-using FinalstreamCommons.Frameworks.Actions;
-using NLog;
+﻿using Firk.Core.Actions;
 
 namespace Movselex.Core.Models.Actions
 {

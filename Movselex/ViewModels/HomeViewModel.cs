@@ -784,14 +784,14 @@ namespace Movselex.ViewModels
 
         #region Commands
 
-        private CancelableDataGridSortingCommand _librarydataGridSortingCommand;
+        private LibraryDataGridSortingCommand _librarydataGridSortingCommand;
 
-        public CancelableDataGridSortingCommand LibraryDataGridSortingCommand
+        public LibraryDataGridSortingCommand LibraryDataGridSortingCommand
         {
             get
             {
                 return _librarydataGridSortingCommand ??
-                       (_librarydataGridSortingCommand = new CancelableDataGridSortingCommand(Libraries));
+                       (_librarydataGridSortingCommand = new LibraryDataGridSortingCommand(Libraries));
             }
         }
 
@@ -803,7 +803,7 @@ namespace Movselex.ViewModels
             {
                 return _groupdataGridSortingCommand ??
                        (_groupdataGridSortingCommand = new CancelableDataGridSortingCommand(Groups,
-                           () => { if (CurrentGroup != null) CurrentGroup.Model.IsSelected = false; }));
+                           _ => { if (CurrentGroup != null) CurrentGroup.Model.IsSelected = false; }));
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using FinalstreamCommons.Database.SQLiteFunctions;
+using Firk.Database.SQLiteFunctions;
 using Movselex.Core.Models.SQLiteFunctions;
 
 namespace Movselex.Core

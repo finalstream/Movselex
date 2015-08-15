@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinalstreamCommons.Database;
+﻿using System.Data.SQLite;
 using FinalstreamCommons.Utils;
+using Firk.Database;
 using NLog;
 
 namespace Movselex.Core.Models.Actions
