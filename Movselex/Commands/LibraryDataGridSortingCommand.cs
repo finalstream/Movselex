@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
-using FinalstreamCommons.Comparers;
+using FinalstreamUIComponents.Commands;
 using Movselex.Comparers;
 
-namespace FinalstreamUIComponents.Commands
+namespace Movselex.Commands
 {
     /// <summary>
     ///     キャンセル可能なソート処理を実装するSortingコマンドを表します。

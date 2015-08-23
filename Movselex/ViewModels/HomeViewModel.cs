@@ -20,6 +20,7 @@ using FirstFloor.ModernUI.Windows.Controls;
 using Livet;
 using Livet.Commands;
 using Livet.EventListeners;
+using Movselex.Commands;
 using Movselex.Core;
 using Movselex.Core.Models;
 using Movselex.Models;

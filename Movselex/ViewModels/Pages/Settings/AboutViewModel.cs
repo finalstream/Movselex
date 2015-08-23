@@ -70,9 +70,17 @@ namespace Movselex.ViewModels.Pages.Settings
                 "http://www.finalstream.net/"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
+                "Firk.dll",
+                "Firk",
+                "Framework",
+                "MIT License",
+                "Copyright (c) 2015 FINALSTREAM",
+                "https://github.com/finalstream/Firk"));
+
+            DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
                 "FinalstreamCommons.dll",
                 "Finalstream Commons",
-                "Framework",
+                "Common Library",
                 "MIT License",
                 "Copyright (c) 2015 FINALSTREAM",
                 "https://github.com/finalstream/FinalstreamCommons"));
