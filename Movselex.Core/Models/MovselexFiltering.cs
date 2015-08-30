@@ -47,5 +47,15 @@ namespace Movselex.Core.Models
             //}
         }
 
+        /// <summary>
+        /// ALLMovieが選択状態であるかどうか
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSelectAllMovie()
+        {
+            var select = FilteringItems.Where(x => x.IsSelected).Select(x => x.Value).FirstOrDefault();
+            if (select == null) return false;
+            return select.Sql == "";
+        }
     }
 }

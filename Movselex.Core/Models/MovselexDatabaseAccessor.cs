@@ -71,10 +71,16 @@ namespace Movselex.Core.Models
                 _sqlBuilder.CreateSelectGroup(_appConfig.LibraryMode, _lastLibrarySelectSQL));
         }
 
-        public IEnumerable<LibraryItem> ShuffleLibrary(int limitNum)
+        public IEnumerable<LibraryItem> ShuffleLibrary(int limitNum, LibraryMode libraryMode, bool isSelectAllMovie)
         {
             if (string.IsNullOrEmpty(_lastLibrarySelectSQL)) return Enumerable.Empty<LibraryItem>();
-            var sql = SQLResource.SelectShuffleLibrary.Replace("#LastExecSql#", _lastLibrarySelectSQL);
+
+            // ALLMovieが選択されているときは全体からシャッフルする。
+            var repSql = isSelectAllMovie ? 
+                _sqlBuilder.CreateSelectLibrary(libraryMode, new LibraryCondition(FilteringMode.SQL, new FilteringCondition("", false))):
+            _lastLibrarySelectSQL;
+
+            var sql = SQLResource.SelectShuffleLibrary.Replace("#LastExecSql#", repSql);
             return SqlExecuter.Query<LibraryItem>(
                 sql, 
                 new { LimitNum = limitNum });

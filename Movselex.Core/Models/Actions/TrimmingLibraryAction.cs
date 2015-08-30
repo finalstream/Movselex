@@ -28,7 +28,9 @@ namespace Movselex.Core.Models.Actions
 
             if (_isShuffle)
             {
-                client.MovselexLibrary.Shuffle(appConfig.MaxGenerateNum);
+                client.MovselexLibrary.Shuffle(appConfig.MaxGenerateNum,
+                    client.AppConfig.LibraryMode,
+                    client.MovselexFiltering.IsSelectAllMovie());
             }
             else
             {

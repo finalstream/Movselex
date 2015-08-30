@@ -9,7 +9,7 @@ namespace Movselex.Core.Models
         IEnumerable<LibraryItem> SelectLibraryList(LibraryCondition libCondition);
         void ChangeDatabase(string databaseName);
         IEnumerable<GroupItem> SelectGroup();
-        IEnumerable<LibraryItem> ShuffleLibrary(int limitNum);
+        IEnumerable<LibraryItem> ShuffleLibrary(int limitNum, LibraryMode selectAllMovie, bool isSelectAllMovie);
         string GetMostUseDirectoryPath();
         IEnumerable<string> SelectAllLibraryFilePaths();
         bool InsertMediaFile(MediaFile mediaFile);

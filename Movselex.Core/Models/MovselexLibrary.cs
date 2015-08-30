@@ -67,9 +67,9 @@ namespace Movselex.Core.Models
             }
         }
 
-        public void Shuffle(int limitNum)
+        public void Shuffle(int limitNum, LibraryMode libraryMode, bool isSelectAllMovie)
         {
-            var libraries = _databaseAccessor.ShuffleLibrary(limitNum);
+            var libraries = _databaseAccessor.ShuffleLibrary(limitNum, libraryMode, isSelectAllMovie);
 
             LibraryItems.Clear();
             foreach (var libraryItem in libraries)
