@@ -7,6 +7,8 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="http://schemas.livet-mvvm.net/2011/wpf"
              xmlns:views="clr-namespace:FinalstreamUIComponents.Views;assembly=FinalstreamUIComponents"
+             xmlns:properties="clr-namespace:Movselex.Properties"
+             xmlns:models="clr-namespace:Movselex.Models"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance settings:GeneralViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -22,6 +24,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
@@ -59,6 +62,13 @@
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Screen:" VerticalAlignment="Center" Margin="0,0,16,10" />
                     <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding Screens}" SelectedValue="{Binding CurrentScreen}" SelectedValuePath="Value"  VerticalAlignment="Center" Margin="0,0,0,10" />
                     <CheckBox Grid.Row="4" Grid.Column="2" Content="FullScreen" IsChecked="{Binding IsFullScreen}" Margin="5,0,0,10"></CheckBox>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="MonitorDirectory:" VerticalAlignment="Center" Margin="0,0,16,10" />
+                    <StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">
+                        <views:EditableStringListBox ItemsSource="{Binding MonitorDirectories}" Validator="Directory"></views:EditableStringListBox>
+                        <TextBlock Text="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.MessageAttentionMonitorDirectory, Mode=OneWay}" />
+                    </StackPanel>
+                    
                 </Grid>
 
             </StackPanel>

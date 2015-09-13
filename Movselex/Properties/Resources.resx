@@ -174,4 +174,7 @@
   <data name="UnGroup" xml:space="preserve">
     <value>UnGroup</value>
   </data>
+  <data name="MessageAttentionMonitorDirectory" xml:space="preserve">
+    <value>If not specified it will monitor the most registered a large number of directories in the database.</value>
+  </data>
 </root>

@@ -148,7 +148,6 @@ namespace Movselex.Core
             MovselexLibrary = new MovselexLibrary(_databaseAccessor, MovselexGroup);
             Databases = new ObservableCollection<string>();
             NowPlayingInfo = new NowPlayingInfo();
-            LibraryUpdater = new LibraryUpdater(MovselexLibrary, AppConfig.SupportExtentions);
             ProgressInfo = new ProgressInfo();
         }
 
@@ -163,6 +162,8 @@ namespace Movselex.Core
             AppConfig.AppVersion = ExecutingAssemblyInfo.FileVersion;
 
             UpgradeSchema();
+
+            LibraryUpdater = new LibraryUpdater(MovselexLibrary, AppConfig);
             
             Initialize(AppConfig.SelectDatabase);
             
@@ -296,6 +297,11 @@ namespace Movselex.Core
                     new AutoUpdateLibraryAction(this), 
                 });
             _backgroundWorker.Start();
+        }
+
+        public void ResetLibraryUpdater()
+        {
+            LibraryUpdater = new LibraryUpdater(MovselexLibrary, AppConfig);
         }
 
         public void ChangeDatabase(string databaseName)

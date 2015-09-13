@@ -116,5 +116,6 @@ namespace Movselex.Core
         void DiffRefresh();
         void InterruptThrow(long id);
         void ResetBackgroundWorker();
+        void ResetLibraryUpdater();
     }
 }

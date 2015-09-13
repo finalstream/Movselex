@@ -174,4 +174,7 @@
   <data name="UnGroup" xml:space="preserve">
     <value>グループ解除</value>
   </data>
+  <data name="MessageAttentionMonitorDirectory" xml:space="preserve">
+    <value>未指定の場合はデータベース内で最も登録数の多いディレクトリを監視します。</value>
+  </data>
 </root>

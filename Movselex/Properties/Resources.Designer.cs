@@ -124,6 +124,15 @@ namespace Movselex.Properties {
         }
         
         /// <summary>
+        ///   If not specified it will monitor the most registered a large number of directories in the database. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MessageAttentionMonitorDirectory {
+            get {
+                return ResourceManager.GetString("MessageAttentionMonitorDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Edit the group. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MessageEditGroup {

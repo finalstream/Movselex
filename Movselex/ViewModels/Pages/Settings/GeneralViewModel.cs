@@ -1,7 +1,9 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Forms;
 using FinalstreamCommons.Models;
 using FinalstreamCommons.Utils;
 using Livet;
+using Livet.EventListeners;
 using Movselex.Properties;
 
 namespace Movselex.ViewModels.Pages.Settings
@@ -66,6 +68,19 @@ namespace Movselex.ViewModels.Pages.Settings
                 _screens.Add(new DisplayableItem<int>(i++, ScreenUtils.GetDisplayDevice(screen.DeviceName).DeviceString));
             }
             CurrentScreen = App.Config.ScreenNo;
+            _monitorDirectories = new ObservableCollection<string>(App.Config.MonitorDirectories);
+
+
+            var monitorDirectoriesListener = new CollectionChangedEventListener(_monitorDirectories)
+            {
+                (sender, args) =>
+                {
+                    App.Config.MonitorDirectories = _monitorDirectories;
+                    App.Client.ResetLibraryUpdater();
+                }
+            };
+            CompositeDisposable.Add(monitorDirectoriesListener);
+
         }
 
         #region Players変更通知プロパティ
@@ -186,6 +201,23 @@ namespace Movselex.ViewModels.Pages.Settings
                 if (_currentScreen == value) return;
                 _currentScreen = value;
                 App.Config.ScreenNo = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region MonitorDirectories変更通知プロパティ
+
+        private ObservableCollection<string> _monitorDirectories;
+
+        public ObservableCollection<string> MonitorDirectories
+        {
+            get { return _monitorDirectories; }
+            set
+            {
+                if (_monitorDirectories == value) return;
+                _monitorDirectories = value;
                 RaisePropertyChanged();
             }
         }

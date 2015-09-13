@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FinalstreamCommons.Extentions;
+using NLog;
 
 namespace Movselex.Core.Models
 {
@@ -13,13 +16,14 @@ namespace Movselex.Core.Models
     class LibraryUpdater
     {
         private readonly MovselexLibrary _movselexLibrary;
-        private readonly List<string> _searchDirectoryPaths = new List<string>();
+        private readonly Collection<string> _searchDirectoryPaths = new Collection<string>();
         private readonly string[] _supportExts;
 
-        public LibraryUpdater(MovselexLibrary movselexLibrary, string[] supportExts)
+        public LibraryUpdater(MovselexLibrary movselexLibrary, MovselexAppConfig appConfig)
         {
             _movselexLibrary = movselexLibrary;
-            _supportExts = supportExts.Select(x=> x.ToLower()).ToArray();
+            _searchDirectoryPaths = appConfig.MonitorDirectories;
+            _supportExts = appConfig.SupportExtentions.Select(x=> x.ToLower()).ToArray();
         }
 
         public IReadOnlyCollection<string> SearchDirectoryPaths {get { return _searchDirectoryPaths; }}
@@ -37,6 +41,8 @@ namespace Movselex.Core.Models
                 if (!string.IsNullOrEmpty(mostUseDirectoryPath)) _searchDirectoryPaths.Add(mostUseDirectoryPath);
             }
 
+            _searchDirectoryPaths.DebugWriteJson("SearchDirectoryPaths");
+
             foreach (var searchDirectoryPath in SearchDirectoryPaths)
             {
                 // 検索対象ディレクトリからサポートしている拡張子のファイルだけ抜く。
@@ -45,7 +51,6 @@ namespace Movselex.Core.Models
                 _movselexLibrary.Regist(registFiles, progressInfo);
             }
 
-            // 不完全なものを再スキャン
             _movselexLibrary.ReScan(_movselexLibrary.GetInCompleteIds());
         }
 

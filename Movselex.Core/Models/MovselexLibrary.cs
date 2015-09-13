@@ -161,6 +161,10 @@ namespace Movselex.Core.Models
             return _databaseAccessor.SelectInCompleteIds();
         }
 
+        /// <summary>
+        /// 不完全なものを再スキャンします。
+        /// </summary>
+        /// <param name="iddic"></param>
         public void ReScan(Dictionary<long, string> iddic)
         {
             using (var tran = _databaseAccessor.BeginTransaction())

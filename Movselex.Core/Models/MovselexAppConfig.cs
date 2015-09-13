@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using Livet;
@@ -28,7 +29,8 @@ namespace Movselex.Core.Models
             SelectedTheme = "light",
             FilteringMode = FilteringMode.SQL,
             MpcExePath = "",
-            Language = CultureInfo.CurrentUICulture.Parent.Name
+            Language = CultureInfo.CurrentUICulture.Parent.Name,
+            MonitorDirectories = new Collection<string>()
         };
 
         public string AppVersion { get; set; }
@@ -151,6 +153,23 @@ namespace Movselex.Core.Models
 
         #endregion
 
+        #region MonitorDirectories変更通知プロパティ
+
+        private Collection<string> _monitorDirectories;
+
+        public Collection<string> MonitorDirectories
+        {
+            get { return _monitorDirectories; }
+            set
+            {
+                if (_monitorDirectories == value) return;
+                _monitorDirectories = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         /*
         public MovselexAppConfig()
         {
@@ -199,6 +218,7 @@ namespace Movselex.Core.Models
             FilteringMode = newConfig.FilteringMode;
             if (newConfig.MpcExePath != null) MpcExePath = newConfig.MpcExePath;
             if (newConfig.Language != null) Language = newConfig.Language;
+            if (newConfig.MonitorDirectories != null) MonitorDirectories = newConfig.MonitorDirectories;
 
         }
     }
