@@ -90,7 +90,21 @@ namespace Movselex.Core.Models
         /// <summary>
         /// Noを取得します。
         /// </summary>
-        public string No { get; private set; }
+        #region No変更通知プロパティ
+        private string _No;
+
+        public string No
+        {
+            get { return _No; }
+            set
+            {
+                if (_No == value) return;
+                _No = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 再生時間を取得します。
@@ -383,6 +397,13 @@ namespace Movselex.Core.Models
         public void ModifyTitle(string title)
         {
             Title = title;
+        }
+
+        public void Update(Dictionary<string, object> input)
+        {
+            Title = input["Title"].ToString();
+            No = input["No"].ToString();
+            Season = input["Season"].ToString();
         }
     }
 }

@@ -302,7 +302,7 @@
 		<DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" RowHeaderWidth="0" 
 				  IsReadOnly="True"  ItemsSource="{Binding Libraries}" AutoGenerateColumns="False" 
 				  Margin="5,10,0,10" BorderThickness="0" ColumnHeaderStyle="{StaticResource columnHeader}"
-				  SelectedIndex="{Binding LibrarySelectIndex}" SelectedItem="{Binding SelectLibrary}" RowHeight="30">
+				  SelectedItem="{Binding CurrentLibrary}" SelectedIndex="{Binding LibrarySelectIndex}" RowHeight="30">
 
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="" Width="10">
@@ -388,6 +388,14 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
+					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.EditLibrary}" HeaderStringFormat="{}{0}...">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="EditLibrary" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</MenuItem>
+					<Separator></Separator>
 					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.MoveFile}" HeaderStringFormat="{}{0}...">
 						<i:Interaction.Triggers>
 							<i:EventTrigger EventName="Click">

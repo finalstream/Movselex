@@ -288,5 +288,12 @@ namespace Movselex.Core.Models
             }
             nowLibrary.IsPlaying = true;
         }
+
+        public void ModifyLibrary(LibraryItem library, Dictionary<string, object> modDataDic)
+        {
+            library.Update(modDataDic);
+            _databaseAccessor.UpdateLibrary(library);
+
+        }
     }
 }

@@ -5,6 +5,10 @@ using FinalstreamCommons.WebServices;
 
 namespace Movselex.Core.Models.Actions
 {
+    /// <summary>
+    /// グループ名の候補を取得するアクションを表します。
+    /// </summary>
+    /// <remarks>グループ名の候補はGoogleCustomSearchの結果を使用する</remarks>
     internal class GetCandidateGroupNameAction : MovselexAction
     {
         private readonly string _groupName;

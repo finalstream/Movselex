@@ -408,10 +408,10 @@ namespace Movselex.ViewModels
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     var group = CurrentGroup.Model;
-                    var paramDic = new Dictionary<string, InputParam>();
-                    paramDic.Add("GroupName", new InputParam("GroupName", group.GroupName, candidateGroupNames));
+                    var paramDic = new Dictionary<string, IInputFormParam>();
+                    paramDic.Add("GroupName", new InputSelectParam("GroupName", group.GroupName, candidateGroupNames));
                     paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", group.Keyword));
-                    var inputTextContent = new InputTextContent(Resources.MessageEditGroup, paramDic);
+                    var inputTextContent = new InputFormContent(Resources.MessageEditGroup, paramDic);
                     var dlg = new ModernDialog
                     {
                         Title = Resources.EditGroup,
@@ -432,16 +432,17 @@ namespace Movselex.ViewModels
 
         public void Grouping()
         {
-            if (LibrarySelectIndex == -1) return;
-            var paramDic = new Dictionary<string, InputParam>();
+            var targets = Libraries.Where(x => x.IsSelected).ToArray();
+            if (CurrentLibrary == null || targets.Length == 0) return;
+            var paramDic = new Dictionary<string, IInputFormParam>();
 
-            var library = Libraries[LibrarySelectIndex].Model;
+            var library = CurrentLibrary.Model;
             var gid = library.Gid;
             if (gid != 0)
             {
                 // グループ登録済み
                 paramDic.Add("GroupName",
-                    new InputParam("GroupName", library.GroupName, _groups.Select(x => x.Model.GroupName)));
+                    new InputSelectParam("GroupName", library.GroupName, _groups.Select(x => x.Model.GroupName)));
                 paramDic.Add("GroupKeyword",
                     new InputParam("GroupKeyword",
                         _groups.Where(x => x.Model.Gid == gid).Select(x => x.Model.Keyword).FirstOrDefault()));
@@ -461,11 +462,13 @@ namespace Movselex.ViewModels
                 var keyword = MovselexUtils.GetMaxCountMaxLengthKeyword(keywordList);
 
 
-                paramDic.Add("GroupName", new InputParam("GroupName", keyword, _groups.Select(x => x.Model.GroupName)));
+                paramDic.Add("GroupName", new InputSelectParam("GroupName", keyword, _groups.Select(x => x.Model.GroupName)));
                 paramDic.Add("GroupKeyword", new InputParam("GroupKeyword", keyword));
             }
+           
+            paramDic.Add("Target", new InputListParam("Target", targets.Select(x=>x.Model.Title)));
 
-            var inputTextContent = new InputTextContent(Resources.MessageRegistGroup, paramDic);
+            var inputTextContent = new InputFormContent(Resources.MessageRegistGroup, paramDic);
             var dlg = new ModernDialog
             {
                 Title = "Grouping",
@@ -482,7 +485,7 @@ namespace Movselex.ViewModels
             _client.Grouping(
                 input["GroupName"].Value.ToString(),
                 input["GroupKeyword"].Value.ToString(),
-                Libraries.Where(x => x.IsSelected).Select(x => x.Model));
+                targets.Select(x => x.Model));
         }
 
         public void UnGroup()
@@ -502,7 +505,7 @@ namespace Movselex.ViewModels
         public void OpenLibraryFolder()
         {
             if (LibrarySelectIndex == -1) return;
-            _client.OpenLibraryFolder(SelectLibrary.Model);
+            _client.OpenLibraryFolder(CurrentLibrary.Model);
         }
 
         public void MoveLibraryFile()
@@ -524,6 +527,32 @@ namespace Movselex.ViewModels
                 "Question?", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes) _client.MoveLibraryFile(moveDestDirectory, selectLibraries);
+        }
+
+        public void EditLibrary()
+        {
+            if (CurrentLibrary == null) return;
+
+            var library = CurrentLibrary.Model;
+            var paramDic = new Dictionary<string, IInputFormParam>();
+            paramDic.Add("FilePath", new ReadOnlyParam("FilePath", library.FilePath));
+            paramDic.Add("Title", new InputParam("Title", library.Title));
+            paramDic.Add("No", new InputParam("No", library.No));
+            paramDic.Add("Season", new InputParam("Season", library.Season));
+            var inputTextContent = new InputFormContent(Resources.MessageEditLibrary, paramDic);
+            var dlg = new ModernDialog
+            {
+                Title = Resources.EditLibrary,
+                Content = inputTextContent
+            };
+            dlg.Buttons = new[] { dlg.OkButton, dlg.CancelButton };
+            var result = dlg.ShowDialog();
+
+            if (result == false || !inputTextContent.IsModify) return;
+
+            var input = inputTextContent.InputParamDictionary;
+
+            Client.ModifyLibrary(library, input.ToDictionary(pair => pair.Key, pair => pair.Value.Value));
         }
 
         public void DeleteLibrary()
@@ -714,6 +743,24 @@ namespace Movselex.ViewModels
 
         #endregion
 
+        #region CurrentLibrary変更通知プロパティ
+
+        private LibraryViewModel _currentLibrary;
+
+        public LibraryViewModel CurrentLibrary
+        {
+            get { return _currentLibrary; }
+            set
+            {
+                if (_currentLibrary == value) return;
+                _currentLibrary = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+
         #region LibrarySelectIndex変更通知プロパティ
 
         private int _librarySelectIndex;
@@ -725,23 +772,6 @@ namespace Movselex.ViewModels
             {
                 if (_librarySelectIndex == value) return;
                 _librarySelectIndex = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        #endregion
-
-        #region LibrarySelectItem変更通知プロパティ
-
-        private LibraryViewModel _SelectLibrary;
-
-        public LibraryViewModel SelectLibrary
-        {
-            get { return _SelectLibrary; }
-            set
-            {
-                if (_SelectLibrary == value) return;
-                _SelectLibrary = value;
                 RaisePropertyChanged();
             }
         }
@@ -792,7 +822,14 @@ namespace Movselex.ViewModels
             get
             {
                 return _librarydataGridSortingCommand ??
-                       (_librarydataGridSortingCommand = new LibraryDataGridSortingCommand(Libraries));
+                       (_librarydataGridSortingCommand = new LibraryDataGridSortingCommand(Libraries, args =>
+                       {
+                           // IsSelectedの挙動がおかしいので選択すべて解除する。
+                           foreach (var libm in Libraries)
+                           {
+                               libm.IsSelected = false;
+                           }
+                       }));
             }
         }
 
@@ -827,8 +864,8 @@ namespace Movselex.ViewModels
                                if (dep is DataGridRow)
                                {
                                    // 行がクリックされたときだけ処理する
-                                   SelectLibrary.Model.DebugWriteJson();
-                                   _client.InterruptThrow(SelectLibrary.Model);
+                                   CurrentLibrary.Model.DebugWriteJson();
+                                   _client.InterruptThrow(CurrentLibrary.Model);
                                }
                            }));
             }

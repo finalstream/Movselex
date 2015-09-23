@@ -177,4 +177,10 @@
   <data name="MessageAttentionMonitorDirectory" xml:space="preserve">
     <value>未指定の場合はデータベース内で最も登録数の多いディレクトリを監視します。</value>
   </data>
+  <data name="EditLibrary" xml:space="preserve">
+    <value>ライブラリ編集</value>
+  </data>
+  <data name="MessageEditLibrary" xml:space="preserve">
+    <value>ライブラリを編集します。</value>
+  </data>
 </root>

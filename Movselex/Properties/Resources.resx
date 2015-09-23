@@ -177,4 +177,10 @@
   <data name="MessageAttentionMonitorDirectory" xml:space="preserve">
     <value>If not specified it will monitor the most registered a large number of directories in the database.</value>
   </data>
+  <data name="EditLibrary" xml:space="preserve">
+    <value>Edit Library</value>
+  </data>
+  <data name="MessageEditLibrary" xml:space="preserve">
+    <value>Edit the library.</value>
+  </data>
 </root>

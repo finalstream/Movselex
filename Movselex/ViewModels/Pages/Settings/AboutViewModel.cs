@@ -72,7 +72,7 @@ namespace Movselex.ViewModels.Pages.Settings
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
                 "Firk.dll",
                 "Firk",
-                "Framework",
+                "App Framework",
                 "MIT License",
                 "Copyright (c) 2015 FINALSTREAM",
                 "https://github.com/finalstream/Firk"));

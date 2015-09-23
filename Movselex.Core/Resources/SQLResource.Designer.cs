@@ -649,6 +649,19 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   UPDATE MOVLIST
+        ///SET TITLE = @Title,
+        ///NO = @No,
+        ///SEASON = @Season
+        ///WHERE ID = @Id に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdateLibrary {
+            get {
+                return ResourceManager.GetString("UpdateLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   UPDATE MOVLIST 
         ///SET
         ///FILEPATH = @FilePath,

@@ -115,6 +115,15 @@ namespace Movselex.Properties {
         }
         
         /// <summary>
+        ///   Edit Library に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EditLibrary {
+            get {
+                return ResourceManager.GetString("EditLibrary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Grouping に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Grouping {
@@ -138,6 +147,15 @@ namespace Movselex.Properties {
         public static string MessageEditGroup {
             get {
                 return ResourceManager.GetString("MessageEditGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Edit the library. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MessageEditLibrary {
+            get {
+                return ResourceManager.GetString("MessageEditLibrary", resourceCulture);
             }
         }
         

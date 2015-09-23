@@ -117,5 +117,6 @@ namespace Movselex.Core
         void InterruptThrow(long id);
         void ResetBackgroundWorker();
         void ResetLibraryUpdater();
+        void ModifyLibrary(LibraryItem library, Dictionary<string, object> modDataDic);
     }
 }

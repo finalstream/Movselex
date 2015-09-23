@@ -308,5 +308,15 @@ namespace Movselex.Core.Models
         {
             return SqlExecuter.Query<dynamic>(SQLResource.SelectLibraryPreviousAndNextId, new { Gid = gid, No = no }).Select(x=> new Tuple<long?, long?>(x.Previous, x.Next)).FirstOrDefault();
         }
+
+        public void UpdateLibrary(LibraryItem library)
+        {
+            SqlExecuter.Execute(SQLResource.UpdateLibrary,
+                new { Id = library.Id,
+                    Title = library.Title,
+                    No = library.No,
+                    Season = library.Season
+                });
+        }
     }
 }

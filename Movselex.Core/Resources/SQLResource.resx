@@ -517,4 +517,12 @@ WHERE ID = @Id</value>
 (SELECT ID FROM MOVLIST WHERE GID = @Gid AND ABS(NO) &gt; ABS(@No) ORDER BY ABS(NO) ASC Limit 1) Next</value>
     <comment>PreviousとNextのIDを取得</comment>
   </data>
+  <data name="UpdateLibrary" xml:space="preserve">
+    <value>UPDATE MOVLIST
+SET TITLE = @Title,
+NO = @No,
+SEASON = @Season
+WHERE ID = @Id</value>
+    <comment>ライブラリ更新</comment>
+  </data>
 </root>

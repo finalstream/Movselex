@@ -304,6 +304,11 @@ namespace Movselex.Core
             LibraryUpdater = new LibraryUpdater(MovselexLibrary, AppConfig);
         }
 
+        public void ModifyLibrary(LibraryItem library, Dictionary<string, object> modDataDic)
+        {
+            _actionExecuter.Post(new ModifyLibraryAction(library, modDataDic));
+        }
+
         public void ChangeDatabase(string databaseName)
         {
             if (databaseName == null) return;
