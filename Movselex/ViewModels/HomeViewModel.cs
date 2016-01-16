@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using FinalstreamCommons.Extentions;
+using FinalstreamCommons.Extensions;
 using FinalstreamCommons.Utils;
 using FinalstreamUIComponents.Commands;
 using FinalstreamUIComponents.Models;

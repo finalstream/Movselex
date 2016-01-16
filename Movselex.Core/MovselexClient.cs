@@ -14,14 +14,13 @@ using NLog;
 
 namespace Movselex.Core
 {
-    internal class MovselexClient : AppClient, IMovselexClient
+    internal class MovselexClient : AppClient<MovselexAppConfig>, IMovselexClient
     {
         private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
         private readonly string _appConfigFilePath;
         private readonly ActionExecuter<MovselexClient> _actionExecuter;
         private readonly IMovselexDatabaseAccessor _databaseAccessor;
-        private BackgroundWorker _backgroundWorker;
 
         #region Initializedイベント
 
@@ -113,19 +112,6 @@ namespace Movselex.Core
         
         public IProgressInfo ProgressInfo { get; private set; }
 
-        private MovselexAppConfig _appConfig;
-        public new MovselexAppConfig AppConfig
-        {
-            get
-            {
-                return _appConfig;
-            }
-            private set
-            {
-                _appConfig = value;
-                base.AppConfig = value;
-            }
-        }
 
         /// <summary>
         /// 新しいインスタンスを初期化します。
@@ -136,9 +122,6 @@ namespace Movselex.Core
             : base(executingAssembly)
         {
             _appConfigFilePath = appConfigFilePath;
-
-            AppConfig = MovselexAppConfig.Empty;
-
             _actionExecuter = new ActionExecuter<MovselexClient>(this);
             _actionExecuter.ExecuteFailed += (sender, exception) => OnExceptionThrowed(exception);
             _databaseAccessor = new MovselexDatabaseAccessor(AppConfig);
@@ -149,6 +132,9 @@ namespace Movselex.Core
             Databases = new ObservableCollection<string>();
             NowPlayingInfo = new NowPlayingInfo();
             ProgressInfo = new ProgressInfo();
+
+            DisposableCollection.Add(_actionExecuter);
+            DisposableCollection.Add(_databaseAccessor);
         }
 
 
@@ -157,10 +143,6 @@ namespace Movselex.Core
         /// </summary>
         protected override void InitializeCore()
         {
-
-            if (File.Exists(_appConfigFilePath)) AppConfig.Update(LoadConfig<MovselexAppConfig>(_appConfigFilePath));
-            AppConfig.AppVersion = ExecutingAssemblyInfo.FileVersion;
-
             UpgradeSchema();
 
             LibraryUpdater = new LibraryUpdater(MovselexLibrary, AppConfig);
@@ -280,8 +262,6 @@ namespace Movselex.Core
 
         public void ResetBackgroundWorker()
         {
-            if (_backgroundWorker != null) _backgroundWorker.Dispose();
-
             var playerMediaCrawlerAction = new PlayerMediaCrawlerAction(AppConfig.MpcExePath);
             var playMonitoringAction = new PlayMonitoringAction(this.NowPlayingInfo);
 
@@ -289,14 +269,12 @@ namespace Movselex.Core
             playMonitoringAction.CountUpTimePlayed += (sender, l) => _actionExecuter.Post(new IncrementPlayCountAction(l));
             playMonitoringAction.SwitchTitle += (sender, s) => _actionExecuter.Post(new UpdateNowPlayInfoAction(s));
 
-
-            _backgroundWorker = new BackgroundWorker(TimeSpan.FromMilliseconds(1000), new BackgroundAction[]
+            ResetBackgroundWorker(TimeSpan.FromMilliseconds(1000), new BackgroundAction[]
                 {
                     playerMediaCrawlerAction, 
                     playMonitoringAction,
                     new AutoUpdateLibraryAction(this), 
                 });
-            _backgroundWorker.Start();
         }
 
         public void ResetLibraryUpdater()
@@ -433,42 +411,9 @@ namespace Movselex.Core
             _actionExecuter.Post(new ReloadFilteringAction());
         }
 
-        #region Dispose
-
-        // Flag: Has Dispose already been called?
-        private bool disposed = false;
-        
-
-        // Public implementation of Dispose pattern callable by consumers.
-        public override void Dispose()
+        public override string GetConfigPath()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            return _appConfigFilePath;
         }
-
-        // Protected implementation of Dispose pattern.
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposed)
-                return;
-
-            if (disposing)
-            {
-                // Free any other managed objects here.
-                //
-                //_actionExecuter.Dispose();
-                _actionExecuter.Dispose();
-                if(_backgroundWorker != null) _backgroundWorker.Dispose();
-                if (_databaseAccessor != null) _databaseAccessor.Dispose();
-            }
-
-            // Free any unmanaged objects here.
-            //
-            disposed = true;
-        }
-
-        #endregion
-
-        
     }
 }

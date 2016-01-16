@@ -261,6 +261,10 @@
     <Resource Include="movselex.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\FinalstreamCommons.Core\FinalstreamCommons.Core.csproj">
+      <Project>{e6ea79fa-cd16-4e5d-8e20-1fdfbbc35f5d}</Project>
+      <Name>FinalstreamCommons.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\FinalstreamCommons2\FinalstreamCommons.csproj">
       <Project>{bdf2ba67-4b60-40b5-a039-1bf67bbe25c4}</Project>
       <Name>FinalstreamCommons</Name>
@@ -268,6 +272,10 @@
     <ProjectReference Include="..\..\FinalstreamUIComponents\FinalstreamUIComponents.csproj">
       <Project>{3df18075-0985-4164-8fdd-6ab1736e9b0f}</Project>
       <Name>FinalstreamUIComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Firk.Core\source\Firk.Core.csproj">
+      <Project>{a62c508b-9576-4865-a7a3-613c922a6181}</Project>
+      <Name>Firk.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Firk\source\Firk.csproj">
       <Project>{59fd5b81-feb9-4299-bcfb-c8e985970e1f}</Project>

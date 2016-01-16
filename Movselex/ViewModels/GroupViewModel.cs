@@ -1,4 +1,4 @@
-﻿using FinalstreamCommons.Extentions;
+﻿using FinalstreamCommons.Extensions;
 using Livet;
 using Movselex.Core.Models;
 

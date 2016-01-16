@@ -1,7 +1,3 @@
-using System.IO;
-using System.Linq;
-using FinalstreamCommons.Extentions;
-
 namespace Movselex.Core.Models.Actions
 {
     internal class InitializeAction : RefreshAction

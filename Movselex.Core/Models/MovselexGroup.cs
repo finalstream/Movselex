@@ -1,13 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.SQLite;
 using System.Linq;
-using System.Text.RegularExpressions;
 using FinalstreamCommons.Collections;
-using FinalstreamCommons.Extentions;
-using FinalstreamCommons.Utils;
-using Livet;
+using FinalstreamCommons.Extensions;
 using NLog;
 
 namespace Movselex.Core.Models

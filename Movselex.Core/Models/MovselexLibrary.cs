@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using FinalstreamCommons.Extentions;
+using FinalstreamCommons.Extensions;
 using FinalstreamCommons.Utils;
 using Livet;
 using NLog;
@@ -40,7 +36,7 @@ namespace Movselex.Core.Models
 
         public LibraryItem GetLibraryItem(long id)
         {
-            var library = LibraryItems.SingleOrDefault(x => x.Id == id);
+            var library = LibraryItems.FirstOrDefault(x => x.Id == id);
             
             if (library == null)
             {

@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Finalstream")]
 [assembly: AssemblyProduct("Movselex")]
-[assembly: AssemblyCopyright("Copyright ©  2015 Finalstream")]
+[assembly: AssemblyCopyright("Copyright ©  2015-2016 Finalstream")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,5 +51,5 @@ using System.Windows;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.6.*")]
-[assembly: AssemblyFileVersion("0.6.0.0")]
+[assembly: AssemblyVersion("0.7.*")]
+[assembly: AssemblyFileVersion("0.7.0.0")]
