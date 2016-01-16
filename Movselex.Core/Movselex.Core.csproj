@@ -33,6 +33,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FinalstreamCommons, Version=0.4.58.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FinalstreamCommons.0.4.58.0\lib\net45\FinalstreamCommons.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FinalstreamCommons.Core, Version=0.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FinalstreamCommons.Core.0.1.8.0\lib\net45\FinalstreamCommons.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FinalstreamCommons.Web, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FinalstreamCommons.Web.0.1.2.0\lib\net45\FinalstreamCommons.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Firk, Version=0.2.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Firk.0.2.11.0\lib\net45\Firk.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Firk.Core, Version=0.2.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Firk.Core.0.2.11.0\lib\net45\Firk.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Livet">
       <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\Livet.dll</HintPath>
     </Reference>
@@ -54,6 +78,10 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.1.0\lib\net45\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.97.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -61,6 +89,22 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -178,28 +222,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>SQLResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\FinalstreamCommons.Core\FinalstreamCommons.Core.csproj">
-      <Project>{e6ea79fa-cd16-4e5d-8e20-1fdfbbc35f5d}</Project>
-      <Name>FinalstreamCommons.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FinalstreamCommons.Web\FinalstreamCommons.Web.csproj">
-      <Project>{f0feac4b-f310-42a1-9e3b-9a2bee087a77}</Project>
-      <Name>FinalstreamCommons.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FinalstreamCommons2\FinalstreamCommons.csproj">
-      <Project>{bdf2ba67-4b60-40b5-a039-1bf67bbe25c4}</Project>
-      <Name>FinalstreamCommons</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Firk.Core\source\Firk.Core.csproj">
-      <Project>{a62c508b-9576-4865-a7a3-613c922a6181}</Project>
-      <Name>Firk.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Firk\source\Firk.csproj">
-      <Project>{59fd5b81-feb9-4299-bcfb-c8e985970e1f}</Project>
-      <Name>Firk</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

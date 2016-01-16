@@ -56,19 +56,51 @@
     <ApplicationIcon>movselex.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FinalstreamCommons, Version=0.4.58.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FinalstreamCommons.0.4.58.0\lib\net45\FinalstreamCommons.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FinalstreamCommons.Core, Version=0.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FinalstreamCommons.Core.0.1.8.0\lib\net45\FinalstreamCommons.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FinalstreamUIComponents, Version=0.1.30.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FinalstreamUIComponents.0.1.30.0\lib\net45\FinalstreamUIComponents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Firk, Version=0.2.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Firk.0.2.11.0\lib\net45\Firk.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Firk.Core, Version=0.2.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Firk.Core.0.2.11.0\lib\net45\Firk.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FirstFloor.ModernUI">
       <HintPath>..\packages\ModernUI.WPF.1.0.6\lib\net45\FirstFloor.ModernUI.dll</HintPath>
     </Reference>
-    <Reference Include="Livet">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>InfrastructureAssemblies\Livet.dll</HintPath>
+    <Reference Include="Livet, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b0b1d3f711ef38cb, processorArchitecture=MSIL">
+      <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\Livet.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Expression.Interactions">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>InfrastructureAssemblies\Microsoft.Expression.Interactions.dll</HintPath>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.1.0\lib\net45\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -91,7 +123,10 @@
       <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\LivetCask.1.1.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -261,26 +296,6 @@
     <Resource Include="movselex.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FinalstreamCommons.Core\FinalstreamCommons.Core.csproj">
-      <Project>{e6ea79fa-cd16-4e5d-8e20-1fdfbbc35f5d}</Project>
-      <Name>FinalstreamCommons.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FinalstreamCommons2\FinalstreamCommons.csproj">
-      <Project>{bdf2ba67-4b60-40b5-a039-1bf67bbe25c4}</Project>
-      <Name>FinalstreamCommons</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FinalstreamUIComponents\FinalstreamUIComponents.csproj">
-      <Project>{3df18075-0985-4164-8fdd-6ab1736e9b0f}</Project>
-      <Name>FinalstreamUIComponents</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Firk.Core\source\Firk.Core.csproj">
-      <Project>{a62c508b-9576-4865-a7a3-613c922a6181}</Project>
-      <Name>Firk.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Firk\source\Firk.csproj">
-      <Project>{59fd5b81-feb9-4299-bcfb-c8e985970e1f}</Project>
-      <Name>Firk</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Movselex.Core\Movselex.Core.csproj">
       <Project>{f819d8cd-372d-4584-9bb9-22fb4a7e5252}</Project>
       <Name>Movselex.Core</Name>
