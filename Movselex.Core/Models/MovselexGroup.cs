@@ -238,7 +238,7 @@ namespace Movselex.Core.Models
         {
             var groups = _databaseAccessor.SelectGroup().ToArray();
 
-            GroupItems.DiffUpdate(groups, new GroupItemComparer());
+            GroupItems.DiffInsert(groups, new GroupItemComparer());
         }
     }
 }

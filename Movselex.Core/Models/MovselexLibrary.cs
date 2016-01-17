@@ -267,8 +267,9 @@ namespace Movselex.Core.Models
         public void DiffLoad(LibraryCondition libCondition)
         {
             var libraries = _databaseAccessor.SelectLibraryList(libCondition).ToArray();
-            LibraryItems.DiffUpdate(libraries,
+            LibraryItems.DiffInsert(libraries,
                 new LibraryItemComparer());
+        
         }
 
         public Tuple<long?, long?> GetPreviousAndNextId(long gid, string no)
