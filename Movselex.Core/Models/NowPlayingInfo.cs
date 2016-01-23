@@ -9,7 +9,7 @@ namespace Movselex.Core.Models
         public NowPlayingInfo()
         {
             _title = "";
-            _playTime = "";
+            _totalPlayTime = TimeSpan.Zero;
         }
 
         public long Id { get; private set; }
@@ -90,35 +90,49 @@ namespace Movselex.Core.Models
 
         #endregion
 
-        #region PlayTime変更通知プロパティ
+        #region TotalPlayTime変更通知プロパティ
 
-        private string _playTime = ApplicationDefinitions.TimeEmptyString;
+        private TimeSpan _totalPlayTime;
 
-        public string PlayTime
+        public TimeSpan TotalPlayTime
         {
-            get { return _playTime; }
+            get { return _totalPlayTime; }
             set
             {
-                if (_playTime == value) return;
-                _playTime = value;
+                if (_totalPlayTime == value) return;
+                _totalPlayTime = value;
                 RaisePropertyChanged();
             }
         }
 
         #endregion
 
-        public double PlayTimeSeconds
+        #region NowPlayTime変更通知プロパティ
+
+        private TimeSpan _nowPlayTime;
+
+        public TimeSpan NowPlayTime
         {
-            get
+            get { return _nowPlayTime; }
+            set
             {
-                if (string.IsNullOrEmpty(PlayTime)) return 0;
-                var time = PlayTime;
-                if (time.Length < 6)
-                {
-                    time = "0:" + time;
-                }
-                return TimeSpan.Parse(time).TotalSeconds;
+                if (_nowPlayTime == value) return;
+                _nowPlayTime = value;
+                RaisePropertyChanged();
             }
+        }
+
+        #endregion
+
+        private TimeSpan ConvertTimeStringToTimeSpan(string timeString)
+        {
+            timeString = timeString.Replace("-", "").Trim(); // マイナスがついていたら除外する
+            if (string.IsNullOrEmpty(timeString)) return TimeSpan.Zero;
+            if (timeString.Length < 6)
+            {
+                timeString = "0:" + timeString;
+            }
+            return TimeSpan.Parse(timeString);
         }
 
         #region Season変更通知プロパティ
@@ -210,7 +224,7 @@ namespace Movselex.Core.Models
         /// 更新します。
         /// </summary>
         /// <param name="title"></param>
-        /// <param name="playtime"></param>
+        /// <param name="playtime">HH:mm/HH:mm形式</param>
         public void Update(string title, string playtime)
         {
             Title = title;
@@ -221,11 +235,13 @@ namespace Movselex.Core.Models
             if (works.Length == 2)
             {
                 // 再生時間を設定
-                PlayTime = works[1].Trim();
+                NowPlayTime = ConvertTimeStringToTimeSpan(works[0].Trim());
+                TotalPlayTime = ConvertTimeStringToTimeSpan(works[1].Trim());
             }
             else
             {
-                PlayTime = ApplicationDefinitions.TimeEmptyString;
+                NowPlayTime = TimeSpan.Zero;
+                TotalPlayTime = TimeSpan.Zero;
             }
         }
 

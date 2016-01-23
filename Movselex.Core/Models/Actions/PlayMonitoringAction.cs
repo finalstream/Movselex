@@ -60,7 +60,7 @@ namespace Movselex.Core.Models.Actions
             {
                 // タイトル更新された
                 _keepPlayTitle = nowTitle;
-                _keepPlayTime = _nowPlayingInfo.PlayTimeSeconds;
+                _keepPlayTime = _nowPlayingInfo.TotalPlayTime.TotalSeconds;
                 _playCountStopwatch.Restart();
                 OnSwitchTitle(nowTitle);
             }

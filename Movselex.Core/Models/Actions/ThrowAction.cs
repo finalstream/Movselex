@@ -52,7 +52,17 @@ namespace Movselex.Core.Models.Actions
 
             if (_mode == Mode.Interrupt)
             {
-                _libraryItems = _libraryItems.Concat(playing.GetResumePlayingItems());
+                var resumeItems = playing.GetResumePlayingItems();
+
+                // 再生位置が終盤であれば現在の再生中のものは除外する。
+                var nowplaying = client.NowPlayingInfo;
+                if (nowplaying.TotalPlayTime.Subtract(nowplaying.NowPlayTime).Duration().TotalMinutes < 5)
+                {
+                    resumeItems = resumeItems.Skip(1);
+                }
+
+                _libraryItems = _libraryItems.Concat(resumeItems);
+                
             }
 
             var libraryItems = _libraryItems as LibraryItem[] ?? _libraryItems.ToArray();

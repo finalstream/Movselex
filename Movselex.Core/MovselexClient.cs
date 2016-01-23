@@ -166,7 +166,7 @@ namespace Movselex.Core
         /// </summary>
         protected override void FinalizeCore()
         {
-            SaveConfig(_appConfigFilePath, AppConfig);
+            
         }
 
 

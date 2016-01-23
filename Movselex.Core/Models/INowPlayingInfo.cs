@@ -23,11 +23,15 @@ namespace Movselex.Core.Models
         string ViewPlayTime { get; }
 
         /// <summary>
-        /// 再生時間(mm:ss)。
+        /// 現在再生時間
         /// </summary>
-        string PlayTime { get; }
+        TimeSpan NowPlayTime { get; }
 
-        double PlayTimeSeconds { get; }
+        /// <summary>
+        /// 合計再生時間
+        /// </summary>
+        TimeSpan TotalPlayTime { get; }
+
 
         string Season { get; }
 
