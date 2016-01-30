@@ -215,6 +215,7 @@ namespace Movselex.Core
         public void RegistFiles(IEnumerable<string> files)
         {
             var action = new RegistFileAction(files);
+            action.AfterAction = () => DiffRefresh();
             _actionExecuter.Post(action);
         }
 

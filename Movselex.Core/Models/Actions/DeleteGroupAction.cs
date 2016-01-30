@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Firk.Core.Actions;
-using Movselex.Core.Models;
 
-namespace Movselex.Core
+namespace Movselex.Core.Models.Actions
 {
     internal class DeleteGroupAction : IGeneralAction<MovselexClient>
     {
