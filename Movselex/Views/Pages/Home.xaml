@@ -280,6 +280,14 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</MenuItem>
+					<Separator></Separator>
+					<MenuItem Header="{Binding Source={x:Static models:MovselexResource.Current}, Path=Resources.DeleteGroup}" HeaderStringFormat="{}{0}...">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="Click">
+								<behaviors1:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="DeleteGroup" />
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</MenuItem>
 				</ContextMenu>
 			</DataGrid.ContextMenu>
 

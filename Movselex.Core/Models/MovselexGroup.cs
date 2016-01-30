@@ -240,5 +240,23 @@ namespace Movselex.Core.Models
 
             GroupItems.DiffInsert(groups, new GroupItemComparer());
         }
+
+        public IEnumerable<long> GetLibraryIds(long gid)
+        {
+            return _databaseAccessor.SelectIdFromGid(gid);
+        }
+
+        public void DeleteGroup(GroupItem group)
+        {
+            using (var tran = _databaseAccessor.BeginTransaction())
+            {
+                _databaseAccessor.UpdateUnGroup(group.Gid);
+                _databaseAccessor.DeleteGroup(group.Gid);
+
+                tran.Commit();
+                GroupItems.Remove(group);
+                _log.Info("Delete Group. Gid:{0} GroupName:{1} ", group.Gid, group.GroupName);
+            }
+        }
     }
 }

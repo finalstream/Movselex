@@ -79,6 +79,15 @@ namespace Movselex.Properties {
         }
         
         /// <summary>
+        ///   Delete the file that has been registered in the group. is it OK? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ConfirmMessageGroupDelete {
+            get {
+                return ResourceManager.GetString("ConfirmMessageGroupDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   It will move the {0} to {1}. Are you sure? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ConfirmMessageMove {
@@ -102,6 +111,15 @@ namespace Movselex.Properties {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Delete Group に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string DeleteGroup {
+            get {
+                return ResourceManager.GetString("DeleteGroup", resourceCulture);
             }
         }
         

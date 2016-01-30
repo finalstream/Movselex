@@ -118,5 +118,6 @@ namespace Movselex.Core
         void ResetBackgroundWorker();
         void ResetLibraryUpdater();
         void ModifyLibrary(LibraryItem library, Dictionary<string, object> modDataDic);
+        void DeleteGroup(GroupItem group, bool isDeleteFile);
     }
 }

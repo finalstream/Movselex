@@ -305,15 +305,15 @@ FROM MOVLIST
 WHERE GID IS NULL</value>
     <comment>全タイトルを取得</comment>
   </data>
-  <data name="SQL029" xml:space="preserve">
+  <data name="UpdateUnGroup" xml:space="preserve">
     <value>UPDATE MOVLIST
 SET GID = null
-WHERE GID = :Gid</value>
+WHERE GID = @Gid</value>
     <comment>グループ解除</comment>
   </data>
-  <data name="SQL030" xml:space="preserve">
+  <data name="DeleteGroup" xml:space="preserve">
     <value>DELETE FROM MOVGROUPLIST 
-WHERE GID = :Gid</value>
+WHERE GID = @Gid</value>
     <comment>グループ削除</comment>
   </data>
   <data name="UpdateGroup" xml:space="preserve">

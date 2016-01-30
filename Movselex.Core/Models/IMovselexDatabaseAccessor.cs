@@ -40,5 +40,7 @@ namespace Movselex.Core.Models
         void DeleteLibrary(long id);
         Tuple<long?, long?> SelectLibraryPreviousAndNextId(long gid, string no);
         void UpdateLibrary(LibraryItem library);
+        void DeleteGroup(long gid);
+        void UpdateUnGroup(long gid);
     }
 }

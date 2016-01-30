@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDefinitions.cs" />
+    <Compile Include="Models\Actions\DeleteGroupAction.cs" />
     <Compile Include="Models\Actions\AutoUpdateLibraryAction.cs" />
     <Compile Include="Models\Actions\GetCandidateGroupNameAction.cs" />
     <Compile Include="IMovselexClient.cs" />

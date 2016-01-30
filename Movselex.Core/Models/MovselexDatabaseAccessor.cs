@@ -318,5 +318,15 @@ namespace Movselex.Core.Models
                     Season = library.Season
                 });
         }
+
+        public void DeleteGroup(long gid)
+        {
+            SqlExecuter.Execute(SQLResource.DeleteGroup, new { Gid = gid });
+        }
+
+        public void UpdateUnGroup(long gid)
+        {
+            SqlExecuter.Execute(SQLResource.UpdateUnGroup, new { Gid = gid });
+        }
     }
 }

@@ -287,6 +287,11 @@ namespace Movselex.Core
             _actionExecuter.Post(new ModifyLibraryAction(library, modDataDic));
         }
 
+        public void DeleteGroup(GroupItem group, bool isDeleteFile)
+        {
+            _actionExecuter.Post(new DeleteGroupAction(group, isDeleteFile));
+        }
+
         public void ChangeDatabase(string databaseName)
         {
             if (databaseName == null) return;

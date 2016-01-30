@@ -183,4 +183,10 @@
   <data name="MessageEditLibrary" xml:space="preserve">
     <value>Edit the library.</value>
   </data>
+  <data name="ConfirmMessageGroupDelete" xml:space="preserve">
+    <value>Delete the file that has been registered in the group. is it OK?</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete Group</value>
+  </data>
 </root>

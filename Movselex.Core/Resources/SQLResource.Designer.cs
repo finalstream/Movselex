@@ -61,6 +61,16 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
+        ///   DELETE FROM MOVGROUPLIST 
+        ///WHERE GID = @Gid に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DeleteGroup {
+            get {
+                return ResourceManager.GetString("DeleteGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   DELETE FROM MOVLIST 
         ///WHERE ID = @Id に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -410,27 +420,6 @@ namespace Movselex.Core.Resources {
         
         /// <summary>
         ///   UPDATE MOVLIST
-        ///SET GID = null
-        ///WHERE GID = :Gid に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL029 {
-            get {
-                return ResourceManager.GetString("SQL029", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   DELETE FROM MOVGROUPLIST 
-        ///WHERE GID = :Gid に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string SQL030 {
-            get {
-                return ResourceManager.GetString("SQL030", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   UPDATE MOVLIST
         ///SET FILEPATH = :FilePath,
         ///TITLE = :Title,
         ///DRIVE = SUBSTR(:FilePath,1,1),
@@ -730,6 +719,17 @@ namespace Movselex.Core.Resources {
         internal static string UpdatePlayCount {
             get {
                 return ResourceManager.GetString("UpdatePlayCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UPDATE MOVLIST
+        ///SET GID = null
+        ///WHERE GID = @Gid に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdateUnGroup {
+            get {
+                return ResourceManager.GetString("UpdateUnGroup", resourceCulture);
             }
         }
     }

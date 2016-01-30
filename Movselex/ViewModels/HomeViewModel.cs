@@ -555,6 +555,36 @@ namespace Movselex.ViewModels
             Client.ModifyLibrary(library, input.ToDictionary(pair => pair.Key, pair => pair.Value.Value));
         }
 
+        public void DeleteGroup()
+        {
+            if (CurrentGroup == null) return;
+
+            var dlg = new ModernDialog
+            {
+                Content = string.Format(Resources.ConfirmMessageDelete,
+                    CurrentGroup.Model.GroupName),
+                Title = DialogUtils.MessageTitleQuestion,
+                MinHeight = 0
+            };
+            var yes = dlg.YesButton;
+            yes.Content = "yes (with file)";
+            var ok = dlg.OkButton;
+            ok.Content = "yes (only group)";
+            dlg.Buttons = new[] { yes, ok, dlg.NoButton };
+            var result = dlg.ShowDialog();
+            if (result == false) return;
+
+            var isDeleteFile = dlg.MessageBoxResult == MessageBoxResult.Yes;
+            if (isDeleteFile)
+            {
+                var result2 = ModernDialog.ShowMessage(Resources.ConfirmMessageGroupDelete,
+                    DialogUtils.MessageTitleQuestion, MessageBoxButton.YesNo);
+                if (result2 == MessageBoxResult.No) return;
+            }
+
+            _client.DeleteGroup(CurrentGroup.Model, isDeleteFile);
+        }
+
         public void DeleteLibrary()
         {
             var selectLibraries = Libraries.Where(x => x.IsSelected).Select(x => x.Model).ToArray();
