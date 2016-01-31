@@ -66,7 +66,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 "Movselex Core",
                 "Core Feature",
                 null,
-                "Copyright (c) 2015 FINALSTREAM",
+                "Copyright (c) 2015-2016 FINALSTREAM",
                 "http://www.finalstream.net/"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
@@ -74,7 +74,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 "Firk",
                 "App Framework",
                 "MIT License",
-                "Copyright (c) 2015 FINALSTREAM",
+                "Copyright (c) 2015-2016 FINALSTREAM",
                 "https://github.com/finalstream/Firk"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
@@ -82,7 +82,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 "Finalstream Commons",
                 "Common Library",
                 "MIT License",
-                "Copyright (c) 2015 FINALSTREAM",
+                "Copyright (c) 2015-2016 FINALSTREAM",
                 "https://github.com/finalstream/FinalstreamCommons"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
@@ -90,7 +90,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 "Finalstream UI Components",
                 "UI Component",
                 "MIT License",
-                "Copyright (c) 2015 FINALSTREAM",
+                "Copyright (c) 2015-2016 FINALSTREAM",
                 "https://github.com/finalstream/FinalstreamUIComponents"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(

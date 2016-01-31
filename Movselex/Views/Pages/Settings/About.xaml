@@ -18,7 +18,7 @@
             <StackPanel MinWidth="200">
                 <TextBlock Text="ABOUT" Style="{StaticResource Heading2}" Margin="0,0,0,10" />
                 <TextBlock Text="{Binding ApplicationName}" Style="{StaticResource Heading1}" Margin="0,0,0,8" TextWrapping="Wrap" />
-                <TextBlock Text="Copyright © 2015 FINALSTREAM" Style="{StaticResource Heading2}" Margin="0,0,0,8" TextWrapping="Wrap" />
+                <TextBlock Text="Copyright © 2015-2016 FINALSTREAM" Style="{StaticResource Heading2}" Margin="0,0,0,8" TextWrapping="Wrap" />
                 <mui:BBCodeBlock BBCode="[url=http://www.finalstream.net/]http://www.finalstream.net/[/url]" Margin="0,0,0,8" />
                 <Separator Margin="0,0,0,30"></Separator>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" Height="300" Margin="0,0,0,50">
