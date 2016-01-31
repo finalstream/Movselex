@@ -424,9 +424,6 @@
     <None Include="license\taglibsharp.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="migemo\migemo.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="movselex.ico" />
   </ItemGroup>
   <ItemGroup>
