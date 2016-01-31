@@ -262,6 +262,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Readme.html.lnk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="sql\default.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
