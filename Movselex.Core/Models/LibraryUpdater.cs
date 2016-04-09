@@ -63,6 +63,7 @@ namespace Movselex.Core.Models
         /// <returns></returns>
         private IEnumerable<string> GetSupportFiles(string directoryPath)
         {
+            if (!Directory.Exists(directoryPath)) return Enumerable.Empty<string>();
             return Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories)
                     .Where(x => _supportExts.Contains(Path.GetExtension(x).ToLower()));
         }

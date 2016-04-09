@@ -1,4 +1,6 @@
-﻿using FinalstreamCommons.Windows;
+﻿using System.IO;
+using System.Text.RegularExpressions;
+using FinalstreamCommons.Windows;
 
 namespace Movselex.Core.Models
 {
@@ -12,8 +14,13 @@ namespace Movselex.Core.Models
             if (HasExited()) return PlayerMediaInfo.Empty;  // プロセスが終了していたら抜ける
 
             var timeString = Win32Api.GetWindowCaption(Process.MainWindowHandle, "#32770", @"\d*:?\d*:\d* / \d*:?\d*:\d*");
-            
-            return new PlayerMediaInfo(Process.MainWindowTitle, timeString);
+
+            var title = Process.MainWindowTitle;
+
+            // MPC-BE対応
+            title = Path.GetFileNameWithoutExtension(new Regex("- MPC-BE.*").Replace(title, ""));
+
+            return new PlayerMediaInfo(title, timeString);
         }
 
     }

@@ -623,6 +623,11 @@ namespace Movselex.ViewModels
             IsShuffle = isShuffle;
         }
 
+        public void SetSearchKeyword()
+        {
+            // グループ登録してない場合は何もしない
+        }
+
         public void SetSearchKeyword(string searchKeyword)
         {
             SearchText = searchKeyword;
@@ -666,7 +671,7 @@ namespace Movselex.ViewModels
             set
             {
                 if (_canThrow == value) return;
-                _canThrow = !String.IsNullOrEmpty(AppConfig.MpcExePath) && LibraryCount > 0 && value;
+                _canThrow = !String.IsNullOrEmpty(AppConfig.MpcExePath) && File.Exists(AppConfig.MpcExePath) && LibraryCount > 0 && value;
                 RaisePropertyChanged();
             }
         }
@@ -895,7 +900,7 @@ namespace Movselex.ViewModels
                                {
                                    // 行がクリックされたときだけ処理する
                                    CurrentLibrary.Model.DebugWriteJson();
-                                   _client.InterruptThrow(CurrentLibrary.Model);
+                                   if (this.CanThrow) _client.InterruptThrow(CurrentLibrary.Model);
                                }
                            }));
             }
