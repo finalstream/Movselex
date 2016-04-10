@@ -101,6 +101,7 @@ namespace Movselex.Core.Models
 
                         // 未登録の場合のみ登録する
                         var mediaFile = new MediaFile(registFile);
+                        if (mediaFile.Duration == TimeSpan.Zero) continue; // 不完全ファイルは追加しない。
                         _movselexGroup.SetMovGroup(mediaFile);
                         var isSuccess = _databaseAccessor.InsertMediaFile(mediaFile);
                         if (isSuccess)
