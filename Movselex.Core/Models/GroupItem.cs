@@ -44,7 +44,7 @@ namespace Movselex.Core.Models
 
         public string Drive
         {
-            get { return _drive; }
+            get { return _drive.ToUpper(); }
             set
             {
                 if (_drive == value) return;
