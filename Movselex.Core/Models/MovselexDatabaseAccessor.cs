@@ -183,6 +183,7 @@ namespace Movselex.Core.Models
                 new
                 {
                     Id = mediaFile.Id,
+                    Title = mediaFile.MovieTitle,
                     Length = mediaFile.Length,
                     Codec = mediaFile.Codec,
                     VideoSize = mediaFile.VideoSize

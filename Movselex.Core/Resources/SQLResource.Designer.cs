@@ -699,7 +699,8 @@ namespace Movselex.Core.Resources {
         
         /// <summary>
         ///   UPDATE MOVLIST
-        ///SET LENGTH = @Length,
+        ///SET TITLE = @Title,
+        ///LENGTH = @Length,
         ///CODEC = @Codec,
         ///VIDEOSIZE = @VideoSize
         ///WHERE ID = @Id に類似しているローカライズされた文字列を検索します。

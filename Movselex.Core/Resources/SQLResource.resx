@@ -433,7 +433,8 @@ ORDER BY ADDDATE DESC LIMIT 1</value>
   </data>
   <data name="UpdateMediaInfo" xml:space="preserve">
     <value>UPDATE MOVLIST
-SET LENGTH = @Length,
+SET TITLE = @Title,
+LENGTH = @Length,
 CODEC = @Codec,
 VIDEOSIZE = @VideoSize
 WHERE ID = @Id</value>
