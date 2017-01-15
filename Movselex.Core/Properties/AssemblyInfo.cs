@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Finalstream")]
 [assembly: AssemblyProduct("Movselex.Core")]
-[assembly: AssemblyCopyright("Copyright ©  2015-2016 Finalstream")]
+[assembly: AssemblyCopyright("Copyright ©  2015-2017 Finalstream")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

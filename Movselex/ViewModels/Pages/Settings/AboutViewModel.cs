@@ -66,7 +66,7 @@ namespace Movselex.ViewModels.Pages.Settings
                 "Movselex Core",
                 "Core Feature",
                 null,
-                "Copyright (c) 2015-2016 FINALSTREAM",
+                "Copyright (c) 2015-2017 FINALSTREAM",
                 "http://www.finalstream.net/"));
 
             DynamicLinkLibraries.Add(new DynamicLinkLibraryInfo(
