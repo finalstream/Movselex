@@ -28,7 +28,9 @@ namespace Movselex.Core.Models
                 .Replace("#", "")
                 .Replace("RAW", "");
 
-            return Regex.Replace(sss, @"[(\[].+?[)\]]", "").Trim();
+            var title = Regex.Replace(sss, @"[(\[].+?[)\]]", "").Trim();
+
+            return string.IsNullOrEmpty(title) ? ss : title;
         }
 
         /// <summary>

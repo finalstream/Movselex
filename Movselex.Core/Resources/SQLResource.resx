@@ -498,7 +498,7 @@ WHERE Id = :Id</value>
     <comment>ファイル名からIDを取得</comment>
   </data>
   <data name="SelectInCompleteIdFilePaths" xml:space="preserve">
-    <value>SELECT ID, FILEPATH FROM MOVLIST WHERE LENGTH = @Length</value>
+    <value>SELECT ID, FILEPATH FROM MOVLIST WHERE LENGTH = @Length OR ifnull(TITLE, '') = ''</value>
     <comment>不完全ID、ファイルパスリスト取得</comment>
   </data>
   <data name="UpdateLibraryRating" xml:space="preserve">
