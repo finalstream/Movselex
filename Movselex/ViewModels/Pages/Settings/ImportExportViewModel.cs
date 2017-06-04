@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Forms;
+using FinalstreamCommons.Models;
+using FinalstreamCommons.Utils;
+using FirstFloor.ModernUI.Windows.Controls;
 using Livet;
-using Livet.Commands;
-using Livet.Messaging;
-using Livet.Messaging.IO;
 using Livet.EventListeners;
-using Livet.Messaging.Windows;
+using Movselex.Properties;
 
-using Movselex.Models;
-
-namespace Movselex.ViewModels
+namespace Movselex.ViewModels.Pages.Settings
 {
-    public class MainWindowViewModel : ViewModel
+    public class ImportExportViewModel : ViewModel
     {
         /* コマンド、プロパティの定義にはそれぞれ 
          * 
@@ -61,15 +56,31 @@ namespace Movselex.ViewModels
 
         public void Initialize()
         {
+            
+        }
+
+        public ImportExportViewModel()
+        {
+           
 
         }
 
-        public Rect WindowRect {get { return App.Config.WindowBounds; }}
-
-        public Uri Export { get {  return new Uri("cmd://copy"); } }
-
-        public MainWindowViewModel()
+        public void Export()
         {
+            var dlg = new ModernDialog
+            {
+                Content = "Export?",
+                Title = DialogUtils.MessageTitleQuestion,
+                MinHeight = 0
+            };
+            dlg.Buttons = new[] {dlg.YesButton, dlg.NoButton};
+            var result = dlg.ShowDialog();
+            if (result == false) return;
+
+            var isExecExport = dlg.MessageBoxResult == MessageBoxResult.Yes;
+            if (isExecExport)
+            {
+            }
         }
     }
 }
