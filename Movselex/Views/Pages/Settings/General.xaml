@@ -11,7 +11,7 @@
              xmlns:models="clr-namespace:Movselex.Models"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance settings:GeneralViewModel}"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
     <Grid>
         <ScrollViewer>
             <StackPanel MinWidth="200">
@@ -36,8 +36,8 @@
                     <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Players}" SelectedValue="mpc" SelectedValuePath="Value"  VerticalAlignment="Center" Margin="0,0,0,10" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Exe Path:" VerticalAlignment="Center" Margin="0,0,16,10" />
-                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding ExePath}" Margin="0,0,0,10"></TextBox>
-                    <Button Grid.Row="1" Grid.Column="2" Content="..." Width="50" HorizontalAlignment="Left" Margin="5,0,0,10">
+                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding ExePath}" Margin="0,0,0,10" VerticalContentAlignment="Center"/>
+                    <Button Grid.Row="1" Grid.Column="2" Content="..." Width="30" HorizontalAlignment="Left" Margin="5.4,2,0,10" Height="20" VerticalContentAlignment="Center" Padding="0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <behaviors:LivetCallMethodAction MethodTarget="{Binding}"  MethodName="OpenDialogExePath"/>
