@@ -60,7 +60,7 @@ namespace Movselex.ViewModels.Pages.Settings
         public GeneralViewModel()
         {
             _players = new DispatcherCollection<DisplayableItem<string>>(DispatcherHelper.UIDispatcher);
-            _players.Add(new DisplayableItem<string>("mpc", "Media General Classic"));
+            _players.Add(new DisplayableItem<string>("mpc", "Media Player Classic"));
             _screens = new DispatcherCollection<DisplayableItem<int>>(DispatcherHelper.UIDispatcher);
             var i = 1;
             foreach (Screen screen in Screen.AllScreens)

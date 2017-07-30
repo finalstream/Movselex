@@ -23,6 +23,7 @@
             <mui:ModernTab.Links>
                 <mui:Link DisplayName="general" Source="/Views/Pages/Settings/General.xaml" />
                 <mui:Link DisplayName="appearance" Source="/Views/Pages/Settings/Appearance.xaml" />
+                <mui:Link DisplayName="import/export" Source="/Views/Pages/Settings/ImportExport.xaml" />
                 <mui:Link DisplayName="about" Source="/Views/Pages/Settings/About.xaml" />
             </mui:ModernTab.Links>
         </mui:ModernTab>

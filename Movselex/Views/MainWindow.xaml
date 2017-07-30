@@ -44,7 +44,7 @@
 	</i:Interaction.Triggers>
 
 	<mui:ModernWindow.TitleLinks>
-		<mui:Link DisplayName="settings" Source="/Views/Pages/SettingsPage.xaml" />
+		<mui:Link DisplayName="options" Source="/Views/Pages/SettingsPage.xaml" />
 	</mui:ModernWindow.TitleLinks>
 
 	
