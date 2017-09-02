@@ -42,9 +42,8 @@
       <HintPath>..\packages\FinalstreamCommons.0.4.58.0\lib\net45\FinalstreamCommons.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="FinalstreamCommons.Core, Version=0.1.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FinalstreamCommons.Core.0.1.10.0\lib\net45\FinalstreamCommons.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="FinalstreamCommons.Core, Version=0.1.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FinalstreamCommons.Core.0.1.18\lib\net45\FinalstreamCommons.Core.dll</HintPath>
     </Reference>
     <Reference Include="FinalstreamCommons.Web, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FinalstreamCommons.Web.0.1.2.0\lib\net45\FinalstreamCommons.Web.dll</HintPath>
