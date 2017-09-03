@@ -63,7 +63,21 @@ namespace Movselex.Core.Models
         /// <summary>
         /// グループに格納されているファイル数。
         /// </summary>
-        public int Count { get; private set; }
+        #region Count変更通知プロパティ
+        private int _count;
+
+        public int Count
+        {
+            get { return _count; }
+            set
+            {
+                if (_count == value) return;
+                _count = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// グループに格納されているお気に入りのファイル数。
