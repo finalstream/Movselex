@@ -91,6 +91,7 @@ namespace Movselex.ViewModels
             {
                 DispatcherHelper.UIDispatcher.Invoke(() =>
                 {
+                    // UIスレッドで実行しないとこけるので。
                     var collectionView = CollectionViewSource.GetDefaultView(this.Groups);
                     collectionView.SortDescriptions.Clear();
                     collectionView.SortDescriptions.Add(
