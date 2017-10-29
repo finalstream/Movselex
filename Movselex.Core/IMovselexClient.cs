@@ -11,6 +11,8 @@ namespace Movselex.Core
     {
         event EventHandler<Exception> ExceptionThrowed;
 
+        event EventHandler Refreshed;
+
         /// <summary>
         ///     フィルタリング情報。
         /// </summary>

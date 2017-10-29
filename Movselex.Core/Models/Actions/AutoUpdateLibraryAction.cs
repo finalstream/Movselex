@@ -14,6 +14,7 @@ namespace Movselex.Core.Models.Actions
 
         protected override void InvokeCore()
         {
+            // ライブラリ更新要求を投げる。
             _client.UpdateLibrary();
 
         }

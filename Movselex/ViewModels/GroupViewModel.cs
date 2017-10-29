@@ -78,6 +78,8 @@ namespace Movselex.ViewModels
 
         #endregion
 
+        public string LastUpdate { get { return _model.LastUpdate;  } }
+
         /// <summary>
         ///     お気に入りの状態を変更します。
         /// </summary>

@@ -22,7 +22,7 @@ namespace Movselex.Core.Models.Actions
 
             client.MovselexLibrary.DiffLoad(libCondition);
 
-           if (libCondition.FilteringMode != FilteringMode.Group) client.MovselexGroup.DiffLoad();
+            if (libCondition.FilteringMode != FilteringMode.Group) client.MovselexGroup.DiffLoad(); // グループ選択中は更新しない。(更新すると選択グループのみになるので)
 
             client.MovselexPlaying.Load();
         }
