@@ -118,8 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SelectGroupList" xml:space="preserve">
-    <value>SELECT GGPL.GID,GNAME GroupName,CNT Count,cast(FAVCNT as integer) FavoriteCount, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE IsCompleted
-FROM (SELECT GPL.GID,GPL.GROUPNAME GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE
+    <value>SELECT GGPL.GID,GNAME GroupName,CNT Count,cast(FAVCNT as integer) FavoriteCount, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE IsCompleted, GGPL.LASTUPDATE
+FROM (SELECT GPL.GID,GPL.GROUPNAME GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE, GPL.LASTUPDATE
 FROM (#LASTEXECSQL#) PL
 #JOIN#
 GROUP BY GPL.GROUPNAME

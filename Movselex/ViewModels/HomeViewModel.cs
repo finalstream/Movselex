@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -85,6 +86,19 @@ namespace Movselex.ViewModels
             //    // データベース選択復元
             //    //CurrentDatabase = Databases.SingleOrDefault(x=> x.Name == _client.AppConfig.SelectDatabase);
             //};
+
+            _client.Refreshed += (sender, args) =>
+            {
+                DispatcherHelper.UIDispatcher.Invoke(() =>
+                {
+                    var collectionView = CollectionViewSource.GetDefaultView(this.Groups);
+                    collectionView.SortDescriptions.Clear();
+                    collectionView.SortDescriptions.Add(
+                        new SortDescription("LastUpdate", ListSortDirection.Descending));
+                });
+
+
+            };
 
             // 初回データベース読み込みを行う
             _client.Initialized += (sender, args) =>

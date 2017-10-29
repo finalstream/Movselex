@@ -223,14 +223,13 @@ namespace Movselex.Core.Resources {
         }
         
         /// <summary>
-        ///   SELECT GGPL.GID,GNAME GroupName,CNT Count,cast(FAVCNT as integer) FavoriteCount, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE IsCompleted
-        ///FROM (SELECT GPL.GID,GPL.GROUPNAME GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE
+        ///   SELECT GGPL.GID,GNAME GroupName,CNT Count,cast(FAVCNT as integer) FavoriteCount, DL.DRIVE, FSL.FILESIZE, GGPL.KEYWORD, GGPL.COMPLETE IsCompleted, GGPL.LASTUPDATE
+        ///FROM (SELECT GPL.GID,GPL.GROUPNAME GNAME , ifnull(ACL.cnt,0) CNT #CLASS1COUNT# FAVCNT, GPL.KEYWORD, GPL.COMPLETE, GPL.LASTUPDATE
         ///FROM (#LASTEXECSQL#) PL
         ///#JOIN#
         ///GROUP BY GPL.GROUPNAME
         ///ORDER BY GPL.LASTUPDATE DESC, GPL.GID DESC) GGPL
-        ///LEFT JOIN (SELECT DSLIST.GID, SUMSTR(DSLIST.DRIVE) DRIVE FROM MOVLIST DSLIST GROUP BY DSLIST.GID) DL ON ifnull(GGPL.GID,&apos;&apos;) = ifnull(DL.GID,&apos;&apos;)
-        /// [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///LEFT JOIN (SELECT DSLIST.GID, SUMSTR(DSLIST.DRIVE) DRIVE FROM MOVLIST DSLIST GROUP BY DSLIST.GID) DL ON ifnull(G [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SelectGroupList {
             get {

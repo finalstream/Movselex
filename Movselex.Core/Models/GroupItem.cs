@@ -162,6 +162,22 @@ namespace Movselex.Core.Models
 
         public string FileSizeString { get { return FileUtils.ConvertFileSizeGigaByteString(Filesize); }}
 
+        #region LastUpdate変更通知プロパティ
+        private string _lastUpdate;
+
+        public string LastUpdate
+        {
+            get { return _lastUpdate; }
+            set
+            {
+                if (_lastUpdate == value) return;
+                _lastUpdate = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// お気に入りを変更します。
         /// </summary>
